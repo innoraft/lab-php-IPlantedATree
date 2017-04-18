@@ -1,0 +1,70 @@
+
+
+
+https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow
+
+17/04/2017:
+1) To view likes and to like an object: 
+	https://developers.facebook.com/docs/graph-api/reference/v2.8/object/likes
+
+2) To view the custom friendlist groups : 
+	https://developers.facebook.com/docs/graph-api/reference/user/friendlists/
+	https://developers.facebook.com/docs/graph-api/reference/friend-list/
+
+3) To view a particular photo information : 
+	https://developers.facebook.com/docs/graph-api/reference/photo/
+
+4) To publish posts or read the posts on a particular page : 
+	https://developers.facebook.com/docs/graph-api/reference/v2.8/post/
+
+5) Securing Graph API requests : 
+	https://developers.facebook.com/docs/graph-api/securing-requests
+
+6) Common scenarios for using the Graph API:
+	https://developers.facebook.com/docs/graph-api/common-scenarios/
+
+7) Policies to be followed to build better apps: 
+	https://developers.facebook.com/policy/#integration
+
+8) The User node:
+	https://developers.facebook.com/docs/graph-api/reference/user/
+
+9) Invitable friends:
+	https://developers.facebook.com/docs/graph-api/reference/user/invitable_friends/
+
+10) Taggable friends: V.V.V. Imp.
+	https://developers.facebook.com/docs/graph-api/reference/user/taggable_friends/
+	https://developers.facebook.com/docs/apps/review/feature/
+
+11) Permissions basic info:
+	https://developers.facebook.com/docs/facebook-login/permissions/#reference-basic-info
+
+12) FAQs:
+	https://developers.facebook.com/docs/apps/faq
+
+13) File Upload:
+	https://developers.facebook.com/docs/php/FacebookFile/5.0.0
+
+
+////new
+
+14) Video guide to sessions: 
+	https://developers.facebook.com/docs/facebook-login/overview/#logindialog (from minute 19 onwards)
+
+15) Access Tokens doc:
+	https://developers.facebook.com/docs/facebook-login/access-tokens
+
+16) PersistantDataInterface: 
+	https://developers.facebook.com/docs/php/PersistentDataInterface/5.0.0
+
+17)Manually building a login flow: 
+	https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow#login
+
+18) Feed dialog:
+	https://developers.facebook.com/docs/sharing/reference/feed-dialog
+
+19) Facebook\Facebook service:  count number of likes, view next photos etc, pagination
+	https://developers.facebook.com/docs/php/Facebook/5.0.0
+
+
+	//////// See for post : https://developers.facebook.com/docs/graph-api/reference/v2.8/post //////
