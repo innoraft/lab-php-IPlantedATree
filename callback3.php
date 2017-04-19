@@ -114,13 +114,45 @@ echo "<br><br><br><br><br>";
 // posting on user timeline using publish_actins permission
   
   // getting all friends of user
-  $friends = $fb->get('/me/taggable_friends');
+  $friends = $fb->get('/me/taggable_friends'); 
   $friends = $friends->getGraphEdge()->asArray();
-
-  // getting random friend out of all friends
+  /*The above result is returned in the form of an associative array.
+  Eg. $friends[0] => ['id' => 'adsawdqweqwe123' , 'name' => 'Voeoqej AjkJDSAK']
+      $friends[1] => ['id' => 'getgre233123fde' , 'name' => 'Fsdawc']
+  */
   $totalFriends = count($friends);
-  $random = rand(0, $totalFriends);
-  $msg = ['message' => 'my message', 'tags' => $friends[$random]['id']];
+  $count = 0;
+  $friendIDs = '';
+  ?>
+  <select>
+  <?php
+  while($count < $totalFriends){
+    if($count == 0)
+      $friendIDs =  $friends[$count]['id'].',';
+    else if($count == $totalFriends-1)
+      $friendIDs =  $friendIDs.$friends[$count]['id'];
+    else
+      $friendIDs =  $friendIDs.$friends[$count]['id'].',';
+    // try {
+    //   // Returns a `Facebook\FacebookResponse` object
+    //    $get = '/'.$friends[$count]['id'].'?fields=id,name';
+    //    $response = $fb->get($get,$accessToken);
+    // } catch(Facebook\Exceptions\FacebookResponseException $e) {
+    //   echo 'Graph returned an error: ' . $e->getMessage();
+    //   exit;
+    // } catch(Facebook\Exceptions\FacebookSDKException $e) {
+    //   echo 'Facebook SDK returned an error: ' . $e->getMessage();
+    //   exit;
+    // }
+    //$user = $response->getGraphUser();
+    //echo '<option value="'.$user['name'].'">'.$user['name']."</option>";
+    echo '<option value="'.$friends[$count]['name'].'">'.$friends[$count]['name']."</option>";
+    $count++;
+  }
+  ?>
+  </select>
+  <?php
+  $msg = ['message' => 'Yo11', 'tags' => $friendIDs];
   // posting on facebook and tagging friend with it
 try {
   // Returns a `Facebook\FacebookResponse` object
