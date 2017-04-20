@@ -4,8 +4,11 @@
 session_start();?>
 <html>
 <head>
-  <title>Treeplant</title>
-  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <script>FB.ui({
+  method: 'feed',
+  link: 'https://developers.facebook.com/docs/',
+  caption: 'An example caption',
+}, function(response){});</script>
 </head>
 <body>
 <?php
@@ -111,70 +114,23 @@ echo "<br><br><br><br><br>";
 // posting on user timeline using publish_actins permission
   
   // getting all friends of user
-  $friends = $fb->get('/me/taggable_friends'); 
-  $friends = $friends->getGraphEdge()->asArray();
-  /*The above result is returned in the form of an associative array.
-  Eg. $friends[0] => ['id' => 'adsawdqweqwe123' , 'name' => 'Voeoqej AjkJDSAK']
-      $friends[1] => ['id' => 'getgre233123fde' , 'name' => 'Fsdawc']
-  */
-  $totalFriends = count($friends);
-  $count = 0;
-  $friendIDs = '';
-  ?>
-  <!-- <select> -->
-  <?php
-  echo ' <input type="text" id="default" list="taggable_friends">';
-  echo '<datalist id="taggable_friends">';
-  echo ' <!--[if lte IE 9]><select data-datalist="taggable_friends"><![endif]-->';
-  while($count < $totalFriends){
-    if($count == 0)
-      $friendIDs =  $friends[$count]['id'].',';
-    else if($count == $totalFriends-1)
-      $friendIDs =  $friendIDs.$friends[$count]['id'];
-    else
-      $friendIDs =  $friendIDs.$friends[$count]['id'].',';
-    // try {
-    //   // Returns a `Facebook\FacebookResponse` object
-    //    $get = '/'.$friends[$count]['id'].'?fields=id,name';
-    //    $response = $fb->get($get,$accessToken);
-    // } catch(Facebook\Exceptions\FacebookResponseException $e) {
-    //   echo 'Graph returned an error: ' . $e->getMessage();
-    //   exit;
-    // } catch(Facebook\Exceptions\FacebookSDKException $e) {
-    //   echo 'Facebook SDK returned an error: ' . $e->getMessage();
-    //   exit;
-    // }
-    //$user = $response->getGraphUser();
-    //echo '<option value="'.$user['name'].'">'.$user['name']."</option>";
+  // Upload a photo for a user
+$data = [
+  'message' => 'A PNG icon!',
+  'source' => $fb->fileToUpload('image2.png'),
+];
 
-
-    echo '<option value="'.$friends[$count]['name'].'">'.$friends[$count]['name']."</option>";
-    
-
-    $count++;
-  }
-  echo ' <!--[if lte IE 9]></select><![endif]-->';
-  echo '</datalist>';
-  ?>
-  <!-- </select> -->
-  <?php
-  $msg = ['message' => 'Yo11111', 'tags' => $friendIDs];
-  // posting on facebook and tagging friend with it
 try {
-  // Returns a `Facebook\FacebookResponse` object
-  $response = $fb->post('/me/feed', $msg);
-} catch(Facebook\Exceptions\FacebookResponseException $e) {
-  echo 'Graph returned an error: ' . $e->getMessage();
-  exit;
-} catch(Facebook\Exceptions\FacebookSDKException $e) {
-  echo 'Facebook SDK returned an error: ' . $e->getMessage();
+  $response = $fb->post('/me/photos', $data);
+} catch(FacebookSDKException $e) {
+  echo 'Error: ' . $e->getMessage();
   exit;
 }
 
 $graphNode = $response->getGraphNode();
 
-echo 'Posted with id: ' . $graphNode['id'];
+echo 'Photo ID: ' . $graphNode['id'];
 ?>
-<script src="scripts/js/datalist.polyfill.min.js"></script>
+
 </body>
 </html>

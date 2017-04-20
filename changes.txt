@@ -66,5 +66,15 @@ https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow
 19) Facebook\Facebook service:  count number of likes, view next photos etc, pagination
 	https://developers.facebook.com/docs/php/Facebook/5.0.0
 
+20) If you're using the JavaScript SDK on your site, information on the logged in user is stored in a cookie. Use the FacebookJavaScriptHelper to obtain an access token or signed request from the cookie.
+	https://developers.facebook.com/docs/php/FacebookJavaScriptHelper/5.0.0
 
 	//////// See for post : https://developers.facebook.com/docs/graph-api/reference/v2.8/post //////
+
+21) Side navbar : http://bootsnipp.com/snippets/4OZ8R
+
+22) Access token on Facebook bug : 
+	https://developers.facebook.com/bugs/433868586963042
+
+23) Facebook UID is of 64 bits.
+	https://developers.facebook.com/blog/post/226 (Announcements section)

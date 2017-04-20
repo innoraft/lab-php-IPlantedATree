@@ -17,6 +17,8 @@ $fb = new Facebook\Facebook([
   ]);
 
 $helper = $fb->getRedirectLoginHelper();
+// $_SESSION['FBRLH_state']=$_GET['state']; 
+echo ($_SESSION['FBRLH_' . 'state']);
 try {
   $accessToken = $helper->getAccessToken();
 } catch(Facebook\Exceptions\FacebookResponseException $e) {
@@ -77,7 +79,7 @@ $_SESSION['fb_access_token'] = (string) $accessToken;
 
 try{
 
-  $logoutUrl = $helper->getLogoutUrl($accessToken,"http://treeplant123.com/login1.php");
+  $logoutUrl = $helper->getLogoutUrl($accessToken,"http://treeplant123.com/login5.php");
 
 }catch(Facebook\Exceptions\FacebookSDKException $e) {
   // When validation fails or other local issues
@@ -86,29 +88,6 @@ try{
 }
 echo "<br><br><br><br><br>";
 
-// try {
-//   $response = $fb->get('/me?fields=name,first_name,last_name,email');
-//   $userNode = $response->getGraphUser();
-// } catch(Facebook\Exceptions\FacebookResponseException $e) {
-//   // When Graph returns an error
-//   echo 'Graph returned an error: ' . $e->getMessage();
-//   exit;
-// } catch(Facebook\Exceptions\FacebookSDKException $e) {
-//   // When validation fails or other local issues
-//   echo 'Facebook SDK returned an error: ' . $e->getMessage();
-//   exit;
-// }
-
-// echo 'Logged in as ' . $userNode->getName();
-// echo 'ID : ' . $userNode->getID();
-// echo 'Email : ' . $userNode->getEmail();
-// echo 'First name : ' . $userNode->getFirstName();
-// echo 'Last name : ' . $userNode->getLastName();
-// echo '<br><br><br>';
-// echo $userNode; 
-// $str = $userNode->all();
-// print_r $str;
-// posting on user timeline using publish_actins permission
   
   // getting all friends of user
   $friends = $fb->get('/me/taggable_friends'); 
@@ -120,9 +99,7 @@ echo "<br><br><br><br><br>";
   $totalFriends = count($friends);
   $count = 0;
   $friendIDs = '';
-  ?>
-  <!-- <select> -->
-  <?php
+   
   echo ' <input type="text" id="default" list="taggable_friends">';
   echo '<datalist id="taggable_friends">';
   echo ' <!--[if lte IE 9]><select data-datalist="taggable_friends"><![endif]-->';
@@ -133,20 +110,6 @@ echo "<br><br><br><br><br>";
       $friendIDs =  $friendIDs.$friends[$count]['id'];
     else
       $friendIDs =  $friendIDs.$friends[$count]['id'].',';
-    // try {
-    //   // Returns a `Facebook\FacebookResponse` object
-    //    $get = '/'.$friends[$count]['id'].'?fields=id,name';
-    //    $response = $fb->get($get,$accessToken);
-    // } catch(Facebook\Exceptions\FacebookResponseException $e) {
-    //   echo 'Graph returned an error: ' . $e->getMessage();
-    //   exit;
-    // } catch(Facebook\Exceptions\FacebookSDKException $e) {
-    //   echo 'Facebook SDK returned an error: ' . $e->getMessage();
-    //   exit;
-    // }
-    //$user = $response->getGraphUser();
-    //echo '<option value="'.$user['name'].'">'.$user['name']."</option>";
-
 
     echo '<option value="'.$friends[$count]['name'].'">'.$friends[$count]['name']."</option>";
     
@@ -155,10 +118,8 @@ echo "<br><br><br><br><br>";
   }
   echo ' <!--[if lte IE 9]></select><![endif]-->';
   echo '</datalist>';
-  ?>
-  <!-- </select> -->
-  <?php
-  $msg = ['message' => 'Yo11111', 'tags' => $friendIDs];
+   
+  $msg = ['message' => 'Yo111111QPRST', 'tags' => $friendIDs];
   // posting on facebook and tagging friend with it
 try {
   // Returns a `Facebook\FacebookResponse` object
@@ -174,7 +135,19 @@ try {
 $graphNode = $response->getGraphNode();
 
 echo 'Posted with id: ' . $graphNode['id'];
+echo '<a href="' . htmlspecialchars($logoutUrl) . '">Logout</a>';
+?>
+<br><br>
+<a href="changes.txt">changes.txt</a>
+<br><br>
+<?php 
+var_dump($helper->getPersistentDataHandler());
+echo "<br>GET";
+var_dump($_GET);
+echo "<br>SESSION";
+var_dump($_SESSION);
 ?>
 <script src="scripts/js/datalist.polyfill.min.js"></script>
+<script src="scripts/js/datalist.js"></script>
 </body>
 </html>

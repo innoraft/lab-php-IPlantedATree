@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Datalist</title>
+	<!-- <script type="text/javascript">
+		function remove(){
+			this.remove();
+		}
+	</script> -->
+	
+</head>
+<body>
+<form id="myForm">
+	<input type="text" id="default" list="taggable_friends">
+<datalist id="taggable_friends">
+	<option value="ABC">ABC</option>
+	<option value="BCD">BCD</option>
+	<option value="CDE">CDE</option>
+	<option value="DEF">DEF</option>
+	<option value="EFG">EFG</option>
+	<option value="FGH">FGH</option>
+	<option value="AXCd">AXCd</option>
+</datalist>
+	<input type="submit" name="submit" value="submit">
+<div id="selected_friends"></div>
+
+
+<script src="scripts/js/datalist.js"></script>
+</form>
+</body>
+</html>

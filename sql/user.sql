@@ -1,0 +1,5 @@
+CREATE TABLE user(
+	fb_name VARCHAR(50) NOT NULL,
+	fb_id BIGINT(64) UNSIGNED NOT NULL,
+	fb_profile_pic_path VARCHAR(100) NOT NULL
+);
