@@ -1,6 +1,4 @@
 <?php
-// error_reporting(E_ALL);
-// ini_set("display_errors", 1);
 session_start();?>
 <html>
 <head>
@@ -9,16 +7,17 @@ session_start();?>
 </head>
 <body>
 <?php
+//$state = $_SESSION['state'] = md5(uniqid(rand(), TRUE));
 require_once __DIR__ . '/vendor/autoload.php';
 $fb = new Facebook\Facebook([
     'app_id' => '1867029653544963',
   'app_secret' => 'ab7e90234d0bb4fbb27d160fb93a4479',
   'default-graph_version' => 'v2.5'
+        // ,'state' => $state
   ]);
 
 $helper = $fb->getRedirectLoginHelper();
-// $_SESSION['FBRLH_state']=$_GET['state']; 
-echo ($_SESSION['FBRLH_' . 'state']);
+
 try {
   $accessToken = $helper->getAccessToken();
 } catch(Facebook\Exceptions\FacebookResponseException $e) {
@@ -47,107 +46,11 @@ if (!isset($accessToken)) {
 else{
   // Logged in!
   $_SESSION['facebook_access_token'] = (string) $accessToken;
-
+  header('location:http://treeplant123.com/profile.php');
   // Now you can redirect to another page and use the
   // access token from $_SESSION['facebook_access_token']
 }
-echo '<h3>Access Token</h3>';
-var_dump($accessToken->getValue());
 
-// The OAuth 2.0 client handler helps us manage access tokens
-$oAuth2Client = $fb->getOAuth2Client();
-
-// Get the access token metadata from /debug_token
-$tokenMetadata = $oAuth2Client->debugToken($accessToken);
-echo '<h3>Metadata</h3>';
-var_dump($tokenMetadata);
-$fb->setDefaultAccessToken($accessToken);
-if (! $accessToken->isLongLived()) {
-  // Exchanges a short-lived access token for a long-lived one
-  try {
-    $accessToken = $oAuth2Client->getLongLivedAccessToken($accessToken);
-  } catch (Facebook\Exceptions\FacebookSDKException $e) {
-    echo "<p>Error getting long-lived access token: " . $helper->getMessage() . "</p>\n\n";
-    exit;
-  }
-
-  echo '<h3>Long-lived</h3>';
-  var_dump($accessToken->getValue());
-}
-
-$_SESSION['fb_access_token'] = (string) $accessToken;
-
-try{
-
-  $logoutUrl = $helper->getLogoutUrl($accessToken,"http://treeplant123.com/login5.php");
-
-}catch(Facebook\Exceptions\FacebookSDKException $e) {
-  // When validation fails or other local issues
-  echo 'Facebook SDK returned an error: ' . $e->getMessage();
-  exit;
-}
-echo "<br><br><br><br><br>";
-
-  
-  // getting all friends of user
-  $friends = $fb->get('/me/taggable_friends'); 
-  $friends = $friends->getGraphEdge()->asArray();
-  /*The above result is returned in the form of an associative array.
-  Eg. $friends[0] => ['id' => 'adsawdqweqwe123' , 'name' => 'Voeoqej AjkJDSAK']
-      $friends[1] => ['id' => 'getgre233123fde' , 'name' => 'Fsdawc']
-  */
-  $totalFriends = count($friends);
-  $count = 0;
-  $friendIDs = '';
-   
-  echo ' <input type="text" id="default" list="taggable_friends">';
-  echo '<datalist id="taggable_friends">';
-  echo ' <!--[if lte IE 9]><select data-datalist="taggable_friends"><![endif]-->';
-  while($count < $totalFriends){
-    if($count == 0)
-      $friendIDs =  $friends[$count]['id'].',';
-    else if($count == $totalFriends-1)
-      $friendIDs =  $friendIDs.$friends[$count]['id'];
-    else
-      $friendIDs =  $friendIDs.$friends[$count]['id'].',';
-
-    echo '<option value="'.$friends[$count]['name'].'">'.$friends[$count]['name']."</option>";
-    
-
-    $count++;
-  }
-  echo ' <!--[if lte IE 9]></select><![endif]-->';
-  echo '</datalist>';
-   
-  $msg = ['message' => 'Yo111111QPRST', 'tags' => $friendIDs];
-  // posting on facebook and tagging friend with it
-try {
-  // Returns a `Facebook\FacebookResponse` object
-  $response = $fb->post('/me/feed', $msg);
-} catch(Facebook\Exceptions\FacebookResponseException $e) {
-  echo 'Graph returned an error: ' . $e->getMessage();
-  exit;
-} catch(Facebook\Exceptions\FacebookSDKException $e) {
-  echo 'Facebook SDK returned an error: ' . $e->getMessage();
-  exit;
-}
-
-$graphNode = $response->getGraphNode();
-
-echo 'Posted with id: ' . $graphNode['id'];
-echo '<a href="' . htmlspecialchars($logoutUrl) . '">Logout</a>';
 ?>
-<br><br>
-<a href="changes.txt">changes.txt</a>
-<br><br>
-<?php 
-var_dump($helper->getPersistentDataHandler());
-echo "<br>GET";
-var_dump($_GET);
-echo "<br>SESSION";
-var_dump($_SESSION);
-?>
-<script src="scripts/js/datalist.polyfill.min.js"></script>
-<script src="scripts/js/datalist.js"></script>
 </body>
 </html>

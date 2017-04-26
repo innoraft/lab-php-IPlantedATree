@@ -6,23 +6,22 @@ $password = "1234";
 $db_name = "treeplant";
 
 $conn = new mysqli($servername, $username, $password, $db_name);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} 
-$sql =  "SELECT * from user";
-$result = $conn->query($sql);
+// if ($conn->connect_error) {
+//     die("Connection failed: " . $conn->connect_error);
+// } 
+// $sql =  "SELECT * from user";
+// $result = $conn->query($sql);
 
-var_dump($result);
 
-if($result->num_rows>0){
-	while($row = $result->fetch_assoc()){
-		echo "<br>id:".$row['fb_id']."<br>";
-		echo "name:".$row['fb_name']."<br>";
-		echo "path:".$row['fb_profile_pic_path']."<br>";
-	}
-}
+// if($result->num_rows>0){
+// 	while($row = $result->fetch_assoc()){
+// 		echo "<br>id:".$row['fb_id']."<br>";
+// 		echo "name:".$row['fb_name']."<br>";
+// 		echo "path:".$row['fb_profile_pic_path']."<br>";
+// 	}
+// }
 
-$conn->close();
+// $conn->close();
 
 
 /*

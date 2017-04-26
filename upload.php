@@ -1,6 +1,6 @@
 <?php
 $target_dir = "assets/uploads/";
-var_dump($_FILES);
+//var_dump($_FILES);
 echo $_FILES['fileToUpload']['error'];
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 $uploadOk = 1;

@@ -4,11 +4,6 @@
 session_start();?>
 <html>
 <head>
-  <script>FB.ui({
-  method: 'feed',
-  link: 'https://developers.facebook.com/docs/',
-  caption: 'An example caption',
-}, function(response){});</script>
 </head>
 <body>
 <?php
@@ -20,6 +15,8 @@ $fb = new Facebook\Facebook([
   ]);
 
 $helper = $fb->getRedirectLoginHelper();
+echo "<br><br>Helper";
+var_dump($helper);
 try {
   $accessToken = $helper->getAccessToken();
 } catch(Facebook\Exceptions\FacebookResponseException $e) {
@@ -28,7 +25,7 @@ try {
   exit;
 } catch(Facebook\Exceptions\FacebookSDKException $e) {
   // When validation fails or other local issues
-  echo 'Facebook SDK returned an error: ' . $e->getMessage();
+  echo '<br><br>Facebook SDK returned an error: ' . $e->getMessage();
   exit;
 }
 
@@ -48,6 +45,7 @@ if (!isset($accessToken)) {
 else{
   // Logged in!
   $_SESSION['facebook_access_token'] = (string) $accessToken;
+  header('location:profile.php');
 
   // Now you can redirect to another page and use the
   // access token from $_SESSION['facebook_access_token']
@@ -89,44 +87,44 @@ try{
 }
 echo "<br><br><br><br><br>";
 
-// try {
-//   $response = $fb->get('/me?fields=name,first_name,last_name,email');
-//   $userNode = $response->getGraphUser();
-// } catch(Facebook\Exceptions\FacebookResponseException $e) {
-//   // When Graph returns an error
-//   echo 'Graph returned an error: ' . $e->getMessage();
-//   exit;
-// } catch(Facebook\Exceptions\FacebookSDKException $e) {
-//   // When validation fails or other local issues
-//   echo 'Facebook SDK returned an error: ' . $e->getMessage();
-//   exit;
-// }
+try {
+  $response = $fb->get('/me?fields=name,first_name,last_name,email');
+  $userNode = $response->getGraphUser();
+} catch(Facebook\Exceptions\FacebookResponseException $e) {
+  // When Graph returns an error
+  echo 'Graph returned an error: ' . $e->getMessage();
+  exit;
+} catch(Facebook\Exceptions\FacebookSDKException $e) {
+  // When validation fails or other local issues
+  echo 'Facebook SDK returned an error: ' . $e->getMessage();
+  exit;
+}
 
-// echo 'Logged in as ' . $userNode->getName();
-// echo 'ID : ' . $userNode->getID();
-// echo 'Email : ' . $userNode->getEmail();
-// echo 'First name : ' . $userNode->getFirstName();
-// echo 'Last name : ' . $userNode->getLastName();
-// echo '<br><br><br>';
-// echo $userNode; 
+echo 'Logged in as ' . $userNode->getName();
+echo 'ID : ' . $userNode->getID();
+echo 'Email : ' . $userNode->getEmail();
+echo 'First name : ' . $userNode->getFirstName();
+echo 'Last name : ' . $userNode->getLastName();
+echo '<br><br><br>';
+echo $userNode; 
 // $str = $userNode->all();
 // print_r $str;
 // posting on user timeline using publish_actins permission
-  try {
-    // message must come from the user-end
-    $data = ['message' => 'iop'];
-    $request = $fb->post('/me/feed', $data);
-    $response = $request->getGraphNode()->asArray();
-  } catch(Facebook\Exceptions\FacebookResponseException $e) {
-    // When Graph returns an error
-    echo 'Graph returned an error: ' . $e->getMessage();
-    exit;
-  } catch(Facebook\Exceptions\FacebookSDKException $e) {
-    // When validation fails or other local issues
-    echo 'Facebook SDK returned an error: ' . $e->getMessage();
-    exit;
-  }
-  echo $response['id']; //response is an array only containing ID. Check by using var_dump($response);
+  // try {
+  //   // message must come from the user-end
+  //   $data = ['message' => 'iop'];
+  //   $request = $fb->post('/me/feed', $data);
+  //   $response = $request->getGraphNode()->asArray();
+  // } catch(Facebook\Exceptions\FacebookResponseException $e) {
+  //   // When Graph returns an error
+  //   echo 'Graph returned an error: ' . $e->getMessage();
+  //   exit;
+  // } catch(Facebook\Exceptions\FacebookSDKException $e) {
+  //   // When validation fails or other local issues
+  //   echo 'Facebook SDK returned an error: ' . $e->getMessage();
+  //   exit;
+  // }
+  // echo $response['id']; //response is an array only containing ID. Check by using var_dump($response);
 
 ?>
 
