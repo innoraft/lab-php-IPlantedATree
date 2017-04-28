@@ -25,3 +25,87 @@
         background: #3875d7;
         color: white;
     }
+
+/* homepage*/
+#btn_plant{
+    position: absolute;
+    top: 47%;
+    left: 37%;
+    width: 300px;
+    height: 70px;
+    font-weight: bold;
+    font-size: 20px;
+    background-color: #ccc;
+    box-sizing: border-box;
+    padding: 17px 0px;
+    text-align: center;
+    display: inline-block;
+    -webkit-writing-mode:horizontal-tb;
+    margin:0;
+    transition: .4s linear;
+}
+
+.navbar	{
+	margin-bottom: 0px;
+}
+
+#btn_plant:hover{
+	/*box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);*/
+	background-color: transparent;
+	font-size:25px;
+	opacity: .7;
+	background-color: green;
+	color: #fff; 
+}
+#backgroundImage1,#backgroundImage2{
+	-webkit-transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -o-transition: opacity 1s ease-in-out;
+  transition: opacity 1s ease-in-out;
+}
+#backgroundImage1.transparent{
+	opacity: 0;
+}
+#backgroundImage2.transparent{
+	opacity: 0;
+}
+
+#id01 .w3-modal-content .w3-container{
+	margin:30px 0px;
+}
+
+#id01 .w3-modal-content footer .align-center button{
+	margin:10px 0px;
+	height: 40px;
+}
+
+.align-center{
+	text-align: center;
+	margin: 0 auto;
+}	
+
+.hvr-fade {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px transparent;
+  overflow: hidden;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: color, background-color;
+  transition-property: color, background-color;
+}
+.hvr-fade:hover, .hvr-fade:focus, .hvr-fade:active {
+  background-color: #3b5998;
+  color: white;
+}
+
+
+/*homepage*/
+
+/*File upload page begins*/
+
+
+
+/*File upload page ends*/

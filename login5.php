@@ -1,13 +1,5 @@
 <?php
 session_start();
-?>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:fb="http://ogp.me/ns/fb#">
-<head>
-	<meta property="og:image" content="image2.png" />
-</head>
-<body>
-<?php
 //$state = $_SESSION['state'] = md5(uniqid(rand(), TRUE));
 //echo $state;
 require_once __DIR__ . '/vendor/autoload.php';
@@ -22,5 +14,3 @@ $permissions = ['email','publish_actions','user_about_me','user_friends','user_p
 $loginUrl = $helper->getLoginUrl('http://treeplant123.com/callback5.php', $permissions);
 echo '<a href="' . htmlspecialchars($loginUrl) . '">Log in with Facebook!</a>';
 ?>
-</body>
-</html>

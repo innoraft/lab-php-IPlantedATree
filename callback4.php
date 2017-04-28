@@ -116,8 +116,8 @@ echo "<br><br><br><br><br>";
   // getting all friends of user
   // Upload a photo for a user
 $data = [
-  'message' => 'A PNG icon!',
-  'source' => $fb->fileToUpload('image2.png'),
+  'message' => 'Treeplanting with so many people!',
+  'source' => $fb->fileToUpload('assets/images/treeplanting7.png'),
 ];
 
 try {

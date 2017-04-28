@@ -114,10 +114,10 @@ echo "<br><br><br><br><br>";
 // posting on user timeline using publish_actins permission
 $message = "Welcome ttto Google";
 $linkData = [
-  'link' => 'http://www.google.com',
+  'link' => 'http://www.facebook.com',
   'message' => $message,
   'application' => 'treeplant123.com',
-  'caption' => 'www.google.com',
+  'caption' => 'Planting trees',
   'description' => 'Planting trees',
   'name' => 'Google',
   'place' => 'India'
