@@ -26,7 +26,7 @@ $loginUrl = $helper->getLoginUrl('http://treeplant123.com/callback5.php', $permi
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   	<script type="text/javascript" src="scripts/js/homepage.js"></script>
 </head>
-<body position: relative;>
+<body>
 
 
 <div class="navbar navbar-default navbar-fixed-top">
@@ -42,7 +42,7 @@ $loginUrl = $helper->getLoginUrl('http://treeplant123.com/callback5.php', $permi
     <div class="collapse navbar-collapse myNavbar">
       <ul class="nav navbar-nav navbar-right">
         <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">Profile</a></li>
+        <li><a href="profile.php">Profile</a></li>
         <li><a href="#">XYZ</a></li>
         <li><a href="#">About Us</a></li>
       </ul>
@@ -62,16 +62,22 @@ $loginUrl = $helper->getLoginUrl('http://treeplant123.com/callback5.php', $permi
       </div>
       <footer class="w3-container w3-teal">
         <div class="align-center">
-        	<button class="hvr-fade"><i class="fa fa-facebook" aria-hidden="true" style="border-right: 1px solid #000;padding-right: 8px;"></i><?php echo '<a href="' . htmlspecialchars($loginUrl) . '">'.'Login With Facebook'.'</a>';?></button>
+        	<button class="hvr-fade">
+        		<i class="fa fa-facebook" aria-hidden="true">	
+        		</i>
+        		<?php echo '<a href="' . htmlspecialchars($loginUrl) . '">'.'Login With Facebook'.'</a>';?>
+        	</button>
         </div>
       </footer>
     </div>
   </div>
 </div>
 
-<img id="backgroundImage1" class="img-responsive" src="assets/images/plantingtrees10.jpg" style="width:100vw;height: 100vh;position: absolute;">
-<img id="backgroundImage2" class="img-responsive" src="assets/images/treeplant.jpg" style="width:100vw;height: 100vh;position: absolute;">
-<button  id="btn_plant" onclick="document.getElementById('id01').style.display='block'">Let's Plant Some Trees</button>
+<img id="backgroundImage1" class="img-responsive" src="assets/images/plantingtrees10.jpg">
+<img id="backgroundImage2" class="img-responsive" src="assets/images/treeplant.jpg">
+<div id="btn_wrapper">
+	<button  id="btn_plant" onclick="document.getElementById('id01').style.display='block'">Let's Plant Some Trees</button>
+</div>
 <!--change -->
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

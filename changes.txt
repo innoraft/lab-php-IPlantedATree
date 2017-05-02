@@ -78,3 +78,6 @@ https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow
 
 23) Facebook UID is of 64 bits.
 	https://developers.facebook.com/blog/post/226 (Announcements section)
+
+24)  file upload
+https://www.script-tutorials.com/pure-html5-file-upload/

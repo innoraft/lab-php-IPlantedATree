@@ -1,9 +1,6 @@
 <?php
-session_start();
 $target_dir = "assets/uploads/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-$fileName = basename($_FILES["fileToUpload"]["name"]);
-echo 'Filename is : '.$fileName;
 $uploadOk = 1;
 $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 // Check if image file is a actual image or fake image
@@ -44,8 +41,17 @@ if ($uploadOk == 0) {
         echo "Sorry, there was an error uploading your file.";
     }
 }
-
-echo '<img src="'.$target_file.'">';
-
-header('location:post.php?fileName='.$fileName.'&description='.$_POST['description']);
 ?>
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<form action="upload.php" method="post" enctype="multipart/form-data">
+    Select image to upload:
+    <input type="file" name="fileToUpload" id="fileToUpload">
+    <input type="submit" value="Upload Image" name="submit">
+</form>
+
+</body>
+</html>

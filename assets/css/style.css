@@ -27,30 +27,42 @@
     }
 
 /* homepage*/
-#btn_plant{
+#btn_wrapper{
     position: absolute;
+    top: 40vh;
+    width: 100%;
+    height: 70px;
+    text-align: center;
+}
+
+#btn_plant{
+/*    position: absolute;
     top: 47%;
-    left: 37%;
+    left: 37%;*/
     width: 300px;
     height: 70px;
     font-weight: bold;
     font-size: 20px;
-    background-color: #ccc;
+    background-color: transparent;
     box-sizing: border-box;
     padding: 17px 0px;
     text-align: center;
     display: inline-block;
     -webkit-writing-mode:horizontal-tb;
     margin:0;
+    border-radius: 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     transition: .4s linear;
 }
 
 .navbar	{
 	margin-bottom: 0px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
 #btn_plant:hover{
 	/*box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);*/
+	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 	background-color: transparent;
 	font-size:25px;
 	opacity: .7;
@@ -58,6 +70,9 @@
 	color: #fff; 
 }
 #backgroundImage1,#backgroundImage2{
+	width:100vw;
+	height: 100vh;
+	position: absolute;
 	-webkit-transition: opacity 1s ease-in-out;
   -moz-transition: opacity 1s ease-in-out;
   -o-transition: opacity 1s ease-in-out;
@@ -78,6 +93,17 @@
 	margin:10px 0px;
 	height: 40px;
 }
+
+#id01 .w3-modal-content footer .align-center button a:hover{
+	text-decoration: none;
+	color: white;
+}
+
+#id01 .w3-modal-content footer .align-center button i{
+	border-right: 1px solid #000;
+	padding-right: 8px;
+}
+
 
 .align-center{
 	text-align: center;
@@ -102,7 +128,52 @@
 }
 
 
+
+
 /*homepage*/
+
+/*Profile page begins*/
+
+#profile_main_body{
+	margin-top: 51px;
+	clear:both;
+	width: 100vw;
+	height: 100vh;
+}
+
+#profile_main_body > div:nth-child(1){
+	float: left;
+	width:20%;
+	height: 100%;
+	background-color: #26c6da;
+}
+
+#profile_upload_area{
+	float: left;
+	width:80%;
+	height: 100%;
+	background-color: #ffee68;
+}
+
+/*Right side heading*/
+#profile_main_body div:nth-child(2) div:nth-child(1){ 
+	font-family: 'Alegreya', serif;
+	font-weight: 400;
+	font-style: italic;
+	width: 100%;
+	font-size: 40px;
+	border: 1px solid #000;
+	height:12%;
+	text-align: center;
+}
+#profile_upload_area div:nth-child(2){
+
+}
+/*Profile page ends*/
+
+
+
+
 
 /*File upload page begins*/
 
