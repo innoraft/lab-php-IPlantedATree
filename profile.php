@@ -18,6 +18,8 @@ try {
   $requestPicture = $fb->get('me/picture?redirect=false&height=300&width=300',$accessToken);
   $picture = $requestPicture->getGraphUser();
   $userNode = $response->getGraphUser();
+  $friends = $fb->get('/me/taggable_friends?fields=name,id',$accessToken); 
+  $friends = $friends->getGraphEdge()->asArray();  
 } catch(Facebook\Exceptions\FacebookResponseException $e) {
   // When Graph returns an error
   echo 'Graph returned an error: ' . $e->getMessage();
@@ -27,6 +29,14 @@ try {
   echo 'Facebook SDK returned an error: ' . $e->getMessage();
   exit;
 }
+
+$totalFriends = count($friends);
+$count = 0;
+$friendIDs = '';
+
+
+
+
 // echo "<img src='".$picture['url']."'/>";
 // echo 'Logged in as ' . $userNode->getName();
 // echo 'ID : ' . $userNode->getID();
@@ -76,32 +86,178 @@ try {
   </div>
 </div>
 
+<div  class="row" id="profile_row">
+  <div class="col-md-2 border" style="background-color: #52b3d9;height: 100vh;padding-right: 0px;">
+    <?php echo "<img id='profile_picture' class='outset' src='".$picture['url']."'/>";
+          echo 'Hello ' . $userNode->getName() . '!';
+    ?>
+  </div>
+  <div class="col-md-10 border" style="background-color: #34495e;color:white;height: 100vh;">
+    <div id="profile_heading">Upload Your Challenge Photo!</div>
+    <form action="upload.php" method="post" enctype="multipart/form-data">
+    <div id="imageContainer">
+      <img id="imagePreview" src="assets/images/placeholder.jpg" alt="your image" width="400" height="300" /><br>
+    </div>
+    <div id="profile_fileUploadButtons">
+      <label>Select image to Upload</label>
+      <input type="file" name="fileToUpload" id="fileToUpload"><br>
+      <input type="hidden" name="fileName" value>
+      <label for="message" style="color:#fff;">Image Description</label>
+      <textarea style="height: 50px;width:70%;margin:0 auto;resize: none;color:#000;" placeholder="Enter image description here" id="description" name="description"></textarea><br>
+      <label>Tag friends</label>
+<?php
+   
+echo ' <input type="text" id="friends" list="taggable_friends">';
+echo '<datalist id="taggable_friends">';
+echo ' <!--[if lte IE 9]><select data-datalist="taggable_friends"><![endif]-->';
+while($count < $totalFriends){
+  if($count == 0)
+      $friendIDs =  $friends[$count]['id'].',';
+  else if($count == $totalFriends-1)
+      $friendIDs =  $friendIDs.$friends[$count]['id'];
+  else
+      $friendIDs =  $friendIDs.$friends[$count]['id'].',';
 
+  echo '<option value="'.$friends[$count]['name'].'">'.$friends[$count]['name']."</option>";
+    
+
+  $count++;
+}
+echo ' <!--[if lte IE 9]></select><![endif]-->';
+echo '</datalist>';
+
+                                                                     
+?>
+      <br>
+      <input type="button" name="save" value="Save">
+      <input type="reset" name="Reset">
+      <input id="submit" type="submit" value="Upload Image" name="submit">
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#friends').on('input', function() {
+    var userText = $(this).val();
+
+    $("#taggable_friends").find("option").each(function() {
+      if ($(this).val() == userText) {
+        var description = $('#description').val();
+        var thisVal = $(this).val();
+        console.log(thisVal);
+        console.log(description);
+        description += "@"+thisVal;
+        $('#description').val(description);
+        $('#friends').val('');
+        //alert("Make Ajax call here.");
+      }
+    })
+  })
+});
+
+
+  $("input[type='reset']").on("click", function(event){
+        event.preventDefault();
+        // stops the form from resetting after this function
+        $(this).closest('form').get(0).reset();
+        // resets the form before continuing the function
+        $('#imagePreview').attr('src','assets/images/placeholder.jpg');
+        $('#submit').attr('disabled','true');
+        // executes after the form has been reset
+    });
+
+  $("input[type='submit']").on("click", function(event){
+    // stops the form from resetting after this function
+    if((document.getElementById("imagePreview").src).includes('placeholder.jpg')){
+        alert('You need to select an image first!');
+        event.preventDefault();
+    }
+    // executes after the form has been reset
+    else{
+        // console.log(document.getElementById("imagePreview").src);
+        // console.log(document.getElementById("imagePreview").src == "http://treeplant123.com/assets/images/placeholder.jpg");
+        alert('OK');
+    }
+  });
+
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+            
+        reader.onload = function (e) {
+        $('#imagePreview').attr('src', e.target.result);
+        document.getElementById('submit').disabled = false;
+      }
+            
+      reader.readAsDataURL(input.files[0]);
+      /*input.files[0].name; //displays the filename*/
+    }
+  }
+
+  $("#fileToUpload").change(function(){
+          readURL(this);
+  });
+</script>
+
+<!-- 
 <div id="profile_main_body">
-  <div class="container">
-    <?php echo "<img style='width:100%;height:40%;' src='".$picture['url']."'/>";
-          echo 'Logged in as ' . $userNode->getName();
+  <div class="">
+    <?php //echo "<img class='outset' style='width:100%;height:40%;' src='".$picture['url']."'/>";
+         // echo 'Hello ' . $userNode->getName() . '!';
     ?>
   </div>
   <div id="profile_upload_area">
     <div>Upload Your Challenge Photo!</div>
-    <div>
+    <div id="profile_form"> 
       <form action="upload.php" method="post" enctype="multipart/form-data">
-      <label>Select image to Upload</label>
-        <input type="file" name="fileToUpload" id="fileToUpload">
-        <img id="imagePreview" src="assets/images/placeholder.jpg" alt="your image" width="200" height="200" style="display: inline;" />
-        <label for="message">Image Description</label>
-        <textarea placeholder="Enter image description here" name="description"></textarea>
-        <input type="hidden" name="fileName" value>
-        <input type="submit" value="Upload Image" name="submit">
+        <div class="row">
+          <div class="col-md-8">
+            <img id="imagePreview" src="assets/images/placeholder.jpg" alt="your image" width="400" height="300" style="display: inline;" /><br>
+            <label>Select image to Upload</label>
+            <input type="file" name="fileToUpload" id="fileToUpload">
+            <input type="hidden" name="fileName" value>
+            <input type="reset" name="Reset">
+            <input id="submit" type="submit" value="Upload Image" name="submit">
+          </div>
+          <div class="col-md-4" style="background-color: red;">
+            <label for="message">Image Description</label>
+            <textarea style="height: 200px;resize: none;" placeholder="Enter image description here" name="description"></textarea>
+          </div>
+        </div>
       </form>
       <script type="text/javascript">
+        $("input[type='reset']").on("click", function(event){
+          event.preventDefault();
+          // stops the form from resetting after this function
+          $(this).closest('form').get(0).reset();
+          // resets the form before continuing the function
+          $('#imagePreview').attr('src','assets/images/placeholder.jpg');
+          $('#submit').attr('disabled','true');
+          // executes after the form has been reset
+          });
+
+        $("input[type='submit']").on("click", function(event){
+          // stops the form from resetting after this function
+          if((document.getElementById("imagePreview").src).includes('placeholder.jpg')){
+                alert('You need to select an image first!');
+                event.preventDefault();
+            }
+          // executes after the form has been reset
+            
+            else{
+              // console.log(document.getElementById("imagePreview").src);
+              // console.log(document.getElementById("imagePreview").src == "http://treeplant123.com/assets/images/placeholder.jpg");
+              alert('OK');
+            }
+          });
+
         function readURL(input) {
           if (input.files && input.files[0]) {
             var reader = new FileReader();
             
             reader.onload = function (e) {
-            $('#imagePreview').attr('src', e.target.result);
+              $('#imagePreview').attr('src', e.target.result);
+              document.getElementById('submit').disabled = false;
             }
             
             reader.readAsDataURL(input.files[0]);
@@ -115,7 +271,7 @@ try {
       </script>
     </div>
   </div>
-</div>
+</div> -->
 <!-- <a href="http://treeplant123.com/post.php">POST</a> -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>

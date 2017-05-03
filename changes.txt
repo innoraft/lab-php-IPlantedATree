@@ -81,3 +81,6 @@ https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow
 
 24)  file upload
 https://www.script-tutorials.com/pure-html5-file-upload/
+
+25) Post edges : 
+https://developers.facebook.com/docs/graph-api/reference/v2.9/post

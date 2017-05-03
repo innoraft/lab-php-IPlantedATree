@@ -1,5 +1,4 @@
 document.querySelector('input[list="taggable_friends"]').addEventListener('input', onInput);
-
 function onInput(e) {
    var input = e.target,
        val = input.value;

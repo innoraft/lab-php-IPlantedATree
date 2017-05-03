@@ -82,6 +82,12 @@ $loginUrl = $helper->getLoginUrl('http://treeplant123.com/callback5.php', $permi
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!-- <script type="text/jquery" src="scripts/js/homepage.js"></script> -->
-
+<script type="text/jquery">
+	$("btn_plant").hover(function(){
+    	$('#backgroundImage1').css("background-image", "assets/images/forest.jpg");
+    }, function(){
+    $(this).css("background-color", "pink");
+});
+</script>
 </body>
 </html>

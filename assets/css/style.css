@@ -26,7 +26,10 @@
         color: white;
     }
 
-/* homepage*/
+
+
+/* homepage begins*/
+
 #btn_wrapper{
     position: absolute;
     top: 40vh;
@@ -55,6 +58,7 @@
     transition: .4s linear;
 }
 
+
 .navbar	{
 	margin-bottom: 0px;
 	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
@@ -69,6 +73,11 @@
 	background-color: green;
 	color: #fff; 
 }
+
+#btn_plant:hover backgroundImage1{
+	background-image: url('assets/images/forest.jpg');
+}
+
 #backgroundImage1,#backgroundImage2{
 	width:100vw;
 	height: 100vh;
@@ -130,9 +139,13 @@
 
 
 
-/*homepage*/
+/*homepage ends*/
 
 /*Profile page begins*/
+/*#profile_main_body >  .container > img{
+	margin-top : 10px;
+	margin-bottom : 10px;
+}
 
 #profile_main_body{
 	margin-top: 51px;
@@ -153,10 +166,10 @@
 	width:80%;
 	height: 100%;
 	background-color: #ffee68;
-}
+}*/
 
 /*Right side heading*/
-#profile_main_body div:nth-child(2) div:nth-child(1){ 
+/*#profile_upload_area>div:nth-child(1){ 
 	font-family: 'Alegreya', serif;
 	font-weight: 400;
 	font-style: italic;
@@ -165,14 +178,72 @@
 	border: 1px solid #000;
 	height:12%;
 	text-align: center;
+}*/
+/*#profile_form{
+	text-align: center;
 }
-#profile_upload_area div:nth-child(2){
+.outset{
+	border: 10px  outset  red;
+}
 
-}
+*/
+
+/*
+
+#imagePreview{
+background-color: #ccc;
+border-style: ridge;
+border-color: red;
+border-width: 7px;
+}*/
 /*Profile page ends*/
 
+/*Profile page 1.1 begins*/
+#profile_row{
+	margin-top: 51px;
+}
+.border{
+	border:1px solid #000;
+}
+#imageContainer{
+	margin:10px auto 0;
+	width: 400px;
+	height:300px;
+}
+#imagePreview{
+	background-color: #ccc;
+	border-style: ridge;
+	border-color: #f89406;
+	border-width: 7px;
+}
+#profile_heading{
+	font-family: 'Alegreya', serif;
+	font-weight: 400;
+	font-style: italic;
+	width: 100%;
+	font-size: 40px;
+	height:12%;
+	text-align: center;
+}
+#profile_fileUploadButtons input{
+	margin-top:10px;
+	display: inline;
+	color: #000;
+}
 
+#profile_fileUploadButtons{
+	margin-bottom:10px;
+	text-align: center;
+}
 
+#profile_picture{
+	width: 100%;
+}
+.outset{
+	border: 3px outset red;
+}
+
+/*Profile page 1.1 ends*/
 
 
 /*File upload page begins*/

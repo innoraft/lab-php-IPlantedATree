@@ -47,5 +47,5 @@ if ($uploadOk == 0) {
 
 echo '<img src="'.$target_file.'">';
 
-header('location:post.php?fileName='.$fileName.'&description='.$_POST['description']);
+header('location:post.php?fileName='.$fileName.'&description='.urlencode($_POST['description']));
 ?>
