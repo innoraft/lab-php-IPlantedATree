@@ -14,11 +14,11 @@ $fb = new Facebook\Facebook([
   ]);
 
 try {
-  $response = $fb->get('/me?fields=name,first_name,last_name,email',$accessToken);
+  $response = $fb->get('/me?fields=name,id,first_name,last_name,email',$accessToken);
   $requestPicture = $fb->get('me/picture?redirect=false&height=300&width=300',$accessToken);
   $picture = $requestPicture->getGraphUser();
   $userNode = $response->getGraphUser();
-  $friends = $fb->get('/me/taggable_friends?fields=name,id',$accessToken); 
+  $friends = $fb->get('/me/taggable_friends?fields=name,id,picture.width(50)',$accessToken); 
   $friends = $friends->getGraphEdge()->asArray();  
 } catch(Facebook\Exceptions\FacebookResponseException $e) {
   // When Graph returns an error
@@ -29,11 +29,11 @@ try {
   echo 'Facebook SDK returned an error: ' . $e->getMessage();
   exit;
 }
-
+$_SESSION['id'] = $userNode->getId();
+$_SESSION['friends'] = $friends;
 $totalFriends = count($friends);
 $count = 0;
 $friendIDs = '';
-
 
 
 
@@ -61,6 +61,9 @@ $friendIDs = '';
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script type="text/javascript" src="scripts/js/homepage.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Alegreya:400,400i,700,700i" rel="stylesheet">
+    <script type="text/javascript">
+      var tagged_friends = '';
+    </script>
 </head>
 <body>
 
@@ -94,9 +97,9 @@ $friendIDs = '';
   </div>
   <div class="col-md-10 border" style="background-color: #34495e;color:white;height: 100vh;">
     <div id="profile_heading">Upload Your Challenge Photo!</div>
-    <form action="upload.php" method="post" enctype="multipart/form-data">
+    <form id="uploadForm" action="upload.php" method="post" enctype="multipart/form-data">
     <div id="imageContainer">
-      <img id="imagePreview" src="assets/images/placeholder.jpg" alt="your image" width="400" height="300" /><br>
+      <img id="imagePreview" name="imagePreview" src="assets/images/placeholder.jpg" alt="your image" width="400" height="300" /><br>
     </div>
     <div id="profile_fileUploadButtons">
       <label>Select image to Upload</label>
@@ -118,7 +121,9 @@ while($count < $totalFriends){
   else
       $friendIDs =  $friendIDs.$friends[$count]['id'].',';
 
-  echo '<option value="'.$friends[$count]['name'].'">'.$friends[$count]['name']."</option>";
+  // echo '<option id="'.$count.'" value="'.$friends[$count]['name'].'">'.$friends[$count]['name']."</option>";
+
+  echo '<option id="'.$count.'" value="'.$friends[$count]['name'].'"><img src="'.$friends[$count]['picture']['url'].'">'.$friends[$count]['name']."</option>";   
     
 
   $count++;
@@ -129,7 +134,8 @@ echo '</datalist>';
                                                                      
 ?>
       <br>
-      <input type="button" name="save" value="Save">
+      <input type="hidden" id="tagged_friends" name="tagged_friends" value="X">
+      <input type="button" id="save" name="save" value="Save">
       <input type="reset" name="Reset">
       <input id="submit" type="submit" value="Upload Image" name="submit">
     </div>
@@ -137,6 +143,7 @@ echo '</datalist>';
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
+  
   $('#friends').on('input', function() {
     var userText = $(this).val();
 
@@ -144,11 +151,11 @@ $(document).ready(function() {
       if ($(this).val() == userText) {
         var description = $('#description').val();
         var thisVal = $(this).val();
-        console.log(thisVal);
-        console.log(description);
         description += "@"+thisVal;
         $('#description').val(description);
         $('#friends').val('');
+        tagged_friends  += ',' + ($(this).attr('id'));
+        this.remove();
         //alert("Make Ajax call here.");
       }
     })
@@ -176,6 +183,9 @@ $(document).ready(function() {
     else{
         // console.log(document.getElementById("imagePreview").src);
         // console.log(document.getElementById("imagePreview").src == "http://treeplant123.com/assets/images/placeholder.jpg");
+        //$('#tagged_friends').html(tagged_friends);
+        $('#tagged_friends').val(tagged_friends);
+        console.log($('#tagged_friends').val());
         alert('OK');
     }
   });

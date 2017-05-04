@@ -45,7 +45,14 @@ if ($uploadOk == 0) {
     }
 }
 
-echo '<img src="'.$target_file.'">';
+$description = $_POST['description'];
+$id = $_SESSION['id'];
+include('conn.php');
 
-header('location:post.php?tagged_friends='.$_POST['tagged_friends'].'&fileName='.$fileName.'&description='.urlencode($_POST['description']));
+$sql = "INSERT INTO `userContent` values('',$id,'$description','$target_file','')";
+$conn->query($sql);
+$conn->close;
+echo $description;
+var_dump($_POST);
+var_dump($_FILES);
 ?>

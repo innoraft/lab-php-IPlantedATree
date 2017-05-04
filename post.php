@@ -64,24 +64,41 @@ $friendID = $friends[0]['id'];
   $count = 0;
   $friendIDs = '';
    
-  echo ' <input type="text" id="default" list="taggable_friends">';
-  echo '<datalist id="taggable_friends">';
-  echo ' <!--[if lte IE 9]><select data-datalist="taggable_friends"><![endif]-->';
-  while($count < $totalFriends){
-    if($count == 0)
-      $friendIDs =  $friends[$count]['id'].',';
-    else if($count == $totalFriends-1)
-      $friendIDs =  $friendIDs.$friends[$count]['id'];
-    else
-      $friendIDs =  $friendIDs.$friends[$count]['id'].',';
+  // echo ' <input type="text" id="default" list="taggable_friends">';
+  // echo '<datalist id="taggable_friends">';
+  // echo ' <!--[if lte IE 9]><select data-datalist="taggable_friends"><![endif]-->';
+  // while($count < $totalFriends){
+  //   if($count == 0)
+  //     $friendIDs =  $friends[$count]['id'].',';
+  //   else if($count == $totalFriends-1)
+  //     $friendIDs =  $friendIDs.$friends[$count]['id'];
+  //   else
+  //     $friendIDs =  $friendIDs.$friends[$count]['id'].',';
 
-    echo '<option value="'.$friends[$count]['name'].'">'.$friends[$count]['name']."</option>";
+  //   echo '<option value="'.$friends[$count]['name'].'">'.$friends[$count]['name']."</option>";
     
+$tagged_friends = $_GET['tagged_friends'];
+$tagged_friends_length = strlen($tagged_friends);
+$count = 0;
+$count1 = 0;
+while($count < $tagged_friends_length){
+  if($tagged_friends[$count] != ','){
+    //$_SESSION[$tagged_friends[$count]]['id'];
 
-    $count++;
+    if($count1 == 0)
+      $friendIDs =  $_SESSION[$tagged_friends[$count]]['id'].',';
+    else if($count1 == $tagged_friends_length-1)
+      $friendIDs =  $_SESSION[$tagged_friends[$count]]['id'];
+    else
+      $friendIDs =  $_SESSION[$tagged_friends[$count]]['id'].',';
   }
-  echo ' <!--[if lte IE 9]></select><![endif]-->';
-  echo '</datalist>';
+  $count++;
+}
+var_dump($friendIDs);
+  //   $count++;
+  // }
+  // echo ' <!--[if lte IE 9]></select><![endif]-->';
+  // echo '</datalist>';
    $link = "http://treeplant123.com/homepage.php?link=".$id;
   $description = $_GET['description'];
   $description .= "<br>".$link;
@@ -115,7 +132,7 @@ $friendID = $friends[0]['id'];
 //     //,    'picture' => $path
 //   );
 /*post link ends*/
-
+var_dump($_GET['tagged_friends']);
   try{
 $response = $fb->post('/me/feed', $msg,$accessToken);
 $postPhotoRequest = $fb->post('me/photos',$data,$accessToken);
