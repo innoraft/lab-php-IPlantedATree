@@ -50,10 +50,10 @@ function saveContent(){
 	        cache: false,
 	        processData: false
 	    });
-	    console.log(request);
+	    //console.log(request);
 	    request.done(function (response, textStatus, jqXHR){
 	        // Log a message to the console
-	       console.log("Ajax req successful!");
+	       console.log("Save successful!");
 	       console.log(response);
 	    });
 
@@ -65,4 +65,4 @@ function saveContent(){
 	            textStatus, errorThrown
 	        );
 	    });
-	}
+}

@@ -18,8 +18,8 @@ try {
   $requestPicture = $fb->get('me/picture?redirect=false&height=300&width=300',$accessToken);
   $picture = $requestPicture->getGraphUser();
   $userNode = $response->getGraphUser();
-  // $friends = $fb->get('/me/taggable_friends?fields=name,id,picture.width(50)',$accessToken); 
-  // $friends = $friends->getGraphEdge()->asArray();  
+  $friends = $fb->get('/me/taggable_friends?fields=name,id,picture.width(50)',$accessToken); 
+  $friends = $friends->getGraphEdge()->asArray();  
 } catch(Facebook\Exceptions\FacebookResponseException $e) {
   // When Graph returns an error
   echo 'Graph returned an error: ' . $e->getMessage();
@@ -30,10 +30,10 @@ try {
   exit;
 }
 $_SESSION['id'] = $userNode->getId();
-// $_SESSION['friends'] = $friends;
-// $totalFriends = count($friends);
-// $count = 0;
-// $friendIDs = '';
+$_SESSION['friends'] = $friends;
+$totalFriends = count($friends);
+$count = 0;
+$friendIDs = '';
 
 
 
@@ -64,7 +64,6 @@ $_SESSION['id'] = $userNode->getId();
     <script type="text/javascript">
       var tagged_friends = '';
     </script>
-    <script type="text/javascript" src="scripts/js/profile.js"></script>
 </head>
 <body>
 
@@ -98,7 +97,7 @@ $_SESSION['id'] = $userNode->getId();
   </div>
   <div class="col-md-10 border" style="background-color: #34495e;color:white;height: 100vh;">
     <div id="profile_heading">Upload Your Challenge Photo!</div>
-    <form id="uploadForm" action="showPreview.php" method="post" enctype="multipart/form-data">
+    <form id="uploadForm" action="upload.php" method="post" enctype="multipart/form-data">
     <div id="imageContainer">
       <img id="imagePreview" name="imagePreview" src="assets/images/placeholder.jpg" alt="your image" width="400" height="300" /><br>
     </div>
@@ -108,29 +107,29 @@ $_SESSION['id'] = $userNode->getId();
       <input type="hidden" name="fileName" value>
       <label for="message" style="color:#fff;">Image Description</label>
       <textarea style="height: 50px;width:70%;margin:0 auto;resize: none;color:#000;" placeholder="Enter image description here" id="description" name="description"></textarea><br>
-      <!-- <label>Tag friends</label> -->
+      <label>Tag friends</label>
 <?php
    
-// echo ' <input type="text" id="friends" list="taggable_friends">';
-// echo '<datalist id="taggable_friends">';
-// echo ' <!--[if lte IE 9]><select data-datalist="taggable_friends"><![endif]-->';
-// while($count < $totalFriends){
-//   if($count == 0)
-//       $friendIDs =  $friends[$count]['id'].',';
-//   else if($count == $totalFriends-1)
-//       $friendIDs =  $friendIDs.$friends[$count]['id'];
-//   else
-//       $friendIDs =  $friendIDs.$friends[$count]['id'].',';
+echo ' <input type="text" id="friends" list="taggable_friends">';
+echo '<datalist id="taggable_friends">';
+echo ' <!--[if lte IE 9]><select data-datalist="taggable_friends"><![endif]-->';
+while($count < $totalFriends){
+  if($count == 0)
+      $friendIDs =  $friends[$count]['id'].',';
+  else if($count == $totalFriends-1)
+      $friendIDs =  $friendIDs.$friends[$count]['id'];
+  else
+      $friendIDs =  $friendIDs.$friends[$count]['id'].',';
 
-//   // echo '<option id="'.$count.'" value="'.$friends[$count]['name'].'">'.$friends[$count]['name']."</option>";
+  // echo '<option id="'.$count.'" value="'.$friends[$count]['name'].'">'.$friends[$count]['name']."</option>";
 
-//   echo '<option id="'.$count.'" value="'.$friends[$count]['name'].'"><img src="'.$friends[$count]['picture']['url'].'">'.$friends[$count]['name']."</option>";   
+  echo '<option id="'.$count.'" value="'.$friends[$count]['name'].'"><img src="'.$friends[$count]['picture']['url'].'">'.$friends[$count]['name']."</option>";   
     
 
-//   $count++;
-// }
-// echo ' <!--[if lte IE 9]></select><![endif]-->';
-// echo '</datalist>';
+  $count++;
+}
+echo ' <!--[if lte IE 9]></select><![endif]-->';
+echo '</datalist>';
 
                                                                      
 ?>
@@ -138,11 +137,77 @@ $_SESSION['id'] = $userNode->getId();
       <input type="hidden" id="tagged_friends" name="tagged_friends" value="X">
       <input type="button" id="save" name="save" value="Save">
       <input type="reset" name="Reset">
-      <input id="submit" type="submit" value="Proceed" name="submit">
+      <input id="submit" type="submit" value="Upload Image" name="submit">
     </div>
-    </form>
   </div>
 </div>
+<script type="text/javascript">
+$(document).ready(function() {
+  
+  $('#friends').on('input', function() {
+    var userText = $(this).val();
+
+    $("#taggable_friends").find("option").each(function() {
+      if ($(this).val() == userText) {
+        var description = $('#description').val();
+        var thisVal = $(this).val();
+        description += "@"+thisVal;
+        $('#description').val(description);
+        $('#friends').val('');
+        tagged_friends  += ',' + ($(this).attr('id'));
+        this.remove();
+        //alert("Make Ajax call here.");
+      }
+    })
+  })
+});
+
+
+  $("input[type='reset']").on("click", function(event){
+        event.preventDefault();
+        // stops the form from resetting after this function
+        $(this).closest('form').get(0).reset();
+        // resets the form before continuing the function
+        $('#imagePreview').attr('src','assets/images/placeholder.jpg');
+        $('#submit').attr('disabled','true');
+        // executes after the form has been reset
+    });
+
+  $("input[type='submit']").on("click", function(event){
+    // stops the form from resetting after this function
+    if((document.getElementById("imagePreview").src).includes('placeholder.jpg')){
+        alert('You need to select an image first!');
+        event.preventDefault();
+    }
+    // executes after the form has been reset
+    else{
+        // console.log(document.getElementById("imagePreview").src);
+        // console.log(document.getElementById("imagePreview").src == "http://treeplant123.com/assets/images/placeholder.jpg");
+        //$('#tagged_friends').html(tagged_friends);
+        $('#tagged_friends').val(tagged_friends);
+        // console.log($('#tagged_friends').val());
+        // alert('OK');
+    }
+  });
+
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+            
+        reader.onload = function (e) {
+        $('#imagePreview').attr('src', e.target.result);
+        document.getElementById('submit').disabled = false;
+      }
+            
+      reader.readAsDataURL(input.files[0]);
+      /*input.files[0].name; //displays the filename*/
+    }
+  }
+
+  $("#fileToUpload").change(function(){
+          readURL(this);
+  });
+</script>
 
 <!-- 
 <div id="profile_main_body">

@@ -7,7 +7,7 @@ $fb = new Facebook\Facebook([
   'app_secret' => 'ab7e90234d0bb4fbb27d160fb93a4479',
   'default-graph_version' => 'v2.5'
   ]);
-
+var_dump($_GET['tagged_friends']);
   try {
      $profile_request = $fb->get('/me?fields=name,id',$accessToken);
      $profile = $profile_request->getGraphNode()->asArray();
@@ -52,7 +52,7 @@ $fb = new Facebook\Facebook([
     else{}
       //echo "Unsuccessful insertion 2";
   }
-  $conn->close();
+//  mysqli_close($conn);
 
 
 /*getting friend name from temp access token*/
@@ -81,20 +81,30 @@ $tagged_friends = $_GET['tagged_friends'];
 $tagged_friends_length = strlen($tagged_friends);
 $count = 0;
 $count1 = 0;
+// echo "Dumping friends : \n";
+// var_dump($tagged_friends);
+// echo "Dumping friends ended\n";
+// echo "Dumping session begin\n";
+// var_dump($_SESSION);
+// echo "Dumping session end\n";
 while($count < $tagged_friends_length){
   if($tagged_friends[$count] != ','){
     //$_SESSION[$tagged_friends[$count]]['id'];
-
+    echo "Tagged friends ".$tagged_friends[$count]."\n";
     if($count1 == 0)
-      $friendIDs =  $_SESSION[$tagged_friends[$count]]['id'].',';
+      $friendIDs =  $_SESSION['friends'][$tagged_friends[$count]]['id'].',';
     else if($count1 == $tagged_friends_length-1)
-      $friendIDs =  $_SESSION[$tagged_friends[$count]]['id'];
+      $friendIDs =  $friendIDs.$_SESSION['friends'][$tagged_friends[$count]]['id'];
     else
-      $friendIDs =  $_SESSION[$tagged_friends[$count]]['id'].',';
+      $friendIDs =  $friendIDs.$_SESSION['friends'][$tagged_friends[$count]]['id'].',';
+
+    $count1++;
   }
   $count++;
 }
-var_dump($friendIDs);
+// echo "Dumping friendIDs begin\n";
+// var_dump($friendIDs);
+// echo "Dumping friendIDs end\n";
   //   $count++;
   // }
   // echo ' <!--[if lte IE 9]></select><![endif]-->';
@@ -132,7 +142,7 @@ var_dump($friendIDs);
 //     //,    'picture' => $path
 //   );
 /*post link ends*/
-var_dump($_GET['tagged_friends']);
+
   try{
 $response = $fb->post('/me/feed', $msg,$accessToken);
 $postPhotoRequest = $fb->post('me/photos',$data,$accessToken);
@@ -151,6 +161,25 @@ $graphNodePhotoResponse = $postPhotoRequest->getGraphNode()->asArray();
 echo "<img src='".$path."'/>";
 echo 'Posted with id: ' . $graphNode['id'];
 echo '<br>Photo posted with ID : '.$graphNodePhotoResponse['id'];
+if(!isset($_SESSION['saveContentID'])){
+  echo "IN IF \n";
+  $graphNodeId = $graphNode['id'];
+  $sql = "INSERT INTO `userContent` values('',$id,'$description','$path','$graphNodeId')";
+  $conn->query($sql);
+  mysqli_close($conn);
+}
+else{
+  echo "IN ELSE \n";
+  $sql = "UPDATE `userContent` SET post_id='".$graphNode['id']."' WHERE id=".$_SESSION['saveContentID'];
+  if($conn->query($sql)){
+    echo "Successful updation\n";
+    $_SESSION['saveContentID'] = '';
+    unset($_SESSION['saveContentID']);
+  }
+  else
+    echo "Error : ".mysqli_error($conn)."\n";
+  mysqli_close($conn);
+}
 // echo '<a href="' . htmlspecialchars($logoutUrl) . '">Logout</a>';
 ?>
 <script src="scripts/js/datalist.polyfill.min.js"></script>
