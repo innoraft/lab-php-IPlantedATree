@@ -59,10 +59,11 @@ if(!isset($_SESSION['saveContentID'])){
 else{
 	$saveContentID = $_SESSION['saveContentID'];
 	$sql = "UPDATE `userContent` SET description='$description',picture_url='$target_file' WHERE id='$saveContentID'";
-	if($conn->query($sql))
-		echo "Success";
-	else
-		echo "Failure";
+	$conn->query($sql);
+	//if($conn->query($sql))
+		//echo "Success";
+	//else
+		//echo "Failure";
 }
 mysqli_close($conn);
 // echo $description;

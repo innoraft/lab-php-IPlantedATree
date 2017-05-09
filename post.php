@@ -109,14 +109,15 @@ while($count < $tagged_friends_length){
   // }
   // echo ' <!--[if lte IE 9]></select><![endif]-->';
   // echo '</datalist>';
-   $link = "http://treeplant123.com/homepage.php?link=".$id;
+   // $link = "http://treeplant123.com/homepage.php?link=".$id;
+  $link = "https://www.yahoo.com/";
   $description = $_GET['description'];
   $description .= "<br>".$link;
   // $msg = ['message' => $description,'link' => $link ,'tags' => $friendIDs];
-  $msg = ['message' => $description];
+  $msg = ['message' => ' my message','link' => $link,'description' => $description, 'caption' => 'Caption'];
   //$photoToUpload = $_FILES['fileToUpload'];
   //echo $path;
-  $data = ['source'=>$fb->fileToUpload($path),'message' => $description, 'link' => $link];
+  //$data = ['source'=>$fb->fileToUpload($path),'message' => $description, 'link' => $link];
   //echo $path;
   // posting on facebook and tagging friend with it
 // try {
@@ -145,10 +146,10 @@ while($count < $tagged_friends_length){
 
   try{
 $response = $fb->post('/me/feed', $msg,$accessToken);
-$postPhotoRequest = $fb->post('me/photos',$data,$accessToken);
+//$postPhotoRequest = $fb->post('me/photos',$data,$accessToken);
    // $postPhotoRequest = $fb->post('me/feed',$params,$accessToken); 
 $graphNode = $response->getGraphNode();
-$graphNodePhotoResponse = $postPhotoRequest->getGraphNode()->asArray();
+//$graphNodePhotoResponse = $postPhotoRequest->getGraphNode()->asArray();
 } catch(Facebook\Exceptions\FacebookResponseException $e) {
     // When Graph returns an error
     echo 'Graph returned an error: ' . $e->getMessage();
@@ -160,7 +161,7 @@ $graphNodePhotoResponse = $postPhotoRequest->getGraphNode()->asArray();
   }
 echo "<img src='".$path."'/>";
 echo 'Posted with id: ' . $graphNode['id'];
-echo '<br>Photo posted with ID : '.$graphNodePhotoResponse['id'];
+//echo '<br>Photo posted with ID : '.$graphNodePhotoResponse['id'];
 if(!isset($_SESSION['saveContentID'])){
   echo "IN IF \n";
   $graphNodeId = $graphNode['id'];
@@ -182,5 +183,5 @@ else{
 }
 // echo '<a href="' . htmlspecialchars($logoutUrl) . '">Logout</a>';
 ?>
-<script src="scripts/js/datalist.polyfill.min.js"></script>
-<script src="scripts/js/datalist.js"></script>
+<!-- <script src="scripts/js/datalist.polyfill.min.js"></script>
+<script src="scripts/js/datalist.js"></script> -->
