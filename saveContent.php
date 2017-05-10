@@ -70,4 +70,6 @@ mysqli_close($conn);
 // var_dump($_POST);
 // var_dump($_FILES);
 
+//header('location:showPreview.php?contentId='.$_SESSION['saveContentID']."&target_file=".$target_file."&description=".$description);
+header('location:showPreview.php?contentId='.$_SESSION['saveContentID']);
 ?>

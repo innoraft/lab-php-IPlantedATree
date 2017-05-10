@@ -15,11 +15,6 @@ function login(){
 	window.location = 'login5.php';
 }
 
-$(document).ready(function(){
-	$('#save').on('click',function(){
-		saveContent();
-	});
-});
 /*
 var form = document.getElementById('uploadForm');
 var formData = new FormData(form);
@@ -38,6 +33,14 @@ formData.append('username', 'Chris');
 formData.append('username', 'Bob');
 formData.get('username');
 */
+
+/* Save button deleted. So this was removed.
+$(document).ready(function(){
+	$('#save').on('click',function(){
+		saveContent();
+	});
+});
+
 function saveContent(){	
 		var form = document.getElementById('uploadForm');
 		var formData = new FormData(form);
@@ -66,3 +69,4 @@ function saveContent(){
 	        );
 	    });
 }
+*/

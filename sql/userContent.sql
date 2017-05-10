@@ -6,3 +6,5 @@ CREATE TABLE userContent(
 	post_id VARCHAR(100),
 	PRIMARY KEY(id)
 );
+
+ ALTER TABLE userContent MODIFY description varchar(500);

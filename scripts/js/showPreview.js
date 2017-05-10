@@ -1,14 +1,14 @@
 $(document).ready(function(){
 
-	document.getElementById("lbl_tag_friends").style.visibility = "hidden";
-	document.getElementById("friends").style.visibility = "hidden";
+	 document.getElementById("lbl_tag_friends").style.visibility = "hidden";
+	 document.getElementById("friends").style.visibility = "hidden";
 	
 
-	$('#btn_tag_friends').on("click",function(){
-		document.getElementById("lbl_tag_friends").style.visibility = "visible";
-		document.getElementById("friends").style.visibility = "visible";
-		$(this).hide();
-	});
+	// $('#btn_tag_friends').on("click",function(){
+	// 	document.getElementById("lbl_tag_friends").style.visibility = "visible";
+	// 	document.getElementById("friends").style.visibility = "visible";
+	// 	$(this).hide();
+	// });
 
 	$('#friends').on('input', function() {
     	var userText = $(this).val();
@@ -28,8 +28,6 @@ $(document).ready(function(){
     	})
   	});
 
-
-
   	$("input[type='submit']").on("click", function(event){
     	
     	
@@ -42,4 +40,8 @@ $(document).ready(function(){
 
     	
   	});
+
+    // $("#no").click(function(){
+    //     $('#uploadForm').submit();
+    // });
 });

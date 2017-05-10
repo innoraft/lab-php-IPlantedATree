@@ -30,6 +30,7 @@ try {
   exit;
 }
 $_SESSION['id'] = $userNode->getId();
+$logoutUrl = 'https://www.facebook.com/logout.php?next=treeplant123.com&access_token='.$accessToken;
 // $_SESSION['friends'] = $friends;
 // $totalFriends = count($friends);
 // $count = 0;
@@ -55,7 +56,6 @@ $_SESSION['id'] = $userNode->getId();
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
   <link rel="stylesheet" type="text/css" href="assets/css/w3.css">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
@@ -64,6 +64,7 @@ $_SESSION['id'] = $userNode->getId();
     <script type="text/javascript">
       var tagged_friends = '';
     </script>
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <script type="text/javascript" src="scripts/js/profile.js"></script>
 </head>
 <body>
@@ -85,139 +86,40 @@ $_SESSION['id'] = $userNode->getId();
         <li class="active"><a href="#">Profile</a></li>
         <li><a href="#">XYZ</a></li>
         <li><a href="#">About Us</a></li>
+        <li><a href="<?php echo $_SESSION['logoutUrl'];?>">Logout</a></li>
       </ul>
     </div>
   </div>
 </div>
 
 <div  class="row" id="profile_row">
-  <div class="col-md-2 border" style="background-color: #52b3d9;height: 100vh;padding-right: 0px;">
+  <div class="col-md-2 border profile-col-1">
     <?php echo "<img id='profile_picture' class='outset' src='".$picture['url']."'/>";
-          echo 'Hello ' . $userNode->getName() . '!';
+          echo '<div style="color:#fff;margin-top:10px;font-size:20px;">Welcome<br> ' . $userNode->getName() . '!</div>';
     ?>
   </div>
-  <div class="col-md-10 border" style="background-color: #34495e;color:white;height: 100vh;">
+  <div class="col-md-10 border-negative profile-col-2">
     <div id="profile_heading">Upload Your Challenge Photo!</div>
-    <form id="uploadForm" action="showPreview.php" method="post" enctype="multipart/form-data">
+    <form id="uploadForm" action="saveContent.php" method="post" enctype="multipart/form-data">
     <div id="imageContainer">
       <img id="imagePreview" name="imagePreview" src="assets/images/placeholder.jpg" alt="your image" width="400" height="300" /><br>
     </div>
-    <div id="profile_fileUploadButtons">
+    <div id="profile_fileUploadButtons"><br>
       <label>Select image to Upload</label>
-      <input type="file" name="fileToUpload" id="fileToUpload"><br>
+      <input type="file" name="fileToUpload" id="fileToUpload"><br><br>
       <input type="hidden" name="fileName" value>
-      <label for="message" style="color:#fff;">Image Description</label>
-      <textarea style="height: 50px;width:70%;margin:0 auto;resize: none;color:#000;" placeholder="Enter image description here" id="description" name="description"></textarea><br>
+      <label for="message">Image Description</label><br>
+      <textarea placeholder="Enter image description here" id="description" name="description"></textarea><br>
       <!-- <label>Tag friends</label> -->
-<?php
-   
-// echo ' <input type="text" id="friends" list="taggable_friends">';
-// echo '<datalist id="taggable_friends">';
-// echo ' <!--[if lte IE 9]><select data-datalist="taggable_friends"><![endif]-->';
-// while($count < $totalFriends){
-//   if($count == 0)
-//       $friendIDs =  $friends[$count]['id'].',';
-//   else if($count == $totalFriends-1)
-//       $friendIDs =  $friendIDs.$friends[$count]['id'];
-//   else
-//       $friendIDs =  $friendIDs.$friends[$count]['id'].',';
-
-//   // echo '<option id="'.$count.'" value="'.$friends[$count]['name'].'">'.$friends[$count]['name']."</option>";
-
-//   echo '<option id="'.$count.'" value="'.$friends[$count]['name'].'"><img src="'.$friends[$count]['picture']['url'].'">'.$friends[$count]['name']."</option>";   
-    
-
-//   $count++;
-// }
-// echo ' <!--[if lte IE 9]></select><![endif]-->';
-// echo '</datalist>';
-
-                                                                     
-?>
       <br>
       <input type="hidden" id="tagged_friends" name="tagged_friends" value="X">
-      <input type="button" id="save" name="save" value="Save">
-      <input type="reset" name="Reset">
-      <input id="submit" type="submit" value="Proceed" name="submit">
+      <!-- <input type="button" id="save" name="save" value="Save"> -->
+      <input type="reset" class="myButton" name="Reset">
+      <input id="submit" class="myButton" type="submit" value="Save" name="submit">
     </div>
     </form>
   </div>
 </div>
-
-<!-- 
-<div id="profile_main_body">
-  <div class="">
-    <?php //echo "<img class='outset' style='width:100%;height:40%;' src='".$picture['url']."'/>";
-         // echo 'Hello ' . $userNode->getName() . '!';
-    ?>
-  </div>
-  <div id="profile_upload_area">
-    <div>Upload Your Challenge Photo!</div>
-    <div id="profile_form"> 
-      <form action="upload.php" method="post" enctype="multipart/form-data">
-        <div class="row">
-          <div class="col-md-8">
-            <img id="imagePreview" src="assets/images/placeholder.jpg" alt="your image" width="400" height="300" style="display: inline;" /><br>
-            <label>Select image to Upload</label>
-            <input type="file" name="fileToUpload" id="fileToUpload">
-            <input type="hidden" name="fileName" value>
-            <input type="reset" name="Reset">
-            <input id="submit" type="submit" value="Upload Image" name="submit">
-          </div>
-          <div class="col-md-4" style="background-color: red;">
-            <label for="message">Image Description</label>
-            <textarea style="height: 200px;resize: none;" placeholder="Enter image description here" name="description"></textarea>
-          </div>
-        </div>
-      </form>
-      <script type="text/javascript">
-        $("input[type='reset']").on("click", function(event){
-          event.preventDefault();
-          // stops the form from resetting after this function
-          $(this).closest('form').get(0).reset();
-          // resets the form before continuing the function
-          $('#imagePreview').attr('src','assets/images/placeholder.jpg');
-          $('#submit').attr('disabled','true');
-          // executes after the form has been reset
-          });
-
-        $("input[type='submit']").on("click", function(event){
-          // stops the form from resetting after this function
-          if((document.getElementById("imagePreview").src).includes('placeholder.jpg')){
-                alert('You need to select an image first!');
-                event.preventDefault();
-            }
-          // executes after the form has been reset
-            
-            else{
-              // console.log(document.getElementById("imagePreview").src);
-              // console.log(document.getElementById("imagePreview").src == "http://treeplant123.com/assets/images/placeholder.jpg");
-              alert('OK');
-            }
-          });
-
-        function readURL(input) {
-          if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            
-            reader.onload = function (e) {
-              $('#imagePreview').attr('src', e.target.result);
-              document.getElementById('submit').disabled = false;
-            }
-            
-            reader.readAsDataURL(input.files[0]);
-            /*input.files[0].name; //displays the filename*/
-          }
-        }
-
-        $("#fileToUpload").change(function(){
-          readURL(this);
-        });
-      </script>
-    </div>
-  </div>
-</div> -->
-<!-- <a href="http://treeplant123.com/post.php">POST</a> -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>

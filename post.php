@@ -112,7 +112,7 @@ while($count < $tagged_friends_length){
    // $link = "http://treeplant123.com/homepage.php?link=".$id;
   $link = "https://www.yahoo.com/";
   $description = $_GET['description'];
-  $description .= "<br>".$link;
+  //$description .= "<br>".$link;
   // $msg = ['message' => $description,'link' => $link ,'tags' => $friendIDs];
   $msg = ['message' => ' my message','link' => $link,'description' => $description, 'caption' => 'Caption'];
   //$photoToUpload = $_FILES['fileToUpload'];

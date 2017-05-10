@@ -48,18 +48,22 @@ $(document).ready(function() {
   function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
-            
+      
         reader.onload = function (e) {
         $('#imagePreview').attr('src', e.target.result);
         document.getElementById('submit').disabled = false;
+        //document.getElementById('imagePreview').className +=' fadeIn';
+        $('#imagePreview').addClass('fadeIn');
       }
             
       reader.readAsDataURL(input.files[0]);
       /*input.files[0].name; //displays the filename*/
+
     }
   }
 
   $("#fileToUpload").change(function(){
+          $('#imagePreview').removeClass('fadeIn');
           readURL(this);
   });
 
