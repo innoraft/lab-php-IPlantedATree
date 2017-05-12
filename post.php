@@ -11,7 +11,7 @@ var_dump($_GET['tagged_friends']);
   try {
      $profile_request = $fb->get('/me?fields=name,id',$accessToken);
      $profile = $profile_request->getGraphNode()->asArray();
-    $friends = $fb->get('/me/taggable_friends?fields=name,id',$accessToken); 
+    $friends = $fb->get('/me/taggable_friends?fields=name,id,limit=1000',$accessToken); 
     $friends = $friends->getGraphEdge()->asArray();
   } catch(Facebook\Exceptions\FacebookResponseException $e) {
     // When Graph returns an error
@@ -38,22 +38,6 @@ var_dump($_GET['tagged_friends']);
   else{}
     //echo "Unsuccessful insertion";
   $i = 0;
-  $sql = "";
-  for($i=0 ; $i<$totalFriends ; $i++){
-    $friendID = $friends[$i]['id'];
-    $link = "http://treeplant.com/visit.php?link=".$id.'_'.$friendID;
-    if($i == 0)
-      $sql = "INSERT INTO `invitation` values('$id','$friendID',0,'$link')";
-    else
-      $sql .= ",('$id','$friendID',0,'$link')";
-
-    if($conn->query($sql)){}
-      //echo "Successful insertion 2";
-    else{}
-      //echo "Unsuccessful insertion 2";
-  }
-//  mysqli_close($conn);
-
 
 /*getting friend name from temp access token*/
 $friendID = $friends[0]['id'];
@@ -110,11 +94,12 @@ while($count < $tagged_friends_length){
   // echo ' <!--[if lte IE 9]></select><![endif]-->';
   // echo '</datalist>';
    // $link = "http://treeplant123.com/homepage.php?link=".$id;
-  $link = "https://www.yahoo.com/";
+  $link = "https://treeplant123.com/";
   $description = $_GET['description'];
+  $tags = '109295572962564,102901210272199';
   //$description .= "<br>".$link;
   // $msg = ['message' => $description,'link' => $link ,'tags' => $friendIDs];
-  $msg = ['message' => ' my message','link' => $link,'description' => $description, 'caption' => 'Caption'];
+  $msg = ['message' => ' my message','link' => $link,'description' => $description, 'caption' => 'Caption' , 'tags' => $tags];
   //$photoToUpload = $_FILES['fileToUpload'];
   //echo $path;
   //$data = ['source'=>$fb->fileToUpload($path),'message' => $description, 'link' => $link];

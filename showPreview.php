@@ -46,6 +46,10 @@ $friendIDs = '';
 <head>
   <title>TreePlant123</title>
   <meta charset="utf-8">
+  <meta property="og:url"                content="http://treeplant123.com/showPreview.php" />
+  <meta property="og:title"              content="<?php echo "Planting trees with my friends!!!";?>" />
+  <meta property="og:description"        content="<?php echo $description;?>" />
+  <meta property="og:image"              content="<?php echo "www.treeplant123.com/".$target_file;?>" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
