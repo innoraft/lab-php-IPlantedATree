@@ -9,12 +9,7 @@ session_start();?>
 <?php
 //$state = $_SESSION['state'] = md5(uniqid(rand(), TRUE));
 require_once __DIR__ . '/vendor/autoload.php';
-$fb = new Facebook\Facebook([
-    'app_id' => '1867029653544963',
-  'app_secret' => 'ab7e90234d0bb4fbb27d160fb93a4479',
-  'default-graph_version' => 'v2.5'
-        // ,'state' => $state
-  ]);
+include('assets/config/fbCredentials.php');
 
 $helper = $fb->getRedirectLoginHelper();
 
@@ -46,7 +41,7 @@ if (!isset($accessToken)) {
 else{
   // Logged in!
   $_SESSION['facebook_access_token'] = (string) $accessToken;
-  $_SESSION['logoutUrl'] = $helper->getLogoutUrl($accessToken,'http://treeplant123.com/homepage.php'); 
+  $_SESSION['logoutUrl'] = $helper->getLogoutUrl($accessToken,'http://treeplant123.com/index.php'); 
   header('location:http://treeplant123.com/profile.php');
   // Now you can redirect to another page and use the
   // access token from $_SESSION['facebook_access_token']

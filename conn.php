@@ -1,10 +1,7 @@
 <?php
 
-$servername = "localhost";
-$username = "root";
-$password = "1234";
-$db_name = "treeplant";
+include('assets/config/databaseConfig.php');
 
-$conn = new mysqli($servername, $username, $password, $db_name);
+$conn = new mysqli($servername, $username, $password, $dbName);
 
 ?>

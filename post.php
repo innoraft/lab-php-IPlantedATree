@@ -2,11 +2,7 @@
 session_start();
 require_once __DIR__ . '/vendor/autoload.php';
 $accessToken =  $_SESSION["facebook_access_token"];
-$fb = new Facebook\Facebook([
-    'app_id' => '1867029653544963',
-  'app_secret' => 'ab7e90234d0bb4fbb27d160fb93a4479',
-  'default-graph_version' => 'v2.5'
-  ]);
+include('assets/config/fbCredentials.php');
 var_dump($_GET['tagged_friends']);
   try {
      $profile_request = $fb->get('/me?fields=name,id',$accessToken);

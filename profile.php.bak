@@ -65,7 +65,7 @@ $logoutUrl = 'https://www.facebook.com/logout.php?next=treeplant123.com&access_t
     </div>
     <div class="collapse navbar-collapse myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="index.php">Home</a></li>
+        <li><a href="homepage.php">Home</a></li>
         <li class="active"><a href="#">Profile</a></li>
         <li><a href="aboutus.php">About Us</a></li>
         <li><a href="<?php echo $_SESSION['logoutUrl'];?>">Logout</a></li>
@@ -90,8 +90,8 @@ $logoutUrl = 'https://www.facebook.com/logout.php?next=treeplant123.com&access_t
         <textarea placeholder="Enter image description here" id="description" name="description"></textarea><br>
         <br>
         <input type="hidden" id="tagged_friends" name="tagged_friends" value="X">
-        <input type="reset" class="btn btn-primary btn-lg" name="Reset">
-        <input id="submit" class="btn btn-primary btn-lg" type="submit" value="Save" name="submit">
+        <input type="reset" class="myButton" name="Reset">
+        <input id="submit" class="myButton" type="submit" value="Save" name="submit">
       </div>
       </form>
     </div>

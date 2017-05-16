@@ -4,22 +4,15 @@ session_start();
 <?php
 
 require_once __DIR__ . '/vendor/autoload.php';
+include('assets/config/fbCredentials.php');
 $accessToken =  $_SESSION["facebook_access_token"];
 
-
-$fb = new Facebook\Facebook([
-    'app_id' => '1867029653544963',
-  'app_secret' => 'ab7e90234d0bb4fbb27d160fb93a4479',
-  'default-graph_version' => 'v2.5'
-  ]);
 
 try {
   $response = $fb->get('/me?fields=first_name',$accessToken);
   $requestPicture = $fb->get('me/picture?redirect=false&height=300&width=300',$accessToken);
   $picture = $requestPicture->getGraphUser();
   $userNode = $response->getGraphUser();
-  // $friends = $fb->get('/me/taggable_friends?fields=name,id,picture.width(50)',$accessToken); 
-  // $friends = $friends->getGraphEdge()->asArray();  
 } catch(Facebook\Exceptions\FacebookResponseException $e) {
   // When Graph returns an error
   echo 'Graph returned an error: ' . $e->getMessage();
@@ -31,22 +24,6 @@ try {
 }
 $_SESSION['id'] = $userNode->getId();
 $logoutUrl = 'https://www.facebook.com/logout.php?next=treeplant123.com&access_token='.$accessToken;
-// $_SESSION['friends'] = $friends;
-// $totalFriends = count($friends);
-// $count = 0;
-// $friendIDs = '';
-
-
-
-// echo "<img src='".$picture['url']."'/>";
-// echo 'Logged in as ' . $userNode->getName();
-// echo 'ID : ' . $userNode->getID();
-// echo 'Email : ' . $userNode->getEmail();
-// echo 'First name : ' . $userNode->getFirstName();
-// echo 'Last name : ' . $userNode->getLastName();
-// echo '<br><br><br>';
-// echo $userNode; 
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -83,14 +60,10 @@ $logoutUrl = 'https://www.facebook.com/logout.php?next=treeplant123.com&access_t
   			font-weight: bold;
   			margin-bottom: 40px;
   			text-align: center;
-  			/*text-shadow: 0px 10px 8px rgba(138, 103, 51, 1);*/
-  			/*text-shadow: 0px 5px 1px rgba(28, 28, 28, 1);*/
 		}
 
 		.arch span {
  			-webkit-background-clip: text;
-  			/*color: transparent;
-  			background-image: linear-gradient(rgb(0,255,0), rgb(0,100,0));*/
   			color : #000;
   			text-shadow: 3px 3px 3px #fff;
 		}
@@ -125,7 +98,7 @@ $logoutUrl = 'https://www.facebook.com/logout.php?next=treeplant123.com&access_t
     </div>
     <div class="collapse navbar-collapse myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="homepage.php">Home</a></li>
+        <li><a href="index.php">Home</a></li>
         <li><a href="profile.php">Profile</a></li>
         <li><a href="aboutus.php">About Us</a></li>
         <li><a href="<?php echo $_SESSION['logoutUrl'];?>">Logout</a></li>

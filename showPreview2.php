@@ -5,6 +5,7 @@ session_start();
 require_once __DIR__ . '/vendor/autoload.php';
 
 include('conn.php');
+include('assets/config/fbCredentials.php');
 $contentId = $_GET['contentId'];
 $sql = "SELECT * FROM `userContent` WHERE id='".$contentId."'";
 $rs = $conn->query($sql);
@@ -14,11 +15,6 @@ $target_file = $row['picture_url'];
 
 $accessToken =  $_SESSION["facebook_access_token"];
 
-$fb = new Facebook\Facebook([
-    'app_id' => '1867029653544963',
-  'app_secret' => 'ab7e90234d0bb4fbb27d160fb93a4479',
-  'default-graph_version' => 'v2.5'
-  ]);
 
 try {
   $response = $fb->get('/me?fields=name,id,first_name,last_name,email',$accessToken);
@@ -59,7 +55,7 @@ $friendIDs = '';
   <link rel="stylesheet" type="text/css" href="assets/css/w3.css">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-    <script type="text/javascript" src="scripts/js/homepage.js"></script>
+    <!-- <script type="text/javascript" src="scripts/js/homepage.js"></script> -->
     <link href="https://fonts.googleapis.com/css?family=Alegreya:400,400i,700,700i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Rancho" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -179,7 +175,7 @@ $friendIDs = '';
     </div>
     <div class="collapse navbar-collapse myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="homepage.php">Home</a></li>
+        <li><a href="index.php">Home</a></li>
         <li><a href="profile.php">Profile</a></li>
         <li><a href="aboutus.php">About Us</a></li>
         <li><a href="<?php echo $_SESSION['logoutUrl'];?>">Logout</a></li>
@@ -189,13 +185,7 @@ $friendIDs = '';
 </div>
 
 <div  class="row" id="profile_row">
-  <!-- <div class="col-md-2 border profile-col-1">
-    <?php //echo "<img id='profile_picture' class='outset' src='".$picture['url']."'/>";
-          //echo '<div style="color:#fff;margin-top:33px;font-size:20px;text-align:center;">Welcome<br><span>' . $userNode->getName() . '!</span></div>';
-    ?>
-  </div> -->
   <div class="col-md-12 border-negative profile-col-2 rem-padding-right">
-    <!-- <div id="profile_heading">Upload Your Challenge Photo!</div> -->
     <div id="main-container" class="expandUp">
       <span>Choose your image for uploading</span>
     <form id="uploadForm" name="uploadForm" action="upload.php" method="POST"> <!-- Upload form begins-->
@@ -226,8 +216,6 @@ while($count < $totalFriends){
   else
       $friendIDs =  $friendIDs.$friends[$count]['id'].',';
 
-  // echo '<option id="'.$count.'" value="'.$friends[$count]['name'].'">'.$friends[$count]['name']."</option>";
-
   echo '<option id="'.$count.'" value="'.$friends[$count]['name'].'"><img src="'.$friends[$count]['picture']['url'].'">'.$friends[$count]['name']."</option>";   
     
   $count++;
@@ -237,9 +225,7 @@ echo '</datalist>';
 ?>
       <br>
 <input type="hidden" id="tagged_friends"  name="tagged_friends" value="X">
-      <!-- <input class="btn myButton" id="showPreview-submit" type="submit" value="Upload Image"> -->
       <button id="showPreview-submit" type="button"  class="btn btn-primary btn-lg btn-custom" onclick="formSubmit()">
-      <!-- <input  id="showPreview-submit" type="submit" value="Share" style="display: none" > -->
 <i class="fa fa-facebook fa-lg" aria-hidden="true" style="margin-right: 20px;"></i><div style="height:100%;display: inline;border-right:1px solid #000;margin-right: 10px;"></div>Share</button>
       
     </form>
@@ -250,7 +236,6 @@ echo '</datalist>';
 </div>
 
 <!-- Trigger/Open The Modal -->
-<!-- <button id="myBtn">Upload</button> -->
 
 <!-- The Modal -->
 <div id="myModal" class="modal">

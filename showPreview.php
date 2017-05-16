@@ -3,6 +3,7 @@ session_start();
 require_once __DIR__ . '/vendor/autoload.php';
 
 include('conn.php');
+include('assets/config/fbCredentials.php');
 $contentId = $_GET['contentId'];
 $sql = "SELECT * FROM `userContent` WHERE id='".$contentId."'";
 $rs = $conn->query($sql);
@@ -12,11 +13,6 @@ $target_file = $row['picture_url'];
 
 $accessToken =  $_SESSION["facebook_access_token"];
 
-$fb = new Facebook\Facebook([
-    'app_id' => '1867029653544963',
-  'app_secret' => 'ab7e90234d0bb4fbb27d160fb93a4479',
-  'default-graph_version' => 'v2.5'
-  ]);
 
 try {
   $response = $fb->get('/me?fields=name,id,first_name,last_name,email',$accessToken);
@@ -204,8 +200,6 @@ while($count < $totalFriends){
   else
       $friendIDs =  $friendIDs.$friends[$count]['id'].',';
 
-  // echo '<option id="'.$count.'" value="'.$friends[$count]['name'].'">'.$friends[$count]['name']."</option>";
-
   echo '<option id="'.$count.'" value="'.$friends[$count]['name'].'"><img src="'.$friends[$count]['picture']['url'].'">'.$friends[$count]['name']."</option>";   
     
   $count++;
@@ -217,15 +211,13 @@ echo '</datalist>';
       <input type="hidden" id="tagged_friends" name="tagged_friends" value="X">
       <input class="btn myButton" id="showPreview-submit" type="submit" value="Upload Image">
     </form>
-    <!-- <button style="color:#000;" id="btn_tag_friends">Tag friends</button> -->
-    <!-- Upload form ends-->
+ 
     </div>
     <button id="myBtn" class="myButton" style="position: absolute;top: 550px;left: 500px;">Upload</button>
   </div>
 </div>
 
 <!-- Trigger/Open The Modal -->
-<!-- <button id="myBtn">Upload</button> -->
 
 <!-- The Modal -->
 <div id="myModal" class="modal">
