@@ -71,5 +71,5 @@ mysqli_close($conn);
 // var_dump($_FILES);
 
 //header('location:showPreview.php?contentId='.$_SESSION['saveContentID']."&target_file=".$target_file."&description=".$description);
-header('location:showPreview.php?contentId='.$_SESSION['saveContentID']);
+header('location:showPreview2.php?contentId='.$_SESSION['saveContentID']);
 ?>

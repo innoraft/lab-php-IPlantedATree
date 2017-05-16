@@ -1,5 +1,7 @@
 <?php
 session_start();
+?>
+<?php
 require_once __DIR__ . '/vendor/autoload.php';
 
 include('conn.php');
@@ -39,30 +41,34 @@ $_SESSION['friends'] = $friends;
 $totalFriends = count($friends);
 $count = 0;
 $friendIDs = '';
-?>
 
+?>
 <!DOCTYPE html>
 <html>
 <head>
   <title>TreePlant123</title>
   <meta charset="utf-8">
-  <meta property="og:url"                content="http://treeplant123.com/showPreview.php" />
+  <meta property="og:url"                content="http://treeplant123.com/showPreview2.php<?php echo $contentId?>" />
   <meta property="og:title"              content="<?php echo "Planting trees with my friends!!!";?>" />
   <meta property="og:description"        content="<?php echo $description;?>" />
   <meta property="og:image"              content="<?php echo "www.treeplant123.com/".$target_file;?>" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="assets/css/w3.css">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-  <script type="text/javascript" src="scripts/js/homepage.js"></script>
-  <link href="https://fonts.googleapis.com/css?family=Alegreya:400,400i,700,700i" rel="stylesheet">
-  <script type="text/javascript">
+    <script type="text/javascript" src="scripts/js/homepage.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Alegreya:400,400i,700,700i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rancho" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <script type="text/javascript">
       var tagged_friends = '';
-  </script>
-  <script type="text/javascript" src="scripts/js/showPreview.js"></script>
-<style>
+    </script>
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <script type="text/javascript" src="scripts/js/homepage.js"></script>
+    <script type="text/javascript" src="scripts/js/showPreview.js"></script>
+    <style>
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
@@ -140,12 +146,16 @@ $friendIDs = '';
 #showPreview-submit{
   visibility: hidden;
 }
-
+.btn-custom{
+      margin-top: 20px;
+      border-radius: 0px;
+    }
 </style>
-
 
 </head>
 <body>
+
+
 <div class="navbar navbar-inverse navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
@@ -158,9 +168,8 @@ $friendIDs = '';
     </div>
     <div class="collapse navbar-collapse myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Home</a></li>
-        <li class="active"><a href="#">Profile</a></li>
-        <li><a href="#">XYZ</a></li>
+        <li><a href="homepage.php">Home</a></li>
+        <li><a href="#">Profile</a></li>
         <li><a href="aboutus.php">About Us</a></li>
         <li><a href="<?php echo $_SESSION['logoutUrl'];?>">Logout</a></li>
       </ul>
@@ -169,16 +178,18 @@ $friendIDs = '';
 </div>
 
 <div  class="row" id="profile_row">
-  <div class="col-md-2 border profile-col-1" style="color: #fff;height: 100vh;padding-right: 0px;">
-    <?php echo "<img id='profile_picture' class='outset' src='".$picture['url']."'/>";
-          echo 'Welcome ' . $userNode->getName() . '!';
+  <!-- <div class="col-md-2 border profile-col-1">
+    <?php //echo "<img id='profile_picture' class='outset' src='".$picture['url']."'/>";
+          //echo '<div style="color:#fff;margin-top:33px;font-size:20px;text-align:center;">Welcome<br><span>' . $userNode->getName() . '!</span></div>';
     ?>
-  </div>
-  <div class="col-md-10 border-negative profile-col-2" style="text-align: center;">
-    <div id="profile_heading" style="position: relative;">Ready to POST?</div>
+  </div> -->
+  <div class="col-md-12 border-negative profile-col-2 rem-padding-right">
+    <!-- <div id="profile_heading">Upload Your Challenge Photo!</div> -->
+    <div id="main-container" class="expandUp">
+      <span>Choose your image for uploading</span>
     <form id="uploadForm" action="upload.php" method="POST"> <!-- Upload form begins-->
       <div id="imageContainer">
-        <img id="imagePreview" name="imagePreview" src="<?php echo $target_file; ?>" alt="your image" width="400" height="300" /><br>
+        <img id="imagePreview" name="imagePreview" src="<?php echo $target_file; ?>" alt="your image" width="400" height="300" />
       </div>
       <div id="profile_fileUploadButtons">
         <?php if(!empty($description)){ ?>
@@ -214,13 +225,13 @@ echo ' <!--[if lte IE 9]></select><![endif]-->';
 echo '</datalist>';                                                                 
 ?>
       <br>
-      <input type="hidden" id="tagged_friends" name="tagged_friends" value="X">
-      <input class="btn myButton" id="showPreview-submit" type="submit" value="Upload Image">
+<input type="hidden" id="tagged_friends" name="tagged_friends" value="X">
+      <!-- <input class="btn myButton" id="showPreview-submit" type="submit" value="Upload Image"> -->
+      <input class="btn myButton" id="showPreview-submit" type="submit" value="Share" >
     </form>
-    <!-- <button style="color:#000;" id="btn_tag_friends">Tag friends</button> -->
-    <!-- Upload form ends-->
     </div>
-    <button id="myBtn" class="myButton" style="position: absolute;top: 550px;left: 500px;">Upload</button>
+    <button id="myBtn" type="button" class="btn btn-primary btn-lg btn-custom" style="margin-bottom:20px;">
+<i class="fa fa-facebook fa-lg" aria-hidden="true" style="margin-right: 20px;"></i><div style="height:100%;display: inline;border-right:1px solid #000;margin-right: 10px;"></div>Share</button>
   </div>
 </div>
 
@@ -285,6 +296,7 @@ document.getElementById('no').onclick = function(){
   document.getElementById('uploadForm').submit();
 };
 </script>
+
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>

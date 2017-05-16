@@ -43,7 +43,8 @@ $loginUrl = $helper->getLoginUrl('http://treeplant123.com/callback5.php', $permi
       <ul class="nav navbar-nav navbar-right">
         <li class="active"><a href="#">Home</a></li>
         <li><a href="profile.php">Profile</a></li>
-        <li><a href="aboutus.php">About Us</a></li>
+        <li><a href="#">XYZ</a></li>
+        <li><a href="#">About Us</a></li>
       </ul>
     </div>
   </div>

@@ -96,7 +96,7 @@ while($count < $tagged_friends_length){
    // $link = "http://treeplant123.com/homepage.php?link=".$id;
   $link = "https://treeplant123.com/";
   $description = $_GET['description'];
-  $tags = '109295572962564,102901210272199';
+  $tags = $friendIDs;
   //$description .= "<br>".$link;
   // $msg = ['message' => $description,'link' => $link ,'tags' => $friendIDs];
   $msg = ['message' => ' my message','link' => $link,'description' => $description, 'caption' => 'Caption' , 'tags' => $tags];
@@ -144,18 +144,18 @@ $graphNode = $response->getGraphNode();
     echo 'Facebook SDK returned an error: ' . $e->getMessage();
     exit;
   }
-echo "<img src='".$path."'/>";
-echo 'Posted with id: ' . $graphNode['id'];
+// echo "<img src='".$path."'/>";
+// echo 'Posted with id: ' . $graphNode['id'];
 //echo '<br>Photo posted with ID : '.$graphNodePhotoResponse['id'];
 if(!isset($_SESSION['saveContentID'])){
-  echo "IN IF \n";
+  // echo "IN IF \n";
   $graphNodeId = $graphNode['id'];
   $sql = "INSERT INTO `userContent` values('',$id,'$description','$path','$graphNodeId')";
   $conn->query($sql);
   mysqli_close($conn);
 }
 else{
-  echo "IN ELSE \n";
+  // echo "IN ELSE \n";
   $sql = "UPDATE `userContent` SET post_id='".$graphNode['id']."' WHERE id=".$_SESSION['saveContentID'];
   if($conn->query($sql)){
     echo "Successful updation\n";
@@ -166,6 +166,8 @@ else{
     echo "Error : ".mysqli_error($conn)."\n";
   mysqli_close($conn);
 }
+
+header('location:http://treeplant123.com/thankyou.php');
 // echo '<a href="' . htmlspecialchars($logoutUrl) . '">Logout</a>';
 ?>
 <!-- <script src="scripts/js/datalist.polyfill.min.js"></script>

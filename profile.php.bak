@@ -61,7 +61,6 @@ $logoutUrl = 'https://www.facebook.com/logout.php?next=treeplant123.com&access_t
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script type="text/javascript" src="scripts/js/homepage.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Alegreya:400,400i,700,700i" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Rancho" rel="stylesheet">
     <script type="text/javascript">
       var tagged_friends = '';
     </script>
@@ -83,9 +82,10 @@ $logoutUrl = 'https://www.facebook.com/logout.php?next=treeplant123.com&access_t
     </div>
     <div class="collapse navbar-collapse myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="homepage.php">Home</a></li>
+        <li><a href="#">Home</a></li>
         <li class="active"><a href="#">Profile</a></li>
-        <li><a href="aboutus.php">About Us</a></li>
+        <li><a href="#">XYZ</a></li>
+        <li><a href="#">About Us</a></li>
         <li><a href="<?php echo $_SESSION['logoutUrl'];?>">Logout</a></li>
       </ul>
     </div>
@@ -93,34 +93,31 @@ $logoutUrl = 'https://www.facebook.com/logout.php?next=treeplant123.com&access_t
 </div>
 
 <div  class="row" id="profile_row">
-  <!-- <div class="col-md-2 border profile-col-1">
-    <?php //echo "<img id='profile_picture' class='outset' src='".$picture['url']."'/>";
-          //echo '<div style="color:#fff;margin-top:33px;font-size:20px;text-align:center;">Welcome<br><span>' . $userNode->getName() . '!</span></div>';
+  <div class="col-md-2 border profile-col-1">
+    <?php echo "<img id='profile_picture' class='outset' src='".$picture['url']."'/>";
+          echo '<div style="color:#fff;margin-top:33px;font-size:20px;text-align:center;">Welcome<br><span>' . $userNode->getName() . '!</span></div>';
     ?>
-  </div> -->
-  <div class="col-md-12 border-negative profile-col-2 rem-padding-right">
-    <!-- <div id="profile_heading">Upload Your Challenge Photo!</div> -->
-    <div id="main-container" class="expandUp">
-      <span>Choose your image for uploading</span>
-      <form id="uploadForm" action="saveContent.php" method="post" enctype="multipart/form-data">
-      <div id="imageContainer">
-        <img id="imagePreview" name="imagePreview" src="assets/images/placeholder.jpg" alt="your image" width="400" height="300" /><br>
-      </div>
-      <div id="profile_fileUploadButtons"><br>
-        <label>Select image to Upload</label>
-        <input type="file" name="fileToUpload" id="fileToUpload"><br><br>
-        <input type="hidden" name="fileName" value>
-        <label for="message">Add an Image Description</label><br>
-        <textarea placeholder="Enter image description here" id="description" name="description"></textarea><br>
-        <!-- <label>Tag friends</label> -->
-        <br>
-        <input type="hidden" id="tagged_friends" name="tagged_friends" value="X">
-        <!-- <input type="button" id="save" name="save" value="Save"> -->
-        <input type="reset" class="myButton" name="Reset">
-        <input id="submit" class="myButton" type="submit" value="Save" name="submit">
-      </div>
-      </form>
+  </div>
+  <div class="col-md-10 border-negative profile-col-2">
+    <div id="profile_heading">Upload Your Challenge Photo!</div>
+    <form id="uploadForm" action="saveContent.php" method="post" enctype="multipart/form-data">
+    <div id="imageContainer">
+      <img id="imagePreview" name="imagePreview" src="assets/images/placeholder.jpg" alt="your image" width="400" height="300" /><br>
     </div>
+    <div id="profile_fileUploadButtons"><br>
+      <label>Select image to Upload</label>
+      <input type="file" name="fileToUpload" id="fileToUpload"><br><br>
+      <input type="hidden" name="fileName" value>
+      <label for="message">Image Description</label><br>
+      <textarea placeholder="Enter image description here" id="description" name="description"></textarea><br>
+      <!-- <label>Tag friends</label> -->
+      <br>
+      <input type="hidden" id="tagged_friends" name="tagged_friends" value="X">
+      <!-- <input type="button" id="save" name="save" value="Save"> -->
+      <input type="reset" class="myButton" name="Reset">
+      <input id="submit" class="myButton" type="submit" value="Save" name="submit">
+    </div>
+    </form>
   </div>
 </div>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
