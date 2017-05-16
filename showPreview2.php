@@ -49,9 +49,10 @@ $friendIDs = '';
   <title>TreePlant123</title>
   <meta charset="utf-8">
   <meta property="og:url"                content="http://treeplant123.com/showPreview2.php<?php echo $contentId?>" />
-  <meta property="og:title"              content="<?php echo "Planting trees with my friends!!!";?>" />
+  <meta property="og:title"              content="<?php echo 'Planting trees with my friends!!!';?>" />
+  <meta property="og:type"   content="website" /> 
   <meta property="og:description"        content="<?php echo $description;?>" />
-  <meta property="og:image"              content="<?php echo "www.treeplant123.com/".$target_file;?>" />
+  <meta property="og:image"              content="<?php echo 'www.treeplant123.com/'.$target_file;?>" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -157,7 +158,11 @@ $friendIDs = '';
   display: none;
 }
 </style>
-
+<script type="text/javascript">
+  function formSubmit(){
+    document.uploadForm.submit();
+  }
+</script>
 </head>
 <body>
 
@@ -175,7 +180,7 @@ $friendIDs = '';
     <div class="collapse navbar-collapse myNavbar">
       <ul class="nav navbar-nav navbar-right">
         <li><a href="homepage.php">Home</a></li>
-        <li><a href="#">Profile</a></li>
+        <li><a href="profile.php">Profile</a></li>
         <li><a href="aboutus.php">About Us</a></li>
         <li><a href="<?php echo $_SESSION['logoutUrl'];?>">Logout</a></li>
       </ul>
@@ -193,7 +198,7 @@ $friendIDs = '';
     <!-- <div id="profile_heading">Upload Your Challenge Photo!</div> -->
     <div id="main-container" class="expandUp">
       <span>Choose your image for uploading</span>
-    <form id="uploadForm" action="upload.php" method="POST"> <!-- Upload form begins-->
+    <form id="uploadForm" name="uploadForm" action="upload.php" method="POST"> <!-- Upload form begins-->
       <div id="imageContainer">
         <img id="imagePreview" name="imagePreview" src="<?php echo $target_file; ?>" alt="your image" width="400" height="300" />
       </div>
@@ -231,9 +236,12 @@ echo ' <!--[if lte IE 9]></select><![endif]-->';
 echo '</datalist>';                                                                 
 ?>
       <br>
-<input type="hidden" id="tagged_friends" name="tagged_friends" value="X">
+<input type="hidden" id="tagged_friends"  name="tagged_friends" value="X">
       <!-- <input class="btn myButton" id="showPreview-submit" type="submit" value="Upload Image"> -->
-      <input class="btn myButton" id="showPreview-submit" type="submit" value="Share" >
+      <button id="showPreview-submit" type="button"  class="btn btn-primary btn-lg btn-custom" onclick="formSubmit()">
+      <!-- <input  id="showPreview-submit" type="submit" value="Share" style="display: none" > -->
+<i class="fa fa-facebook fa-lg" aria-hidden="true" style="margin-right: 20px;"></i><div style="height:100%;display: inline;border-right:1px solid #000;margin-right: 10px;"></div>Share</button>
+      
     </form>
     </div>
     <button id="myBtn" type="button" class="btn btn-primary btn-lg btn-custom" style="margin-bottom:20px;">
@@ -301,10 +309,17 @@ document.getElementById('yes').onclick = function(){
 document.getElementById('no').onclick = function(){
   document.getElementById('uploadForm').submit();
 };
+$(document).ready(function(){
+    document.getElementById('friends').style.display = "none";
+    document.getElementById('tagged_friends').style.display = "none";
+    document.getElementById('lbl_tag_friends').style.display = "none";
+    document.getElementById('showPreview-submit').style.display = "none";
+});
 </script>
 
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 </body>
 </html>
 

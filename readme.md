@@ -1,1 +1,0 @@
-This is TreePlant project readme file.

@@ -5,7 +5,7 @@ $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 $_SESSION['target_file'] = $target_file;
 $fileName = basename($_FILES["fileToUpload"]["name"]);
 $_SESSION['fileName'] = $fileName;
-//echo 'Filename is : '.$fileName;
+
 $uploadOk = 1;
 $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 // Check if image file is a actual image or fake image
@@ -25,7 +25,7 @@ if (file_exists($target_file)) {
     $uploadOk = 0;
 }
 // Check file size
-if ($_FILES["fileToUpload"]["size"] > 500000) {
+if ($_FILES["fileToUpload"]["size"] > 5000000) {
     //echo "Sorry, your file is too large.";
     $uploadOk = 0;
 }
@@ -60,16 +60,9 @@ else{
 	$saveContentID = $_SESSION['saveContentID'];
 	$sql = "UPDATE `userContent` SET description='$description',picture_url='$target_file' WHERE id='$saveContentID'";
 	$conn->query($sql);
-	//if($conn->query($sql))
-		//echo "Success";
-	//else
-		//echo "Failure";
+
 }
 mysqli_close($conn);
-// echo $description;
-// var_dump($_POST);
-// var_dump($_FILES);
 
-//header('location:showPreview.php?contentId='.$_SESSION['saveContentID']."&target_file=".$target_file."&description=".$description);
 header('location:showPreview2.php?contentId='.$_SESSION['saveContentID']);
 ?>

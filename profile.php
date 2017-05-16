@@ -6,6 +6,8 @@ session_start();
 require_once __DIR__ . '/vendor/autoload.php';
 $accessToken =  $_SESSION["facebook_access_token"];
 
+if(isset($_SESSION['saveContentId']))
+  unset($_SESSION['saveContentId']);
 
 $fb = new Facebook\Facebook([
     'app_id' => '1867029653544963',
@@ -18,8 +20,7 @@ try {
   $requestPicture = $fb->get('me/picture?redirect=false&height=300&width=300',$accessToken);
   $picture = $requestPicture->getGraphUser();
   $userNode = $response->getGraphUser();
-  // $friends = $fb->get('/me/taggable_friends?fields=name,id,picture.width(50)',$accessToken); 
-  // $friends = $friends->getGraphEdge()->asArray();  
+
 } catch(Facebook\Exceptions\FacebookResponseException $e) {
   // When Graph returns an error
   echo 'Graph returned an error: ' . $e->getMessage();
@@ -31,21 +32,7 @@ try {
 }
 $_SESSION['id'] = $userNode->getId();
 $logoutUrl = 'https://www.facebook.com/logout.php?next=treeplant123.com&access_token='.$accessToken;
-// $_SESSION['friends'] = $friends;
-// $totalFriends = count($friends);
-// $count = 0;
-// $friendIDs = '';
 
-
-
-// echo "<img src='".$picture['url']."'/>";
-// echo 'Logged in as ' . $userNode->getName();
-// echo 'ID : ' . $userNode->getID();
-// echo 'Email : ' . $userNode->getEmail();
-// echo 'First name : ' . $userNode->getFirstName();
-// echo 'Last name : ' . $userNode->getLastName();
-// echo '<br><br><br>';
-// echo $userNode; 
 
 ?>
 <!DOCTYPE html>

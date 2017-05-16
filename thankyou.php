@@ -150,5 +150,12 @@ $logoutUrl = 'https://www.facebook.com/logout.php?next=treeplant123.com&access_t
 <i class="fa fa-facebook fa-lg" aria-hidden="true" style="margin-right: 20px;"></i><div style="height:100%;display: inline;border-right:1px solid #000;margin-right: 10px;"></div>Go to Facebook Profile Page</button></a>
 </div>
 </div>
+<div style="color: #fff;">
+<?php 
+// unset($_SESSION['target_file']);
+// unset($_SESSION['fileName']);
+// unset($_SESSION['friends']);
+?>
+</div>
 </body>
 </html>
