@@ -65,7 +65,7 @@ while($count < $tagged_friends_length){
   $count++;
 }
 
-  $link = "https://treeplant123.com/";
+  $link = "http://i-planted-a-tree.sites.innoraft.com/";
   $description = $_GET['description'];
   $tags = $friendIDs;
   $msg = ['message' => ' my message','link' => $link,'description' => $description, 'caption' => 'Caption' , 'tags' => $tags];
@@ -102,6 +102,6 @@ else{
   mysqli_close($conn);
 }
 
-header('location:http://treeplant123.com/thankyou.php');
+header('http://i-planted-a-tree.sites.innoraft.com/thankyou.php');
 
 ?>
