@@ -46,7 +46,7 @@ $friendIDs = '';
   <meta property="og:url"                content="http://i-planted-a-tree.sites.innoraft.com/showPreview2.php<?php echo $contentId?>" />
   <meta property="og:title"              content="<?php echo 'Planting trees with my friends!!!';?>" />
   <meta property="og:type"   content="website" /> 
-  <meta property="og:description"        content="<?php echo $description;?>" />
+  <meta property="og:description"        content="Visit us and share your photos of planting trees" />
   <meta property="og:image"              content="<?php echo 'http://i-planted-a-tree.sites.innoraft.com/'.$target_file;?>" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
