@@ -65,7 +65,7 @@ while($count < $tagged_friends_length){
   $count++;
 }
 
-  $link = "http://i-planted-a-tree.sites.innoraft.com/showPreview2.php?contentId="$_SESSION['saveContentID'];
+  $link = "http://i-planted-a-tree.sites.innoraft.com/showPreview2.php?contentId=".$_SESSION['saveContentID'];
   $description = $_GET['description'];
   $tags = $friendIDs;
   // $msg = ['message' => ' my message','link' => $link,'description' => $description, 'caption' => 'Caption' , 'tags' => $tags];
