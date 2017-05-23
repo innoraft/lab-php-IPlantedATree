@@ -36,53 +36,81 @@ $logoutUrl = 'https://www.facebook.com/logout.php?next=treeplant123.com&access_t
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 </head>
 
-	<style type="text/css">
-		body{
-			margin:0px;
-			padding: 0px;
-			background-image: url('assets/images/cartoon_forest.jpg');
-			background-size: cover;
-			background-position: center;
-			background-repeat: no-repeat;
-		}
-		#ty-plant{
-			width:300px;
-			height: 300px;
-			margin: 0 auto;
-			/*background-image: url('assets/images/thankyou2.jpg');*/
-			background-size: cover;
-			background-position: center;
-			box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
-		}
-		.arch {
-			margin: 60px 10px 0px;
-  			font-size: 40px;
-  			font-weight: bold;
-  			margin-bottom: 40px;
-  			text-align: center;
-		}
+<style type="text/css">
+body{
+	margin:0px;
+	padding: 0px;
+	background-image: url('assets/images/cartoon_forest.jpg');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+#ty-plant{
+	width:300px;
+	height: 300px;
+	margin: 0 auto;
+	/*background-image: url('assets/images/thankyou2.jpg');*/
+	background-size: cover;
+	background-position: center;
+	box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+.arch {
+	margin: 60px 10px 0px;
+  	font-size: 40px;
+  	font-weight: bold;
+  	margin-bottom: 40px;
+  	text-align: center;
+}
 
-		.arch span {
- 			-webkit-background-clip: text;
-  			color : #000;
-  			text-shadow: 3px 3px 3px #fff;
-		}
+.arch span {
+ 	-webkit-background-clip: text;
+  	color : #000;
+  	text-shadow: 3px 3px 3px #fff;
+}
 
-		.btn-custom{
-			margin-top: 20px;
-			border-radius: 0px;
-			box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
-		}
-		#ty_container{
-			background-color: rgba(255,255,255,.4);
-		    border: 1px solid #000;
-		    width: 840px;
-		    height: auto;
-		    margin: 10px auto 0;
-		    padding:20px;
-		}
-	</style>
-	<script type="text/javascript" src="scripts/js/arctext.js"></script>
+.btn-custom{
+	margin-top: 20px;
+	border-radius: 0px;
+	box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+#ty_container{
+	background-color: rgba(255,255,255,.4);
+	border: 1px solid #000;
+	width: 840px;
+	height: auto;
+	margin: 10px auto 0;
+	padding:20px;
+}
+#ty-plant{
+	background-image:url('<?php echo $picture['url'];?>')
+}
+.arch{
+	margin-top: 10px;
+}
+
+#btn-go-to-profile{
+	text-align: center;
+}
+#btn-go-to-profile a{
+	text-decoration: none;color:#fff;
+}
+.fa-lg{
+	margin-right: 20px;
+}
+
+#btn-go-to-profile a button div{
+	height:100%;
+	display: inline;
+	border-right:1px solid #000;
+	margin-right: 10px;
+}
+</style>
+<script type="text/javascript">
+	$(document).ready(function() {
+  		$(".arch").arctext({radius: 1000});
+	});
+</script>
+<script type="text/javascript" src="scripts/js/arctext.js"></script>
 </head>
 <body>
 
@@ -107,23 +135,20 @@ $logoutUrl = 'https://www.facebook.com/logout.php?next=treeplant123.com&access_t
   </div>
 </div>
 <div id="ty_container">
-<div class="arch">Thank you for your participation <?php echo $userNode['first_name'];?>.</div>
-<div id="ty-plant" style="background-image:url('<?php echo $picture['url'];?>')">
-<!-- <img src="<?php ?>"> -->
+	<div class="arch">Thank you for your participation <?php echo $userNode['first_name'];?>.</div>
+	<div id="ty-plant"></div>
+	<div class="arch">Keep planting more trees!</div>
+	<div id="btn-go-to-profile">
+		<a href="https://www.facebook.com/<?php echo $_SESSION['id'] ?>" target="_blank">
+			<button type="button" class="btn btn-primary btn-lg btn-custom">
+				<i class="fa fa-facebook fa-lg" aria-hidden="true"></i>
+				<div></div>
+				Go to Facebook Profile Page
+			</button>
+		</a>
+	</div>
 </div>
-<div class="arch" style="margin-top: 10px;">Keep planting more trees!</div>
-<script type="text/javascript">
-	$(document).ready(function() {
-  		$(".arch").arctext({radius: 1000});
-	});
-</script>
-<div style="text-align: center;">
-<a href="https://www.facebook.com/<?php echo $_SESSION['id'] ?>" target="_blank" style="text-decoration: none;color:#fff;">
-<button type="button" class="btn btn-primary btn-lg btn-custom">
-<i class="fa fa-facebook fa-lg" aria-hidden="true" style="margin-right: 20px;"></i><div style="height:100%;display: inline;border-right:1px solid #000;margin-right: 10px;"></div>Go to Facebook Profile Page</button></a>
-</div>
-</div>
-<div style="color: #fff;">
+<div>
 <?php 
 // unset($_SESSION['target_file']);
 // unset($_SESSION['fileName']);

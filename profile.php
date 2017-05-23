@@ -2,7 +2,7 @@
 session_start();
 ?>
 <?php
-
+include('conn.php');
 require_once __DIR__ . '/vendor/autoload.php';
 include('assets/config/fbCredentials.php');
 $accessToken =  $_SESSION["facebook_access_token"];
@@ -12,8 +12,8 @@ if(isset($_SESSION['saveContentId']))
 
 try {
   $response = $fb->get('/me?fields=name,id,first_name,last_name,email',$accessToken);
-  $requestPicture = $fb->get('me/picture?redirect=false&height=300&width=300',$accessToken);
-  $picture = $requestPicture->getGraphUser();
+  // $requestPicture = $fb->get('me/picture?redirect=false&height=300&width=300',$accessToken);
+  // $picture = $requestPicture->getGraphUser();
   $userNode = $response->getGraphUser();
 
 } catch(Facebook\Exceptions\FacebookResponseException $e) {
@@ -27,7 +27,10 @@ try {
 }
 $_SESSION['id'] = $userNode->getId();
 $logoutUrl = 'https://www.facebook.com/logout.php?next=treeplant123.com&access_token='.$accessToken;
-
+$name = $userNode->getName();
+$userId = $userNode->getId();
+$sql = "INSERT INTO user IF NOT EXISTS values('$name','$userId','')";
+$conn->query($sql);
 
 ?>
 <!DOCTYPE html>

@@ -1,7 +1,8 @@
 <?php
 session_start();
 $target_dir = "assets/uploads/";
-$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+$date = new DateTime();
+$target_file = $target_dir . $date->getTimestamp() . basename($_FILES["fileToUpload"]["name"]);
 $_SESSION['target_file'] = $target_file;
 $fileName = basename($_FILES["fileToUpload"]["name"]);
 $_SESSION['fileName'] = $fileName;

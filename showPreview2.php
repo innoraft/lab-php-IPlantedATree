@@ -12,7 +12,6 @@ $rs = $conn->query($sql);
 $row = mysqli_fetch_array($rs);
 $description = $row['description'];
 $target_file = $row['picture_url'];
-
 $accessToken =  $_SESSION["facebook_access_token"];
 
 
@@ -153,6 +152,44 @@ $friendIDs = '';
 #taggable_friends{
   display: none;
 }
+.description1{
+  height: auto;
+  width:600px;
+  margin:10px auto;
+  padding: 10px;
+  resize: none;
+  color:#000;
+  background-color: #fff;
+  text-align: left;
+}
+.description2{
+  height: auto;
+  width:50vw;
+  margin:10px auto;
+  padding: 10px;
+  resize: none;
+  color:#000;
+  background-color: #fff;
+  text-align: center;
+}
+.fa-lg{
+  margin-right: 20px;
+}
+.share-button{
+  height:100%;
+  display: inline;
+  border-right:1px solid #000;
+  margin-right: 10px;
+}
+#myBtn{
+  margin-bottom:20px;
+}
+.modal-content{
+  text-align: center;
+}
+.modal-footer{
+  text-align: center;
+}
 </style>
 <script type="text/javascript">
   function formSubmit(){
@@ -161,8 +198,6 @@ $friendIDs = '';
 </script>
 </head>
 <body>
-
-
 <div class="navbar navbar-inverse navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
@@ -194,11 +229,11 @@ $friendIDs = '';
       </div>
       <div id="profile_fileUploadButtons">
         <?php if(!empty($description)){ ?>
-          <div style="height: auto;width:600px;margin:10px auto;padding: 10px;resize: none;color:#000;background-color: #fff;text-align: left;" id="description" name="description"><?php echo $description; ?></div><br>
+          <div class="description1" id="description" name="description"><?php echo $description; ?></div><br>
           <?php 
               }
           else{ ?> 
-            <div style="height: auto;width:50vw;margin:10px auto;padding: 10px;resize: none;color:#000;background-color: #fff;text-align: center;" id="description" name="description">No description given!</div><br>
+            <div class="description2" id="description" name="description">No description given!</div><br>
           <?php
               }
            ?>
@@ -207,6 +242,15 @@ $friendIDs = '';
    
 echo ' <input type="text" id="friends" list="taggable_friends">';
 echo '<datalist id="taggable_friends">';
+// echo '<script type="text/javascript">
+// var datalist1 = document.getElementById("taggable_friends");
+//   var datalistLength = document.getElementById("taggable_friends").length;
+//   var i;
+//   console.log(i);
+//   for(i=0;i<datalistLength;i++){
+//     datalist1.remove(i);
+//   }
+// </script>';
 echo ' <!--[if lte IE 9]><select data-datalist="taggable_friends"><![endif]-->';
 while($count < $totalFriends){
   if($count == 0)
@@ -226,12 +270,12 @@ echo '</datalist>';
       <br>
 <input type="hidden" id="tagged_friends"  name="tagged_friends" value="X">
       <button id="showPreview-submit" type="button"  class="btn btn-primary btn-lg btn-custom" onclick="formSubmit()">
-<i class="fa fa-facebook fa-lg" aria-hidden="true" style="margin-right: 20px;"></i><div style="height:100%;display: inline;border-right:1px solid #000;margin-right: 10px;"></div>Share</button>
+<i class="fa fa-facebook fa-lg" aria-hidden="true"></i><div class="share-button"></div>Share</button>
       
     </form>
     </div>
-    <button id="myBtn" type="button" class="btn btn-primary btn-lg btn-custom" style="margin-bottom:20px;">
-<i class="fa fa-facebook fa-lg" aria-hidden="true" style="margin-right: 20px;"></i><div style="height:100%;display: inline;border-right:1px solid #000;margin-right: 10px;"></div>Share</button>
+    <button id="myBtn" type="button" class="btn btn-primary btn-lg btn-custom">
+<i class="fa fa-facebook fa-lg" aria-hidden="true"></i><div class="share-button"></div>Share</button>
   </div>
 </div>
 
@@ -241,7 +285,7 @@ echo '</datalist>';
 <div id="myModal" class="modal">
 
   <!-- Modal content -->
-  <div class="modal-content" style="text-align: center;">
+  <div class="modal-content">
     <div class="modal-header">
       <span class="close">&times;</span>
       <h2>Tag friends</h2>
@@ -249,7 +293,7 @@ echo '</datalist>';
     <div class="modal-body">
       <p>Do you want to tag your friends?</p>
     </div>
-    <div class="modal-footer" style="color:#000;">
+    <div class="modal-footer">
       <button id="yes">Yes</button>
       <button id="no">No</button>
     </div>
