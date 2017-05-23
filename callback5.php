@@ -41,8 +41,8 @@ if (!isset($accessToken)) {
 else{
   // Logged in!
   $_SESSION['facebook_access_token'] = (string) $accessToken;
-  $_SESSION['logoutUrl'] = $helper->getLogoutUrl($accessToken,'http://treeplant123.com/index.php'); 
-  header('location:http://treeplant123.com/profile.php');
+  $_SESSION['logoutUrl'] = $helper->getLogoutUrl($accessToken,'http://i-planted-a-tree.sites.innoraft.com/index.php'); 
+  header('location:http://i-planted-a-tree.sites.innoraft.com/profile.php');
   // Now you can redirect to another page and use the
   // access token from $_SESSION['facebook_access_token']
 }

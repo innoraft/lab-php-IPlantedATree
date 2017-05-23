@@ -43,7 +43,7 @@ $friendIDs = '';
 <head>
   <title>TreePlant123</title>
   <meta charset="utf-8">
-  <meta property="og:url"                content="http://treeplant123.com/showPreview2.php<?php echo $contentId?>" />
+  <meta property="og:url"                content="http://i-planted-a-tree.sites.innoraft.com/showPreview2.php<?php echo $contentId?>" />
   <meta property="og:title"              content="<?php echo 'Planting trees with my friends!!!';?>" />
   <meta property="og:type"   content="website" /> 
   <meta property="og:description"        content="<?php echo $description;?>" />

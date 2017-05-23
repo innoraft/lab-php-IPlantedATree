@@ -29,8 +29,11 @@ $_SESSION['id'] = $userNode->getId();
 $logoutUrl = 'https://www.facebook.com/logout.php?next=treeplant123.com&access_token='.$accessToken;
 $name = $userNode->getName();
 $userId = $userNode->getId();
-//$sql = "INSERT INTO user IF NOT EXISTS values('$name','$userId','')";
-//$conn->query($sql);
+// $sql = "INSERT INTO user IF NOT EXISTS values('$name','$userId','')";
+// ?if($conn->query($sql))
+  // echo "Updated";
+// else
+  // die($conn->error);
 
 ?>
 <!DOCTYPE html>
