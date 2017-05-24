@@ -65,7 +65,7 @@ while($count < $tagged_friends_length){
   $count++;
 }
 
-  $link = "https://treeplant123.com/";
+  $link = "http://".$_SERVER['SERVER_NAME']."/";
   $description = $_GET['description'];
   $tags = $friendIDs;
   $msg = ['message' => ' my message','link' => $link,'description' => $description, 'caption' => 'Caption' , 'tags' => $tags];
@@ -104,6 +104,6 @@ else{
   mysqli_close($conn);
 }
 
-header('location:http://treeplant123.com/thankyou.php');
+header('location:http://'.$_SERVER['SERVER_NAME'].'/thankyou.php');
 
 ?>

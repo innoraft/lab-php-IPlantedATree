@@ -23,7 +23,7 @@ try {
   exit;
 }
 $_SESSION['id'] = $userNode->getId();
-$logoutUrl = 'https://www.facebook.com/logout.php?next=treeplant123.com&access_token='.$accessToken;
+$logoutUrl = 'https://www.facebook.com/logout.php?next='.$_SERVER['SERVER_NAME'].'&access_token='.$accessToken;
 ?>
 <!DOCTYPE html>
 <html>

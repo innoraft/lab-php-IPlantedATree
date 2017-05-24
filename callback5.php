@@ -41,7 +41,7 @@ if (!isset($accessToken)) {
 else{
   // Logged in!
   $_SESSION['facebook_access_token'] = (string) $accessToken;
-  $_SESSION['logoutUrl'] = $helper->getLogoutUrl($accessToken,'http://treeplant123.com/index.php'); 
+  $_SESSION['logoutUrl'] = $helper->getLogoutUrl($accessToken,'http://'.$_SERVER['SERVER_NAME'].'/index.php'); 
   try {
     $response = $fb->get('/me?fields=name,id,email',$accessToken);
     $userNode = $response->getGraphUser();
@@ -60,7 +60,7 @@ else{
   $rs = $conn->query($sql);
   var_dump($rs);
   if($rs->num_rows > 0)
-    header('location:http://treeplant123.com/profile.php');
+    header('location:http://'.$_SERVER['SERVER_NAME'].'/profile.php');
   else{
     $name = $userNode->getName();
     $id = $userNode->getId();

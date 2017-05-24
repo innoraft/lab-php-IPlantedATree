@@ -2,47 +2,52 @@
 session_start();
 ?>
 <?php
+require_once __DIR__ . '/vendor/autoload.php';
 
 include('conn.php');
+include('assets/config/fbCredentials.php');
 $contentId = $_GET['contentId'];
 $sql = "SELECT * FROM `userContent` WHERE id='".$contentId."'";
 $rs = $conn->query($sql);
 $row = mysqli_fetch_array($rs);
 $description = $row['description'];
 $target_file = $row['picture_url'];
+$accessToken =  $_SESSION["facebook_access_token"];
 
-if(isset($_SESSION['facebook_access_token'])){
-  require_once __DIR__ . '/vendor/autoload.php';
-  include('assets/config/fbCredentials.php');
-  $accessToken =  $_SESSION["facebook_access_token"];
-  try {
-    $friends = $fb->get('/me/taggable_friends?fields=name,id,picture.width(50)',$accessToken); 
-    $friends = $friends->getGraphEdge()->asArray();  
-  } catch(Facebook\Exceptions\FacebookResponseException $e) {
-    // When Graph returns an error
-    echo 'Graph returned an error: ' . $e->getMessage();
-    exit;
-  } catch(Facebook\Exceptions\FacebookSDKException $e) {
-    // When validation fails or other local issues
-    echo 'Facebook SDK returned an error: ' . $e->getMessage();
-    exit;
-  }
-  $_SESSION['friends'] = $friends;
-  $totalFriends = count($friends);
-  $count = 0;
-  $friendIDs = '';
+
+try {
+  $response = $fb->get('/me?fields=name,id,first_name,last_name,email',$accessToken);
+  $requestPicture = $fb->get('me/picture?redirect=false&height=300&width=300',$accessToken);
+  $picture = $requestPicture->getGraphUser();
+  $userNode = $response->getGraphUser();
+  $friends = $fb->get('/me/taggable_friends?fields=name,id,picture.width(50)',$accessToken); 
+  $friends = $friends->getGraphEdge()->asArray();  
+} catch(Facebook\Exceptions\FacebookResponseException $e) {
+  // When Graph returns an error
+  echo 'Graph returned an error: ' . $e->getMessage();
+  exit;
+} catch(Facebook\Exceptions\FacebookSDKException $e) {
+  // When validation fails or other local issues
+  echo 'Facebook SDK returned an error: ' . $e->getMessage();
+  exit;
 }
+$_SESSION['id'] = $userNode->getId();
+$_SESSION['friends'] = $friends;
+$totalFriends = count($friends);
+$count = 0;
+$friendIDs = '';
+
 ?>
 <!DOCTYPE html>
 <html>
 <head>
   <title>TreePlant123</title>
   <meta charset="utf-8">
-  <meta property="og:url"                content="http://<?php echo $_SERVER['SERVER_NAME']?>/content.php<?php echo $contentId?>" />
+  <meta property="og:url"                content="http://treeplant123.com/showPreview2.php<?php echo $contentId?>" />
   <meta property="og:title"              content="<?php echo 'Planting trees with my friends!!!';?>" />
   <meta property="og:type"   content="website" /> 
   <meta property="og:description"        content="<?php echo $description;?>" />
-  <meta property="og:image"              content="<?php echo 'http://'.$_SESSION['SERVER_NAME'].'/'.$target_file;?>" />
+  <meta property="og:image"              content="<?php echo 'www.treeplant123.com/'.$target_file;?>" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -222,7 +227,7 @@ if(isset($_SESSION['facebook_access_token'])){
 <div  class="row" id="profile_row">
   <div class="col-md-12 border-negative profile-col-2 rem-padding-right">
     <div id="main-container" class="expandUp">
-      <span>POST PREVIEW</span>
+      <span>Choose your image for uploading</span>
     <form id="uploadForm" name="uploadForm" action="upload.php" method="POST"> <!-- Upload form begins-->
       <div id="imageContainer">
         <img id="imagePreview" name="imagePreview" src="<?php echo $target_file; ?>" alt="your image" width="400" height="300" />
@@ -239,25 +244,35 @@ if(isset($_SESSION['facebook_access_token'])){
            ?>
         <label id="lbl_tag_friends">Tag friends</label>
 <?php
-if(isset($_SESSION['facebook_access_token'])){
-  echo ' <input type="text" id="friends" list="taggable_friends">';
-  echo '<datalist id="taggable_friends">';
-  echo ' <!--[if lte IE 9]><select data-datalist="taggable_friends"><![endif]-->';
-  while($count < $totalFriends){
-    if($count == 0)
-        $friendIDs =  $friends[$count]['id'].',';
-    else if($count == $totalFriends-1)
-        $friendIDs =  $friendIDs.$friends[$count]['id'];
-    else
-        $friendIDs =  $friendIDs.$friends[$count]['id'].',';
+   
+echo ' <input type="text" id="friends" list="taggable_friends">';
+echo '<datalist id="taggable_friends">';
+// echo '<script type="text/javascript">
+// var datalist1 = document.getElementById("taggable_friends");
+//   var datalistLength = document.getElementById("taggable_friends").length;
+//   var i;
+//   console.log(i);
+//   for(i=0;i<datalistLength;i++){
+//     datalist1.remove(i);
+//   }
+// </script>';
+echo ' <!--[if lte IE 9]><select data-datalist="taggable_friends"><![endif]-->';
+while($count < $totalFriends){
+  if($count == 0)
+      $friendIDs =  $friends[$count]['id'].',';
+  else if($count == $totalFriends-1)
+      $friendIDs =  $friendIDs.$friends[$count]['id'];
+  else
+      $friendIDs =  $friendIDs.$friends[$count]['id'].',';
 
-    echo '<option id="'.$count.'" value="'.$friends[$count]['name'].'"><img src="'.$friends[$count]['picture']['url'].'">'.$friends[$count]['name']."</option>";   
-      
-    $count++;
-  }
-  echo ' <!--[if lte IE 9]></select><![endif]-->';
-  echo '</datalist>';
-  echo '      <br>
+  echo '<option id="'.$count.'" value="'.$friends[$count]['name'].'"><img src="'.$friends[$count]['picture']['url'].'">'.$friends[$count]['name']."</option>";   
+    
+  $count++;
+}
+echo ' <!--[if lte IE 9]></select><![endif]-->';
+echo '</datalist>';                                                                 
+?>
+      <br>
 <input type="hidden" id="tagged_friends"  name="tagged_friends" value="X">
       <button id="showPreview-submit" type="button"  class="btn btn-primary btn-lg btn-custom" onclick="formSubmit()">
 <i class="fa fa-facebook fa-lg" aria-hidden="true"></i><div class="share-button"></div>Share</button>
@@ -265,10 +280,7 @@ if(isset($_SESSION['facebook_access_token'])){
     </form>
     </div>
     <button id="myBtn" type="button" class="btn btn-primary btn-lg btn-custom">
-<i class="fa fa-facebook fa-lg" aria-hidden="true"></i><div class="share-button"></div>Share</button>';
-}                                                                 
-?>
-
+<i class="fa fa-facebook fa-lg" aria-hidden="true"></i><div class="share-button"></div>Share</button>
   </div>
 </div>
 

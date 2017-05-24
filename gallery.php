@@ -19,7 +19,7 @@ else{
 
 $left_rec = $rec_count - ($page * $rec_limit);
 
-$sql = "SELECT * FROM userContent LIMIT $offset,$rec_limit";
+$sql = "SELECT * FROM userContent ORDER BY timestamp DESC LIMIT $offset,$rec_limit";
 $rs = $conn->query($sql);
 ?>
 <!DOCTYPE html>
