@@ -365,6 +365,7 @@ function getPostTime(unix_timestamp){
          mysqli_close($conn);
 ?>
 </div>
+<a href="index.php" style="background: none;padding: 0;transform: translate(43vw,0%);"><button class="btn btn-lg btn-primary">Start planting trees</button></a>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>
