@@ -65,12 +65,9 @@ else{
     $name = $userNode->getName();
     $id = $userNode->getId();
     $sql = "INSERT INTO user values('$name','$id','')";
-    if($conn->query($sql))
-      die("Success");
-    else
-      die($conn->error());
+    $conn->query($sql);
+    header('location:http://'.$_SERVER['SERVER_NAME'].'/profile.php');
   }
-  header('location:profile.php');
   // Now you can redirect to another page and use the
   // access token from $_SESSION['facebook_access_token']
 }
