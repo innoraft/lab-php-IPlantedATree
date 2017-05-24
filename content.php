@@ -39,9 +39,9 @@ if(isset($_SESSION['facebook_access_token'])){
   <title>TreePlant123</title>
   <meta charset="utf-8">
   <meta property="og:url"                content="http://<?php echo $_SERVER['SERVER_NAME']?>/content.php?contentId=<?php echo $contentId?>" />
-  <meta property="og:title"              content="<?php echo 'Planting trees with my friends!!!';?>" />
+  <meta property="og:title"              content="I Planted A Tree" />
   <meta property="og:type"   content="website" /> 
-  <meta property="og:description"        content="Share your images from our website" />
+  <meta property="og:description"        content="<?php echo $description;?>" />
   <meta property="og:image"              content="<?php echo 'http://'.$_SERVER['SERVER_NAME'].'/'.$target_file;?>" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->

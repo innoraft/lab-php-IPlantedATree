@@ -68,7 +68,7 @@ while($count < $tagged_friends_length){
   $link = "http://".$_SERVER['SERVER_NAME']."/content.php?contentId=".$_SESSION['saveContentID'];
   $description = $_GET['description'];
   $tags = $friendIDs;
-  $msg = ['message' => $description,'link' => $link,'description' => $description, 'caption' => 'Plant your trees with us' , 'tags' => $tags];
+  $msg = ['message' => $description,'link' => $link,'description' => $description, 'tags' => $tags];
  
 
   try{
