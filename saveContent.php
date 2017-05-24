@@ -52,7 +52,7 @@ $description = $_POST['description'];
 $id = $_SESSION['id'];
 include('conn.php');
 if(!isset($_SESSION['saveContentID'])){
-	$sql = "INSERT INTO `userContent` values('',$id,'$description','$target_file','')";
+	$sql = "INSERT INTO `userContent` values('',$id,'$description','$target_file','',0)";
 	$conn->query($sql);
 //echo "Inserted id Last : ".mysqli_insert_id($conn);
 	$_SESSION['saveContentID'] = mysqli_insert_id($conn);
@@ -65,5 +65,5 @@ else{
 }
 mysqli_close($conn);
 
-header('location:showPreview2.php?contentId='.$_SESSION['saveContentID']);
+header('location:content.php?contentId='.$_SESSION['saveContentID']);
 ?>

@@ -65,11 +65,10 @@ while($count < $tagged_friends_length){
   $count++;
 }
 
-  $link = "http://i-planted-a-tree.sites.innoraft.com/showPreview2.php?contentId=".$_SESSION['saveContentID'];
+  $link = "https://treeplant123.com/";
   $description = $_GET['description'];
   $tags = $friendIDs;
-  // $msg = ['message' => ' my message','link' => $link,'description' => $description, 'caption' => 'Caption' , 'tags' => $tags];
-  $msg = ['message' => $description,'link' => $link,'caption' => 'Plant trees and Save Earth' , 'tags' => $tags];
+  $msg = ['message' => ' my message','link' => $link,'description' => $description, 'caption' => 'Caption' , 'tags' => $tags];
  
 
   try{
@@ -92,7 +91,9 @@ if(!isset($_SESSION['saveContentID'])){
   mysqli_close($conn);
 }
 else{
-  $sql = "UPDATE `userContent` SET post_id='".$graphNode['id']."' WHERE id=".$_SESSION['saveContentID'];
+  $date = new DateTime();
+
+  $sql = "UPDATE `userContent` SET post_id='".$graphNode['id']."' ,timestamp=".$date->getTimestamp()." WHERE id=".$_SESSION['saveContentID'];
   if($conn->query($sql)){
     echo "Successful updation\n";
     $_SESSION['saveContentID'] = '';
@@ -103,6 +104,6 @@ else{
   mysqli_close($conn);
 }
 
-header('http://i-planted-a-tree.sites.innoraft.com/thankyou.php');
+header('location:http://treeplant123.com/thankyou.php');
 
 ?>

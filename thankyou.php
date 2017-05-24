@@ -129,7 +129,8 @@ body{
         <li><a href="index.php">Home</a></li>
         <li><a href="profile.php">Profile</a></li>
         <li><a href="aboutus.php">About Us</a></li>
-        <li><a href="<?php echo $_SESSION['logoutUrl'];?>">Logout</a></li>
+        <li><a href="gallery.php">Gallery</a></li>
+        <li><a href="logout.php">Logout</a></li>
       </ul>
     </div>
   </div>
@@ -153,6 +154,8 @@ body{
 // unset($_SESSION['target_file']);
 // unset($_SESSION['fileName']);
 // unset($_SESSION['friends']);
+$_SESSION['saveContentID'] = NULL;
+unset($_SESSION['saveContentID']);
 ?>
 </div>
 </body>

@@ -1,10 +1,11 @@
 <?php
+// die($_SERVER['SERVER_NAME']);
 session_start();
 require_once __DIR__ . '/vendor/autoload.php';
 include('assets/config/fbCredentials.php');
 $helper = $fb->getRedirectLoginHelper();
 $permissions = ['email','publish_actions','user_about_me','user_friends','user_posts']; // Optional permissions
-$loginUrl = $helper->getLoginUrl('http://i-planted-a-tree.sites.innoraft.com/callback5.php', $permissions);
+$loginUrl = $helper->getLoginUrl('http://treeplant123.com/callback5.php', $permissions);
 
 ?>
 <!DOCTYPE html>
@@ -71,6 +72,7 @@ $loginUrl = $helper->getLoginUrl('http://i-planted-a-tree.sites.innoraft.com/cal
           if(isset($_SESSION['facebook_access_token']))
             echo '<li><a href="profile.php">Profile</a></li>';
         ?>
+        <li><a href="gallery.php">Gallery</a></li>
         <li><a href="aboutus.php">About Us</a></li>
       </ul>
     </div>

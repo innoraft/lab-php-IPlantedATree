@@ -7,8 +7,10 @@ require_once __DIR__ . '/vendor/autoload.php';
 include('assets/config/fbCredentials.php');
 $accessToken =  $_SESSION["facebook_access_token"];
 
-if(isset($_SESSION['saveContentId']))
-  unset($_SESSION['saveContentId']);
+if(isset($_SESSION['saveContentID'])){
+  $_SESSION['saveContentID'] = NULL;
+  unset($_SESSION['saveContentID']);
+}
 
 try {
   $response = $fb->get('/me?fields=name,id,first_name,last_name,email',$accessToken);
@@ -30,7 +32,7 @@ $logoutUrl = 'https://www.facebook.com/logout.php?next=treeplant123.com&access_t
 $name = $userNode->getName();
 $userId = $userNode->getId();
 // $sql = "INSERT INTO user IF NOT EXISTS values('$name','$userId','')";
-// ?if($conn->query($sql))
+// if($conn->query($sql))
   // echo "Updated";
 // else
   // die($conn->error);
@@ -74,7 +76,7 @@ $userId = $userNode->getId();
         <li><a href="index.php">Home</a></li>
         <li class="active"><a href="#">Profile</a></li>
         <li><a href="aboutus.php">About Us</a></li>
-        <li><a href="<?php echo $_SESSION['logoutUrl'];?>">Logout</a></li>
+        <li><a href="logout.php">Logout</a></li>
       </ul>
     </div>
   </div>

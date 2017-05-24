@@ -41,8 +41,35 @@ if (!isset($accessToken)) {
 else{
   // Logged in!
   $_SESSION['facebook_access_token'] = (string) $accessToken;
-  $_SESSION['logoutUrl'] = $helper->getLogoutUrl($accessToken,'http://i-planted-a-tree.sites.innoraft.com/index.php'); 
-  header('location:http://i-planted-a-tree.sites.innoraft.com/profile.php');
+  $_SESSION['logoutUrl'] = $helper->getLogoutUrl($accessToken,'http://treeplant123.com/index.php'); 
+  try {
+    $response = $fb->get('/me?fields=name,id,email',$accessToken);
+    $userNode = $response->getGraphUser();
+  } catch(Facebook\Exceptions\FacebookResponseException $e) {
+    // When Graph returns an error
+    echo 'Graph returned an error: ' . $e->getMessage();
+    exit;
+  } catch(Facebook\Exceptions\FacebookSDKException $e) {
+    // When validation fails or other local issues
+    echo 'Facebook SDK returned an error: ' . $e->getMessage();
+    exit;
+  } 
+  include('conn.php');
+  echo $userNode->getId();
+  $sql = "SELECT * FROM user where fb_id=".$userNode->getId();
+  $rs = $conn->query($sql);
+  var_dump($rs);
+  if($rs->num_rows > 0)
+    header('location:http://treeplant123.com/profile.php');
+  else{
+    $name = $userNode->getName();
+    $id = $userNode->getId();
+    $sql = "INSERT INTO user values('$name','$id','')";
+    if($conn->query($sql))
+      die("Success");
+    else
+      die($conn->error());
+  }
   // Now you can redirect to another page and use the
   // access token from $_SESSION['facebook_access_token']
 }

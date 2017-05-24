@@ -8,3 +8,4 @@ CREATE TABLE userContent(
 );
 
  ALTER TABLE userContent MODIFY description varchar(500);
+ ALTER TABLE userContent ADD COLUMN timestamp INT(12) NOT NULL;

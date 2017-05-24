@@ -27,6 +27,7 @@ session_start();
       <ul class="nav navbar-nav navbar-right">
         <li><a href="homepage.php">Home</a></li>
         <li><a href="profile.php">Profile</a></li>
+        <li><a href="gallery.php">Gallery</a></li>
         <li class="active"><a href="aboutus.php">About Us</a></li>
         <li><a href="<?php echo $_SESSION['logoutUrl'];?>">Logout</a></li>
       </ul>
