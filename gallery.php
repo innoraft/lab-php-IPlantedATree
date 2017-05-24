@@ -349,7 +349,7 @@ function getPostTime(unix_timestamp){
 
   </div>
 </section>
-<div style="height: auto;margin:0px 0;width: 100%;text-align: center;">
+<div style="height: auto;margin:80px 0 0;width: 100%;text-align: center;">
 <?php
  if( $page > 0 ) {
             $last = $page - 2;
