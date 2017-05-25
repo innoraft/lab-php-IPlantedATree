@@ -19,6 +19,7 @@ else{
 
 $left_rec = $rec_count - ($page * $rec_limit);
 
+
 $sql = "SELECT * FROM userContent ORDER BY timestamp DESC LIMIT $offset,$rec_limit";
 $rs = $conn->query($sql);
 ?>
@@ -49,20 +50,20 @@ background-image: url("https://www.transparenttextures.com/patterns/tree-bark.pn
 /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
 }
 
-h1 {
+h1.gallery-h1 {
   font-size: 300%;
   text-transform: uppercase;
   letter-spacing: 3px;
   font-weight: 400;
 }
 
-header {
+header.gallery-header {
   background: #00ff11;
   color: #FFFFFF;
   padding: 50px 0;
   text-align: center;
 }
-header p {
+header.gallery-header p {
   font-family: 'Allura';
   color: rgba(255, 255, 255, 0.8);
   margin-bottom: 0;
@@ -143,7 +144,7 @@ header p {
   margin-left: -15px;
 }
 
-a {
+a.gallery-a {
   background: #3F51B5;
   color: #FFFFFF;
   padding: 8px 20px;
@@ -155,7 +156,7 @@ a {
   border-radius: 2px;
   box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.6);
 }
-a:hover, a:active, a:focus {
+a.gallery-a:hover, a.gallery-a:active, a.gallery-a:focus {
   background: #32408f;
   color: #FFFFFF;
   text-decoration: none;
@@ -307,9 +308,30 @@ function getPostTime(unix_timestamp){
 </script>
 </head>
 <body>
-<header>
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <a href="#" class="navbar-brand">Treeplant</a>
+      <button class="navbar-toggle" data-toggle="collapse" data-target=".myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="index.php">Home</a></li>
+        <li><a href="profile.php">Profile</a></li>
+        <li class="active"><a href="#">Gallery</a></li>
+        <li><a href="aboutus.php">About Us</a></li>
+        <li><a href="logout.php">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<header class="gallery-header">
   <div class="container text-center">
-    <h1>Welcome to Gallery</h1>
+    <h1 class="gallery-h1">Welcome to Gallery</h1>
     <p>See the greenery spread!</p>
   </div>
 </header>
@@ -321,8 +343,6 @@ function getPostTime(unix_timestamp){
   $i = 0;
   while($row = $rs->fetch_assoc()){
     $i++;
-    if($i%6 == 0)
-      break;
     $sql = "SELECT fb_name from user where fb_id=".$row['fb_id'];
     $rs2 = $conn->query($sql);
     $name = $rs2->fetch_assoc();
@@ -338,7 +358,7 @@ function getPostTime(unix_timestamp){
         </div>
         <div class="date"><?php $date = new DateTime();$date->setTimestamp($row['timestamp']);echo $date->format('H:i Y-m-d')?></div>
         <p><?php echo $row['description'];?></p>
-        <a class="bnt-more" href="content.php?contentId=<?php echo $row['id'];?>">More</a>
+        <a class="gallery-a bnt-more" href="content.php?contentId=<?php echo $row['id'];?>">More</a>
       </div>
     </div>   
 
@@ -351,21 +371,21 @@ function getPostTime(unix_timestamp){
 </section>
 <div style="height: auto;margin:80px 0 0;width: 100%;text-align: center;">
 <?php
- if( $page > 0 ) {
-            $last = $page - 2;
-            echo "<a href = \"$_PHP_SELF?page=$last\">Last 5 Posts</a> |";
-            echo "<a href = \"$_PHP_SELF?page=$page\">Next 5 Posts</a>";
-         }else if( $page == 0 ) {
-            echo "<a href = \"$_PHP_SELF?page=$page\">Next 5 Posts</a>";
-         }else if( $left_rec < $rec_limit ) {
-            $last = $page - 2;
-            echo "<a href = \"$_PHP_SELF?page=$last\">Last 5 Posts</a>";
-         }
+  if( $page == 0 ) {
+    echo "<a class='gallery-a' href = \"$_PHP_SELF?page=$page\">Next 5 Posts</a>";
+  }else if( $left_rec < $rec_limit ) {
+    // $last = $page - 2;
+    // echo "<a class='gallery-a' href = \"$_PHP_SELF?page=$last\">Last 5 Posts</a>";
+  }else if( $page > 0 ) {
+    $last = $page - 2;
+    echo "<a class='gallery-a' href = \"$_PHP_SELF?page=$last\">Last 5 Posts</a> |";
+    echo "<a class='gallery-a' href = \"$_PHP_SELF?page=$page\">Next 5 Posts</a>";
+  }
          
-         mysqli_close($conn);
+  mysqli_close($conn);
 ?>
 </div>
-<a href="index.php" style="background: none;padding: 0;transform: translate(43vw,0%);"><button class="btn btn-lg btn-primary">Start planting trees</button></a>
+<a class="gallery-a" href="index.php" style="background: none;padding: 0;transform: translate(43vw,0%);"><button class="btn btn-lg btn-primary">Start planting trees</button></a>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>

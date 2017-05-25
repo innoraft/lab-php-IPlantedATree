@@ -8,6 +8,7 @@ $contentId = $_GET['contentId'];
 $sql = "SELECT * FROM `userContent` WHERE id='".$contentId."'";
 $rs = $conn->query($sql);
 $row = mysqli_fetch_array($rs);
+$fb_id = $row['fb_id'];
 $description = $row['description'];
 $target_file = $row['picture_url'];
 
@@ -222,7 +223,14 @@ if(isset($_SESSION['facebook_access_token'])){
 <div  class="row" id="profile_row">
   <div class="col-md-12 border-negative profile-col-2 rem-padding-right">
     <div id="main-container" class="expandUp">
-      <span>POST PREVIEW</span>
+      <span>I Planted A Tree</span><br>
+      <span>@<?php 
+      include('conn.php');
+      $sql = "SELECT fb_name from user where fb_id=$fb_id";
+      $rs = $conn->query($sql);
+      $row = $rs->fetch_assoc();
+      echo $row['fb_name'];
+      ?></span>
     <form id="uploadForm" name="uploadForm" action="upload.php" method="POST"> <!-- Upload form begins-->
       <div id="imageContainer">
         <img id="imagePreview" name="imagePreview" src="<?php echo $target_file; ?>" alt="your image" width="400" height="300" />

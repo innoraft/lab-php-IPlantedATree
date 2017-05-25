@@ -1,5 +1,7 @@
 <?php
 session_start();
+if(!array_key_exists('facebook_access_token', $_SESSION))
+  header('location: index.php');
 ?>
 <?php
 include('conn.php');
@@ -75,6 +77,7 @@ $userId = $userNode->getId();
       <ul class="nav navbar-nav navbar-right">
         <li><a href="index.php">Home</a></li>
         <li class="active"><a href="#">Profile</a></li>
+        <li><a href="gallery.php">Gallery</a></li>
         <li><a href="aboutus.php">About Us</a></li>
         <li><a href="logout.php">Logout</a></li>
       </ul>

@@ -25,11 +25,15 @@ session_start();
     </div>
     <div class="collapse navbar-collapse myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="homepage.php">Home</a></li>
-        <li><a href="profile.php">Profile</a></li>
+        <li><a href="index.php">Home</a></li>
+        <?php if(isset($_SESSION['facebook_access_token'])) 
+          echo '<li><a href="profile.php">Profile</a></li>';
+        ?>
         <li><a href="gallery.php">Gallery</a></li>
         <li class="active"><a href="aboutus.php">About Us</a></li>
-        <li><a href="<?php echo $_SESSION['logoutUrl'];?>">Logout</a></li>
+        <?php if(isset($_SESSION['facebook_access_token'])) 
+          echo '<li><a href="logout.php">Logout</a></li>';
+        ?>
       </ul>
     </div>
   </div>

@@ -74,6 +74,10 @@ $loginUrl = $helper->getLoginUrl('http://'.$_SERVER['SERVER_NAME'].'/callback5.p
         ?>
         <li><a href="gallery.php">Gallery</a></li>
         <li><a href="aboutus.php">About Us</a></li>
+        <?php
+          if(isset($_SESSION['facebook_access_token']))
+            echo '<li><a href="logout.php">Logout</a></li>';
+        ?>
       </ul>
     </div>
   </div>
