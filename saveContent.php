@@ -2,9 +2,11 @@
 session_start();
 $target_dir = "assets/uploads/";
 $date = new DateTime();
-$target_file = $target_dir . $date->getTimestamp() . trim(basename($_FILES["fileToUpload"]["name"]));
+$pattern = "/\s+/"; //one or more whitespaces
+$replacement = "";
+$target_file = $target_dir . $date->getTimestamp() . preg_replace($pattern,$replacement,basename($_FILES["fileToUpload"]["name"]));
 $_SESSION['target_file'] = $target_file;
-$fileName = basename($_FILES["fileToUpload"]["name"]);
+$fileName = preg_replace($pattern,$replacement,basename($_FILES["fileToUpload"]["name"]));
 $_SESSION['fileName'] = $fileName;
 
 $uploadOk = 1;

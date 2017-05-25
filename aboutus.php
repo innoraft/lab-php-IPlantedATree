@@ -28,6 +28,7 @@ session_start();
         <li><a href="index.php">Home</a></li>
         <?php if(isset($_SESSION['facebook_access_token'])) 
           echo '<li><a href="profile.php">Profile</a></li>';
+          echo '<li><a href="post.php">Post</a></li>';
         ?>
         <li><a href="gallery.php">Gallery</a></li>
         <li class="active"><a href="aboutus.php">About Us</a></li>

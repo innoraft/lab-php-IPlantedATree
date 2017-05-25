@@ -54,12 +54,36 @@ if(isset($_SESSION['facebook_access_token'])){
     <link href="https://fonts.googleapis.com/css?family=Alegreya:400,400i,700,700i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Rancho" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <script type="text/javascript">
-      var tagged_friends = '';
-    </script>
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <script type="text/javascript" src="scripts/js/homepage.js"></script>
-    <script type="text/javascript" src="scripts/js/showPreview.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+$('#tagged_friends').val('');
+var tagged_friends = '';
+    $(document).keypress(function(e) {
+        if(e.which == 13) {
+            e.preventDefault();
+        }
+    });
+
+  $('#friends').on('input', function() {
+      var userText = $(this).val();
+      $("#taggable_friends").find("option").each(function() {
+          if ($(this).val() == userText) {
+            var description = $('#description').html();
+            var thisVal = $(this).val();
+            description += " @"+thisVal;
+            $('#description').html(description);
+            $('#friends').val('');
+            tagged_friends  += ',' + ($(this).attr('id'));
+            this.remove();
+            console.log(tagged_friends);
+            $('#tagged_friends').val(tagged_friends);
+          }
+      })
+    });
+});
+    </script>
     <style>
 /* The Modal (background) */
 .modal {
@@ -209,6 +233,7 @@ if(isset($_SESSION['facebook_access_token'])){
         <li><a href="index.php">Home</a></li>
         <?php if(isset($_SESSION['facebook_access_token'])) 
           echo '<li><a href="profile.php">Profile</a></li>';
+          echo '<li><a href="post.php">Post</a></li>';
         ?>
         <li><a href="gallery.php">Gallery</a></li>
         <li><a href="aboutus.php">About Us</a></li>
@@ -259,14 +284,14 @@ if(isset($_SESSION['facebook_access_token'])){
     else
         $friendIDs =  $friendIDs.$friends[$count]['id'].',';
 
-    echo '<option id="'.$count.'" value="'.$friends[$count]['name'].'"><img src="'.$friends[$count]['picture']['url'].'">'.$friends[$count]['name']."</option>";   
+    echo '<option id="'.$count.'" value="'.$friends[$count]['name'].'">'.$friends[$count]['name']."</option>";   
       
     $count++;
   }
   echo ' <!--[if lte IE 9]></select><![endif]-->';
   echo '</datalist>';
   echo '      <br>
-<input type="hidden" id="tagged_friends"  name="tagged_friends" value="X">
+<input type="hidden" id="tagged_friends"  name="tagged_friends" value="A">
       <button id="showPreview-submit" type="button"  class="btn btn-primary btn-lg btn-custom" onclick="formSubmit()">
 <i class="fa fa-facebook fa-lg" aria-hidden="true"></i><div class="share-button"></div>Share</button>
       
