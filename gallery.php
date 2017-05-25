@@ -162,6 +162,10 @@ a.gallery-a:hover, a.gallery-a:active, a.gallery-a:focus {
   text-decoration: none;
 }
 
+.gallery-h2-name{
+  text-shadow: 2px 2px 2px #000;
+}
+
 .timeline-card {
   padding: 0 !important;
 }
@@ -232,6 +236,7 @@ blockquote {
     border-width: 10px 15px 10px 0;
     border-color: transparent #f5f5f5 transparent transparent;
   }
+
 }
     
   </style>
@@ -355,9 +360,9 @@ function getPostTime(unix_timestamp){
                                                             else  
                                                                echo 'fadeInRight'?>">
         <div class="timeline-img-header" style="background-image: url('<?php echo $row["picture_url"];?>');">
-          <h2><?php echo $name['fb_name']?></h2>
+          <h2 class="gallery-h2-name"><?php echo $name['fb_name']?></h2>
         </div>
-        <div class="date"><?php $date = new DateTime();$date->setTimestamp($row['timestamp']);echo $date->format('H:i Y-m-d')?></div>
+        <div class="date"><?php $date = new DateTime();$date->setTimestamp($row['timestamp']);echo $date->format('d-m-Y H:i')?></div>
         <p><?php echo $row['description'];?></p>
         <a class="gallery-a bnt-more" href="content.php?contentId=<?php echo $row['id'];?>">More</a>
       </div>
