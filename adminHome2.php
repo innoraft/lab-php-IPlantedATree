@@ -139,9 +139,11 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
 <script type="text/javascript">
   google.charts.load('current', {packages: ['corechart']});
   google.charts.setOnLoadCallback(drawChart);
-
+var data;
+var options;
+var chart;
  function drawChart() {
-      var data = google.visualization.arrayToDataTable([
+      data = google.visualization.arrayToDataTable([
       	['DAY', 'Posts', { role: 'style' } ],
       	<?php
 			for($i=$noOfDays ; $i>=0 ; $i--){
@@ -149,14 +151,15 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
 				echo "['".$date->format('d/M/y')."',".$postCount[$i]['posts'].",'color:#d".$i*$i."e'],";
 			}
       	?>
-        // ['Week', 'Posts', { role: 'style' } ],
+        
+      ]);
+// ['Week', 'Posts', { role: 'style' } ],
         // ['2010', 10, 'color: gray'],
         // ['2020', 14, 'color: #76A7FA'],
         // ['2030', 16, 'opacity: 0.2'],
         // ['2040', 22, 'stroke-color: #703593; stroke-width: 4; fill-color: #C5A5CF'],
         // ['2050', 28, 'stroke-color: #871B47; stroke-opacity: 0.6; stroke-width: 8; fill-color: #BC5679; fill-opacity: 0.2']
-      ]);
- var options = {
+ options = {
         title: 'ALL USERS POSTS STATS',
         annotations: {
           alwaysOutside: true,
@@ -180,7 +183,7 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
       };
 
       // Instantiate and draw the chart.
-      var chart = new google.visualization.ColumnChart(document.getElementById('myPieChart'));
+      chart = new google.visualization.ColumnChart(document.getElementById('myPieChart'));
       chart.draw(data, options);
 }
 
@@ -215,16 +218,26 @@ $("input[type='submit']").on("click", function(event){
 function changeDateValues(){
 		var startDate = document.getElementById("startDate").value;
 		var endDate = document.getElementById("endDate").value;
-		console.log(startDate);
-		console.log(endDate);
+		var noOfDays = endDate.getDate() - startDate.getDate();
+
+		var dateComponentArray =  startDate.split("-");
+		startDate = dateComponentArray[1] + "-" + dateComponentArray[2] + "-" + dateComponentArray[0];
+		startDate = new Date(startDate).getTime()/1000;
+		startDate += 5*60*60 + 30*60;
+		
+		dateComponentArray = endDate.split("-");
+		endDate = dateComponentArray[1] + "-" + dateComponentArray[2] + "-" + dateComponentArray[0];
+		endDate = new Date(endDate).getTime()/1000;
+		endDate += 5*60*60 + 30*60;
+		
         var request = $.ajax({
           url: "getChartData.php",
           method: "POST",
-          data : {'startDate' : startDate , 'endDate' : endDate}
+          data : {'startDate' : startDate , 'endDate' : endDate , 'noOfDays' : noOfDays}
         });
          
         request.done(function( response ) {
-           console.log("hi" + response);
+           console.log(response);
            response = JSON.parse("["+ response +"]");
            response.unshift(["DAY", "Posts", { role: "style" } ]);
            console.log(response);
