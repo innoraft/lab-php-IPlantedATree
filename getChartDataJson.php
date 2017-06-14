@@ -45,10 +45,29 @@ for($j=$noOfDays; $j>=0; $j--){
 		
 }
 //echo "\n".$noOfDays;
+// for($i=$noOfDays ; $i>=0 ; $i--){
+// 	$date->setTimestamp($postCount[$i]['day']);
+// 	array_push($returnArray, [$date->format('d/M/y'),$postCount[$i]['posts'],"color:#aaa;opacity:0.7;stroke-color:#aaa;stroke-width:4"]);
+// 	// echo "['".$date->format('d/M/y')."',".$postCount[$i]['posts'].",'color:#d".$i*$i."e'],";
+// }
+// $returnArray = json_encode($returnArray);
+// print_r($returnArray);
+$returnArray = array();
+$returnArray['cols'] = array(
+					array('id'=>'DAY' , 'label'=>'DAY' , 'type'=>'string'),
+					array('id'=>'Posts', 'label'=>'Posts' , 'type'=>'number')
+						);
+$returnArray['rows'] = array();
+
+// print_r($returnArray['rows']);
 for($i=$noOfDays ; $i>=0 ; $i--){
 	$date->setTimestamp($postCount[$i]['day']);
-	array_push($returnArray, [$date->format('d/M/y'),$postCount[$i]['posts'],"color:#aaa;opacity:0.7;stroke-color:#aaa;stroke-width:4"]);
-	// echo "['".$date->format('d/M/y')."',".$postCount[$i]['posts'].",'color:#d".$i*$i."e'],";
+	$returnArray['rows'][$i] = array(
+									"c"=>array(
+										array("v"=>$date->format('d/M/y'),"f"=>"null"),
+										array("v"=>$postCount[$i]['posts'],"f"=>"null")
+									)
+								);
 }
 $returnArray = json_encode($returnArray);
 print_r($returnArray);

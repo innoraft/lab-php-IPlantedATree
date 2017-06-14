@@ -143,18 +143,22 @@ var data;
 var options;
 var chart;
  function drawChart() {
-   //    data = google.visualization.arrayToDataTable([
-   //    	['DAY', 'Posts', { role: 'style' } ],
-   //    	<?php
-			// for($i=$noOfDays ; $i>=0 ; $i--){
-			// 	$date->setTimestamp($postCount[$i]['day']);
-			// 	echo "['".$date->format('d/M/y')."',".$postCount[$i]['posts'].",'color:#d".$i*$i."e'],";
-			// }
-   //    	?>
+ 		// data = google.visualization.arrayToDataTable([
+ 		// 	['DAY','Posts',{role:'style'}],
+ 		// 	[0,0,0]
+ 		// ]);
+      data = google.visualization.arrayToDataTable([
+      	['DAY', 'Posts', { role: 'style' } ],
+      	<?php
+			for($i=$noOfDays ; $i>=0 ; $i--){
+				$date->setTimestamp($postCount[$i]['day']);
+				echo "['".$date->format('d/M/y')."',".$postCount[$i]['posts'].",'color:#d".$i*$i."e'],";
+			}
+      	?>
         
-   //    ]);
+      ]);
 // ['Week', 'Posts', { role: 'style' } ],
-        // ['2010', 10, 'color: gray'],
+//         ['2010', 10, 'color: gray'],
         // ['2020', 14, 'color: #76A7FA'],
         // ['2030', 16, 'opacity: 0.2'],
         // ['2040', 22, 'stroke-color: #703593; stroke-width: 4; fill-color: #C5A5CF'],
@@ -166,8 +170,8 @@ var chart;
           textStyle: {
             fontSize: 14,
             color: '#000',
-            auraColor: 'none'
-          }
+            auraColor: 'none',
+          },
         },
         hAxis: {
           title: 'DAY OF WEEK',
@@ -179,7 +183,12 @@ var chart;
         },
         vAxis: {
           title: 'NUMBER OF POSTS'
-        }
+        },
+         animation : {
+         		startup : true,
+            	duration:1000,
+            	easing:'linear'
+            }
       };
 
       // Instantiate and draw the chart.
@@ -188,7 +197,7 @@ var chart;
 }
 
 $(window).resize(function(){
-	drawChart();
+	chart.draw(data,options);
 });
 </script>
 </head>
@@ -234,21 +243,27 @@ function changeDateValues(){
 		endDate += 5*60*60 + 30*60;
 		
         var request = $.ajax({
-          url: "getChartData.php",
+          url: "getChartDataJson.php",
           method: "POST",
           data : {'startDate' : startDate , 'endDate' : endDate , 'noOfDays' : noOfDays}
         });
          
-        request.done(function( response ) {
-           response = JSON.parse("["+ response +"]");
-           var dataArray = [];
-           for(var i=0; i<response[0].length; i++){
-           		dataArray.push(response[0][i]);
-           }
-           dataArray.unshift(["DAY", "Posts", { role: "style" } ]);
-           console.log(dataArray);
-           data = google.visualization.arrayToDataTable(dataArray);
-           drawChart();
+        // request.done(function( response ) {
+        //    console.log(response);
+        //    response = JSON.parse("["+ response +"]");
+        //    var dataArray = [];
+        //    for(var i=0; i<response[0].length; i++){
+        //    		dataArray.push(response[0][i]);
+        //    }
+        //    dataArray.unshift(["DAY", "Posts", { role: "style" } ]);
+        //    console.log(dataArray);
+        //    data = google.visualization.arrayToDataTable(dataArray);
+     	  //  chart = new google.visualization.ColumnChart(document.getElementById('myPieChart'));
+      	 //   chart.draw(data, options);
+        // });
+
+        request.done(function(response){
+        	
         });
          
         request.fail(function( jqXHR, textStatus ) {
