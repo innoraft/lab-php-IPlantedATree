@@ -141,17 +141,13 @@ $("input[type='submit']").on("click", function(event){
 function changeDateValues(){
 		var startDate = document.getElementById("startDate").value;
 		var endDate = document.getElementById("endDate").value;
-		var noOfDays = 0;// = endDate.getDate() - startDate.getDate();
 
 		var dateComponentArray =  startDate.split("-");
-		noOfDays -= parseInt(dateComponentArray[2]);
 		startDate = dateComponentArray[1] + "-" + dateComponentArray[2] + "-" + dateComponentArray[0];
 		startDate = new Date(startDate).getTime()/1000;
 		startDate += 5*60*60 + 30*60;
 		
 		dateComponentArray = endDate.split("-");
-		noOfDays += parseInt(dateComponentArray[2]) + 1; // since noOfDays = -startDay
-		console.log(noOfDays);
 
 		endDate = dateComponentArray[1] + "-" + dateComponentArray[2] + "-" + dateComponentArray[0];
 		endDate = new Date(endDate).getTime()/1000;
@@ -159,7 +155,7 @@ function changeDateValues(){
 		console.log(endDate);
 		
         var request = $.ajax({
-          url: "getChartDataJson2.php",
+          url: "getChartDataJson3.php",
           method: "POST",
           data : {'startDate' : startDate , 'endDate' : endDate}
         });
