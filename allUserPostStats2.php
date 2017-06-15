@@ -9,8 +9,7 @@ $currSeconds = $date->format('s');
 $prevWeekTimestamp = $currTime - ($currHours*60*60 + $currMins*60 + $currSeconds + 518400); //518400=no of seconds in 6 days
 //$prevWeekTimestamp gets timestamp one week ago from 00:00 hours.
 $date->setTimestamp($prevWeekTimestamp);
-// $timeStampArray = array("7" => $prevWeekTimestamp + 0 * 86400,"6" => $prevWeekTimestamp + 1 * 86400,"5" => $prevWeekTimestamp + 2 * 86400,"4" => $prevWeekTimestamp + 3 * 86400, "3" => $prevWeekTimestamp + 4 * 86400, "2" => $prevWeekTimestamp +  5 * 86400, "1" => $prevWeekTimestamp + 6 * 86400);
-// $i = 1;
+
 
 ?>
 <?php
@@ -45,69 +44,7 @@ for($j=$noOfDays; $j>=0; $j--){
 	$firstTimestamp = $secondTimestamp;
 	$secondTimestamp = $secondTimestamp + 86400;
 }
-// $row = mysqli_fetch_array($rs);
-// echo ($row['timestamp']);
-// var_dump($timeStampArray);
-/*
-2nd attempt
-for($i=7; $i>=1; $i--){
-	echo "First = ".$firstTimestamp."  Second = ".$secondTimestamp."<br>";
-	$flagChanged = 0;
-	while($row = mysqli_fetch_array($rs)){
-		$flagChanged = 1;
-		if(($row['timestamp'] >= $firstTimestamp) && ($row['timestamp'] < $secondTimestamp)){
-			$count++;
-		}
-		else{
-			$timeStampArray[$i] = array("day"=>$firstTimestamp,"posts"=>$count);
-			break;
-		}
-	}
 
-	if($flagChanged == 0){
-		$timeStampArray[$i] = array("day"=>$firstTimestamp,"posts"=>0);
-	}
-	$firstTimestamp = $secondTimestamp;
-	$secondTimestamp = $firstTimestamp + 86400;
-	mysqli_data_seek($rs,0);
-	$count = 0;		
-}
-*/
-
-/* main code
-while($row = mysqli_fetch_array($rs)){
-	// $x = $date->setTimestamp($firstTimestamp);
-	// echo $x->format("d/M/y")."<br>";
-	if(($row['timestamp'] >= $firstTimestamp) && ($row['timestamp'] <= $secondTimestamp)){
-		$count++;
-	}
-	else{
-		$days = $date->setTimestamp($firstTimestamp);
-		$timeStampArray[$i] = array("day"=>$days->getTimestamp(),"posts"=>$count);
-		var_dump($timeStampArray[$i]);
-		$count = 1; //since $row['timestamp'] is already equal to the next value
-		$day++;
-		$firstTimestamp = $secondTimestamp;
-		$secondTimestamp = $prevWeekTimestamp + ($day) * 86400;
-		$i--;
-	}
-}
-
-if($i > 1){
-	while($i >= 1){
-		$days = $date->setTimestamp($firstTimestamp);
-		$days->format('d/M/y');
-		$timeStampArray[$i] = array("day"=>$days->format('d/m/y'),"posts"=>0);
-		// echo $i." = ".$timeStampArray[$i]["day"]."<br>";
-		// $timeStampArray[$i] = array("day"=>$firstTimestamp,"posts"=>0);
-		$day++;
-		$firstTimestamp = $secondTimestamp;
-		$secondTimestamp = $prevWeekTimestamp + ($day) * 86400;
-		$i--;
-	}
-}
-var_dump($timeStampArray);
-*/
 ?>
 <!DOCTYPE html>
 <html>
@@ -143,18 +80,15 @@ var data;
 var options;
 var chart;
  function drawChart() {
- 		// data = google.visualization.arrayToDataTable([
- 		// 	['DAY','Posts',{role:'style'}],
- 		// 	[0,0,0]
- 		// ]);
       data = google.visualization.arrayToDataTable([
-      	['DAY', 'Posts', { role: 'style' } ],
-      	<?php
-			for($i=$noOfDays ; $i>=0 ; $i--){
-				$date->setTimestamp($postCount[$i]['day']);
-				echo "['".$date->format('d/M/y')."',".$postCount[$i]['posts'].",'color:#d".$i*$i."e'],";
-			}
-      	?>
+      	['DAY', 'Posts'],
+      	[0,0]
+   //    	<?php
+			// for($i=$noOfDays ; $i>=0 ; $i--){
+			// 	$date->setTimestamp($postCount[$i]['day']);
+			// 	echo "['".$date->format('d/M/y')."',".$postCount[$i]['posts'].",'color:#0".$i."f'],";
+			// }
+   //    	?>
         
       ]);
 // ['Week', 'Posts', { role: 'style' } ],
@@ -169,13 +103,13 @@ var chart;
           alwaysOutside: true,
           textStyle: {
             fontSize: 14,
-            color: '#000',
+            color: '#eee',
             auraColor: 'none',
           },
         },
         hAxis: {
           title: 'DAY OF WEEK',
-          format: 'h:mm a',
+          // format: 'h:mm a',
           viewWindow: {
             min: [7, 30, 0],
             max: [17, 30, 0]
@@ -192,7 +126,7 @@ var chart;
       };
 
       // Instantiate and draw the chart.
-      chart = new google.visualization.ColumnChart(document.getElementById('myPieChart'));
+      chart = new google.visualization.ColumnChart(document.getElementById('myChart'));
       chart.draw(data, options);
 }
 
@@ -202,24 +136,18 @@ $(window).resize(function(){
 </script>
 </head>
 <body>
-
-<div id="myPieChart" style="height: 500px;margin: 0 auto;"></div>
 <form method="get" action="adminHome.php">
 	<label>Start Date</label><input type="date" id="startDate" name="startDate" size="20" /><br>
 	<label>End Date</label><input type="date" id="endDate" name="endDate" size="20" /><br>
 	<input type="submit" value="Submit" name="submit"></p>
 </form>
+<div id="myChart" style="height: 500px;margin: 0 auto;"></div>
+
 <script type="text/javascript">
 
 $("input[type='submit']").on("click", function(event){
         event.preventDefault();
         changeDateValues();
-        // stops the form from resetting after this function
-        //$(this).closest('form').get(0).reset();
-        // resets the form before continuing the function
-        // $('#imagePreview').attr('src','assets/images/placeholder.jpg');
-        // $('#submit').attr('disabled','true');
-        // executes after the form has been reset
     });
 
 </script>
@@ -236,34 +164,25 @@ function changeDateValues(){
 		startDate += 5*60*60 + 30*60;
 		
 		dateComponentArray = endDate.split("-");
-		noOfDays += parseInt(dateComponentArray[2]); // since noOfDays = -startDay
+		noOfDays += parseInt(dateComponentArray[2]) + 1; // since noOfDays = -startDay
+		console.log(noOfDays);
 
 		endDate = dateComponentArray[1] + "-" + dateComponentArray[2] + "-" + dateComponentArray[0];
 		endDate = new Date(endDate).getTime()/1000;
-		endDate += 5*60*60 + 30*60;
+		endDate += 5*60*60 + 30*60 + 86399; //86399 because posts till midnight of endDate are considered
+		console.log(endDate);
 		
         var request = $.ajax({
-          url: "getChartDataJson.php",
+          url: "getChartDataJson2.php",
           method: "POST",
           data : {'startDate' : startDate , 'endDate' : endDate , 'noOfDays' : noOfDays}
         });
-         
-        // request.done(function( response ) {
-        //    console.log(response);
-        //    response = JSON.parse("["+ response +"]");
-        //    var dataArray = [];
-        //    for(var i=0; i<response[0].length; i++){
-        //    		dataArray.push(response[0][i]);
-        //    }
-        //    dataArray.unshift(["DAY", "Posts", { role: "style" } ]);
-        //    console.log(dataArray);
-        //    data = google.visualization.arrayToDataTable(dataArray);
-     	  //  chart = new google.visualization.ColumnChart(document.getElementById('myPieChart'));
-      	 //   chart.draw(data, options);
-        // });
 
         request.done(function(response){
-        	
+        	console.log(response);
+        	data = new google.visualization.DataTable(response);
+        	console.log(data);
+        	chart.draw(data, options);
         });
          
         request.fail(function( jqXHR, textStatus ) {

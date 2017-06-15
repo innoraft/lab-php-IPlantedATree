@@ -39,22 +39,14 @@ for($j=$noOfDays-1; $j>=0; $j--){
 		$count++;
 		$arrayPos++;
 	}
-	$postCount[$j] = array("day"=>$firstTimestamp,"posts"=>$count);
+	$postCount[$noOfDays-$j-1] = array("day"=>$firstTimestamp,"posts"=>$count);
 	$firstTimestamp = $secondTimestamp;
 	$secondTimestamp = $secondTimestamp + 86400;
 		
 }
-// echo "Printing postcount";
 // var_dump($postCount);
-// print_r($postCount);die();
-//echo "\n".$noOfDays;
-// for($i=$noOfDays ; $i>=0 ; $i--){
-// 	$date->setTimestamp($postCount[$i]['day']);
-// 	array_push($returnArray, [$date->format('d/M/y'),$postCount[$i]['posts'],"color:#aaa;opacity:0.7;stroke-color:#aaa;stroke-width:4"]);
-// 	// echo "['".$date->format('d/M/y')."',".$postCount[$i]['posts'].",'color:#d".$i*$i."e'],";
-// }
-// $returnArray = json_encode($returnArray);
-// print_r($returnArray);
+
+
 $returnArray = array();
 $returnArray['cols'] = array(
 					array('id'=>'DAY' , 'label'=>'DAY' , 'type'=>'string'),
