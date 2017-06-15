@@ -79,6 +79,8 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
 var data;
 var options;
 var chart;
+
+
  function drawChart() {
       data = google.visualization.arrayToDataTable([
       	['DAY', 'Posts'],
@@ -108,12 +110,7 @@ var chart;
           },
         },
         hAxis: {
-          title: 'DAY OF WEEK',
-          // format: 'h:mm a',
-          viewWindow: {
-            min: [7, 30, 0],
-            max: [17, 30, 0]
-          }
+          title: 'DAY OF WEEK'
         },
         vAxis: {
           title: 'NUMBER OF POSTS'
@@ -124,7 +121,7 @@ var chart;
             	easing:'linear'
             }
       };
-
+      
       // Instantiate and draw the chart.
       chart = new google.visualization.ColumnChart(document.getElementById('myChart'));
       chart.draw(data, options);

@@ -49,17 +49,21 @@ for($j=$noOfDays-1; $j>=0; $j--){
 
 $returnArray = array();
 $returnArray['cols'] = array(
-					array('id'=>'DAY' , 'label'=>'DAY' , 'type'=>'string'),
+					array('id'=>'DAY' , 'label'=>'DAY' , 'type'=>'date'),
 					array('id'=>'Posts', 'label'=>'Posts' , 'type'=>'number')
 						);
 $returnArray['rows'] = array();
 
 // print_r($returnArray['rows']);
 for($i=0 ; $i<=$noOfDays-1 ; $i++){
-	$date->setTimestamp($postCount[$i]['day']);
+	// $date->setTimestamp($postCount[$i]['day']);
+	$phpDate = getdate($postCount[$i]['day']);
+	$year = $phpDate['year'];
+	$day = $phpDate['mday'];
+	$month = $phpDate['mon']-1;
 	$returnArray['rows'][$i] = array(
 									"c"=>array(
-										array("v"=>$date->format('d/M/y'),"f"=>$date->format('d/M/y')),
+										array("v"=>"Date($year, $month, $day)","f"=>"Date($year, $month, $day)"),
 										array("v"=>$postCount[$i]['posts'],"f"=>$postCount[$i]['posts'])
 									)
 								);
