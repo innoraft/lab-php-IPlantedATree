@@ -50,6 +50,13 @@ for($j=$noOfDays; $j>=0; $j--){
 <html>
 <head>
 	<title>Admin Home</title>
+<!-- Bootstrap scripts -->
+	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ <!-- Bootstrap scripts end -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -112,8 +119,8 @@ var chart;
       };
       
       // Instantiate and draw the chart.
-      chart = new google.visualization.ColumnChart(document.getElementById('myChart'));
-      chart.draw(data, options);
+      // chart = new google.visualization.ColumnChart(document.getElementById('allUsersPostsChart'));
+      // chart.draw(data, options);
 }
 
 $(window).resize(function(){
@@ -125,13 +132,115 @@ $(window).resize(function(){
 <form method="get" action="adminHome.php">
 	<label>Start Date</label><input type="date" id="startDate" name="startDate" size="20" /><br>
 	<label>End Date</label><input type="date" id="endDate" name="endDate" size="20" /><br>
-	<input type="submit" value="Submit" name="submit"></p>
+	<input id="dateSubmit" type="Submit" value="Submit" name="dateSubmit"></p>
 </form>
-<div id="myChart" style="height: 500px;margin: 0 auto;"></div>
+<div>
+	<div id="allUsersPostsChart" style="height: 500px;margin: 0 auto;"></div>
+</div>
+<div style="margin-top: 100px;border-top: 1px solid #000;">
+	<form id="topUsers">
+		<input id="topPostsNumber" type="number" name="topPostsNumber" >
+		<input id="submitTopPosts" type="submit" name="submitTopPosts">
+	</form>	
+	<div id="topUsersTableDiv" class="container"></div>
+</div>
+
+
+
+
+<script type="text/javascript">
+$("#submitTopPosts").on("click",function(event){
+	event.preventDefault();
+	getNewTopStats();
+});
+</script>
 
 <script type="text/javascript">
 
-$("input[type='submit']").on("click", function(event){
+function createTable(tableData){
+	var isExistsTable = document.getElementById("topUsersTable");
+	if(isExistsTable)
+		isExistsTable.parentNode.removeChild(isExistsTable);
+
+	var topUsersTableDiv = document.getElementById("topUsersTableDiv");
+	var topUsersTable = document.createElement('TABLE');
+	topUsersTable.setAttribute("id","topUsersTable");
+	topUsersTable.setAttribute("class","table table-bordered table-striped table-hover table-responsive");
+	topUsersTable.border = 1;
+
+	var topUsersTableHead = document.createElement("THEAD");
+	topUsersTable.appendChild(topUsersTableHead);
+	var tr = document.createElement("TR");
+	topUsersTableHead.appendChild(tr);
+	
+	var th = document.createElement("TH");
+	tr.appendChild(th);
+	th.appendChild(document.createTextNode("Name"));
+	
+	th = document.createElement("TH");
+	tr.appendChild(th);
+	th.appendChild(document.createTextNode("Posts"));
+	
+	th = document.createElement("TH");
+	tr.appendChild(th);
+	th.appendChild(document.createTextNode("Graph"));
+
+	var topUsersTableBody = document.createElement("TBODY");
+	topUsersTable.appendChild(topUsersTableBody);
+
+	for(var i=0;i<tableData.length;i++){
+		var tr = document.createElement("TR");
+		topUsersTableBody.appendChild(tr);
+
+		for(var j=0;j<3;j++){
+			var td = document.createElement("TD");
+			tr.appendChild(td);
+			if(j == 0)
+				td.appendChild(document.createTextNode(tableData[i]['name']));
+			else if(j == 1)
+				td.appendChild(document.createTextNode(tableData[i]['posts']));
+			else if(j == 2)
+				td.appendChild(document.createTextNode(tableData[i]['id']));
+		}	
+	}	
+	topUsersTableDiv.appendChild(topUsersTable);
+}
+
+function getNewTopStats(){
+	var topPostsNumber = document.getElementById("topPostsNumber").value;
+	var request = $.ajax({
+					url : 'getTopUsersData.php',
+					method : 'POST',
+					data : {'topPostsNumber': topPostsNumber}
+				});
+
+	
+	request.done(function(response){
+		console.log(response);
+		response = JSON.parse(response);
+		console.log(response);
+		createTable(response);
+	});
+    
+    request.fail(function( jqXHR, textStatus ) {
+        console.log("Could not successfully complete AJAX request!");
+    });
+
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+
+$("#dateSubmit").on("click", function(event){
         event.preventDefault();
         changeDateValues();
     });
