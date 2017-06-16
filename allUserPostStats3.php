@@ -86,16 +86,37 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
 var data;
 var options;
 var chart;
+var options2 = {
+        title: 'User Posts v/s Time',
+        annotations: {
+          alwaysOutside: true,
+          textStyle: {
+            fontSize: 14,
+            color: '#eee',
+            auraColor: 'none',
+          },
+        },
+        hAxis: {
+          title: 'NUMBER OF POSTS'
+        },
+        vAxis: {
+          title: 'DAY OF MONTH'
+        },
+         animation : {
+         		startup : true,
+            	duration:1000,
+            	easing:'linear'
+            }
+ };
 
-
- function drawChart() {
-      data = google.visualization.arrayToDataTable([
+function drawChart() {
+     data = google.visualization.arrayToDataTable([
       	['DAY', 'Posts'],
       	[0,0]
        ]);
 
 
- options = {
+ 	options = {
         title: 'ALL USERS POSTS STATS',
         annotations: {
           alwaysOutside: true,
@@ -119,8 +140,8 @@ var chart;
       };
       
       // Instantiate and draw the chart.
-      // chart = new google.visualization.ColumnChart(document.getElementById('allUsersPostsChart'));
-      // chart.draw(data, options);
+      chart = new google.visualization.ColumnChart(document.getElementById('allUsersPostsChart'));
+      chart.draw(data, options);
 }
 
 $(window).resize(function(){
@@ -137,9 +158,9 @@ $(window).resize(function(){
 <div>
 	<div id="allUsersPostsChart" style="height: 500px;margin: 0 auto;"></div>
 </div>
-<div style="margin-top: 100px;border-top: 1px solid #000;">
+<div style="margin-top: 100px;margin-bottom:50px;border-top: 1px solid #000;">
 	<form id="topUsers">
-		<input id="topPostsNumber" type="number" name="topPostsNumber" >
+		<label>Enter number of users : </label><input id="topPostsNumber" type="number" name="topPostsNumber" >
 		<input id="submitTopPosts" type="submit" name="submitTopPosts">
 	</form>	
 	<div id="topUsersTableDiv" class="container"></div>
@@ -165,7 +186,7 @@ function createTable(tableData){
 	var topUsersTableDiv = document.getElementById("topUsersTableDiv");
 	var topUsersTable = document.createElement('TABLE');
 	topUsersTable.setAttribute("id","topUsersTable");
-	topUsersTable.setAttribute("class","table table-bordered table-striped table-hover table-responsive");
+	topUsersTable.setAttribute("class","table table-bordered table-hover table-responsive");
 	topUsersTable.border = 1;
 
 	var topUsersTableHead = document.createElement("THEAD");
@@ -183,7 +204,7 @@ function createTable(tableData){
 	
 	th = document.createElement("TH");
 	tr.appendChild(th);
-	th.appendChild(document.createTextNode("Graph"));
+	th.appendChild(document.createTextNode("Graph for past one month"));
 
 	var topUsersTableBody = document.createElement("TBODY");
 	topUsersTable.appendChild(topUsersTableBody);
@@ -200,9 +221,11 @@ function createTable(tableData){
 			else if(j == 1)
 				td.appendChild(document.createTextNode(tableData[i]['posts']));
 			else if(j == 2){
-				td.height = "80px";
+				// td.height = "80px";
 				var userGraphDiv = document.createElement("div");
 				userGraphDiv.setAttribute("id" , tableData[i]['id']);
+				userGraphDiv.setAttribute("style" , "width:800px;height:300px;border:1px solid #000;");
+				// userGraphDiv.setAttribute("style" , "width:100%;height:100%;");
 				getSingleUserPostData(tableData[i]['id']);
 				td.appendChild(userGraphDiv);
 				// td.appendChild(document.createTextNode(tableData[i]['id']));
@@ -224,7 +247,7 @@ function getSingleUserPostData(id){
 		// response = JSON.parse(response);
 		data = new google.visualization.DataTable(response);
       	var chart = new google.visualization.BarChart(document.getElementById(id));
-      	chart.draw(data, options);		
+      	chart.draw(data, options2);		
 	});
 
     request.fail(function( jqXHR, textStatus ) {
