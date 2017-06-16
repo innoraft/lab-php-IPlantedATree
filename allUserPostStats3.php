@@ -199,11 +199,37 @@ function createTable(tableData){
 				td.appendChild(document.createTextNode(tableData[i]['name']));
 			else if(j == 1)
 				td.appendChild(document.createTextNode(tableData[i]['posts']));
-			else if(j == 2)
-				td.appendChild(document.createTextNode(tableData[i]['id']));
+			else if(j == 2){
+				td.height = "80px";
+				var userGraphDiv = document.createElement("div");
+				userGraphDiv.setAttribute("id" , tableData[i]['id']);
+				getSingleUserPostData(tableData[i]['id']);
+				td.appendChild(userGraphDiv);
+				// td.appendChild(document.createTextNode(tableData[i]['id']));
+			}
 		}	
 	}	
 	topUsersTableDiv.appendChild(topUsersTable);
+}
+
+function getSingleUserPostData(id){
+	console.log(id);
+	var request = $.ajax({
+						url : 'getSingleUserPostData.php?fb_id='+id,
+						method : 'POST',
+						data : {'id' : id}
+					});
+
+	request.done(function(response){
+		// response = JSON.parse(response);
+		data = new google.visualization.DataTable(response);
+      	var chart = new google.visualization.BarChart(document.getElementById(id));
+      	chart.draw(data, options);		
+	});
+
+    request.fail(function( jqXHR, textStatus ) {
+        console.log("Could not successfully complete AJAX request!");
+    });	
 }
 
 function getNewTopStats(){
@@ -218,7 +244,7 @@ function getNewTopStats(){
 	request.done(function(response){
 		console.log(response);
 		response = JSON.parse(response);
-		console.log(response);
+		// console.log(response);
 		createTable(response);
 	});
     

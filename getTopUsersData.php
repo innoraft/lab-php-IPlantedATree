@@ -2,21 +2,23 @@
 
 include("conn.php");
 $number = $_POST['topPostsNumber'];
-$sql = "SELECT fb_id,count(id)
-		FROM userContent
+$sql = "SELECT user.fb_id, user.fb_name,count(id)
+		FROM userContent,user
+		WHERE user.fb_id=userContent.fb_id 
 		GROUP BY fb_id
-		ORDER BY count(id) DESC 
+		ORDER BY count(id) DESC
 ";
+
 if($number > 0)
 	$sql .= " LIMIT ".$number;
 
 $rs = $conn->query($sql);
+
 $i = 0;
 $fbId = array();
 
 while($row = mysqli_fetch_assoc($rs)){
-	// echo "ID : ".$row['fb_id']."  Posts : ";
-	// echo $row['count(id)']."<br>";
+	$fbId[$i]['name'] = $row['fb_name'];
 	$fbId[$i]['id'] = $row['fb_id'];
 	$fbId[$i]['posts'] = $row['count(id)'];
 	$i++;
@@ -32,13 +34,7 @@ $sql .= ")";
 $rs = $conn->query($sql);
 $conn->error;
 $i = 0;
-while($row = mysqli_fetch_assoc($rs)){
-	if($fbId[$i]['id'] == $row['fb_id']){
-		$fbId[$i]['name'] = $row['fb_name'];
-	}
 
-	$i++;
-}
 
 echo json_encode($fbId);
 
