@@ -60,5 +60,5 @@ $date->setTimestamp($date->getTimestamp() - $subVal);
 $date->setTimestamp($date->getTimestamp()-$monthDiff);
 
 
-
+$sql = "SELECT count(*) from userContent where fb_id=110799672811141";
 ?>

@@ -96,11 +96,11 @@ var options2 = {
             auraColor: 'none',
           },
         },
-        // hAxis: {
-        //   title: 'NUMBER OF POSTS'
-        // },
-        vAxis: {
+        hAxis: {
           title: 'NUMBER OF POSTS'
+        },
+        vAxis: {
+          title: 'DAY OF MONTH'
         },
          animation : {
          		startup : true,
@@ -165,10 +165,13 @@ $(window).resize(function(){
 		margin-bottom: 10px;
 	}
 	#singleUserPostStats{
-		/*display: none;*/
+		display: none;
 	}
-	#allUsersPostsStats{
-		
+	#allUserPostsStats{
+		display: none;
+	}
+	.margin1{
+		margin: 10px;
 	}
 </style>
 </head>
@@ -176,7 +179,20 @@ $(window).resize(function(){
 <div class="jumbotron jumbo-mod">
 	<h1>Admin Panel</h1>
 </div>
-<div id="allUsersPostsStats">
+<div class="container center">
+	<div class="row margin1">
+		<div class="col-md-12">
+			<button id="showAllUserPostStats" class="btn btn-lg">Show All Users Post Status</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 margin1">
+			<button id="showTopUserPostButton" class="btn btn-lg">Show top Users</button>
+		</div>
+	</div>
+</div>
+
+<div id="allUserPostsStats">
 	<div class="container date-container">
 		<form method="get" action="adminHome.php">
 			<div class="col-md-12 center col-mod">
@@ -274,7 +290,7 @@ function createTable(tableData){
 }
 
 function getSingleUserPostData(id){
-	// console.log(id);
+	console.log(id);
 	var request = $.ajax({
 						url : 'getSingleUserPostData.php?fb_id='+id,
 						method : 'POST',
@@ -283,9 +299,7 @@ function getSingleUserPostData(id){
 
 	request.done(function(response){
 		// response = JSON.parse(response);
-		console.log(response);
 		data = new google.visualization.DataTable(response);
-		// console.log(data);
       	var chart = new google.visualization.BarChart(document.getElementById(id));
       	chart.draw(data, options2);		
 	});
@@ -305,7 +319,7 @@ function getNewTopStats(){
 
 	
 	request.done(function(response){
-		// console.log(response);
+		console.log(response);
 		response = JSON.parse(response);
 		// console.log(response);
 		createTable(response);
@@ -350,7 +364,7 @@ function changeDateValues(){
 		endDate = dateComponentArray[1] + "-" + dateComponentArray[2] + "-" + dateComponentArray[0];
 		endDate = new Date(endDate).getTime()/1000;
 		endDate += 5*60*60 + 30*60 + 86399; //86399 because posts till midnight of endDate are considered
-		// console.log(endDate);
+		console.log(endDate);
 		
         var request = $.ajax({
           url: "getChartDataJson3.php",
@@ -359,9 +373,9 @@ function changeDateValues(){
         });
 
         request.done(function(response){
-        	// console.log(response);
+        	console.log(response);
         	data = new google.visualization.DataTable(response);
-        	// console.log(data);
+        	console.log(data);
         	chart.draw(data, options);
         });
          
@@ -369,6 +383,15 @@ function changeDateValues(){
           console.log("Could not successfully complete AJAX request!");
         });
 };	
+</script>
+<script type="text/javascript">
+	$('#showTopUserPostButton').on("click",function(event){
+		$('#singleUserPostStats').attr("style","display:block;");
+	});
+
+	$('#showAllUserPostStats').on("click",function(event){
+		$('#allUserPostsStats').attr("style","display:block;");
+	});
 </script>
 </body>
 </html>
