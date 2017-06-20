@@ -28,6 +28,8 @@ if(isset($_SESSION['facebook_access_token'])){
     echo 'Facebook SDK returned an error: ' . $e->getMessage();
     exit;
   }
+  // print_r($friends);
+
   $_SESSION['friends'] = $friends;
   $totalFriends = count($friends);
   $count = 0;
@@ -57,7 +59,9 @@ if(isset($_SESSION['facebook_access_token'])){
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <script type="text/javascript" src="scripts/js/homepage.js"></script>
     <script type="text/javascript">
+    var friendArray = new Array();
       $(document).ready(function(){
+        
 $('#tagged_friends').val('');
 var tagged_friends = '';
     $(document).keypress(function(e) {
@@ -75,15 +79,31 @@ var tagged_friends = '';
             description += " @"+thisVal;
             $('#description').html(description);
             $('#friends').val('');
-            tagged_friends  += ',' + ($(this).attr('id'));
+            friendArray.push($(this).attr('id'));
+            // tagged_friends  += ',' + ($(this).attr('id'));
             this.remove();
-            console.log(tagged_friends);
-            $('#tagged_friends').val(tagged_friends);
+            // console.log(tagged_friends);
+            // $('#tagged_friends').val(friendArray);
           }
       })
     });
 });
     </script>
+  <script type="text/javascript">
+function toObject(arr) {
+  var rv = {};
+  for (var i = 0; i < arr.length; ++i)
+    rv[i] = arr[i];
+  return rv;
+}
+
+  function formSubmit(){
+    var friendObj = toObject(friendArray);
+    friendObj = JSON.stringify(friendObj);
+    $('#tagged_friends').val(friendObj);
+    document.uploadForm.submit();
+  }
+</script>
     <style>
 /* The Modal (background) */
 .modal {
@@ -211,11 +231,6 @@ var tagged_friends = '';
   text-align: center;
 }
 </style>
-<script type="text/javascript">
-  function formSubmit(){
-    document.uploadForm.submit();
-  }
-</script>
 </head>
 <body>
 <div class="navbar navbar-inverse navbar-fixed-top">

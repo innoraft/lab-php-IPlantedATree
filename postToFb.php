@@ -3,7 +3,7 @@ session_start();
 require_once __DIR__ . '/vendor/autoload.php';
 $accessToken =  $_SESSION["facebook_access_token"];
 include('assets/config/fbCredentials.php');
-var_dump($_GET['tagged_friends']);
+
   try {
      $profile_request = $fb->get('/me?fields=name,id',$accessToken);
      $profile = $profile_request->getGraphNode()->asArray();
@@ -42,28 +42,20 @@ $friendID = $friends[0]['id'];
 /* getting friend name from temp access token*/
   
   $count = 0;
-  $friendIDs = '';
-    
-$tagged_friends = $_GET['tagged_friends'];
-$tagged_friends_length = strlen($tagged_friends);
+  $friendIDs = array();
+
+$tagged_friends = json_decode($_GET['tagged_friends'],true);
+$tagged_friends_length = count($tagged_friends);
 $count = 0;
 $count1 = 0;
 
 while($count < $tagged_friends_length){
-  if($tagged_friends[$count] != ','){
-    //$_SESSION[$tagged_friends[$count]]['id'];
-    echo "Tagged friends ".$tagged_friends[$count]."\n";
-    if($count1 == 0)
-      $friendIDs =  $_SESSION['friends'][$tagged_friends[$count]]['id'].',';
-    else if($count1 == $tagged_friends_length-1)
-      $friendIDs =  $friendIDs.$_SESSION['friends'][$tagged_friends[$count]]['id'];
-    else
-      $friendIDs =  $friendIDs.$_SESSION['friends'][$tagged_friends[$count]]['id'].',';
-
-    $count1++;
-  }
+  array_push($friendIDs, $_SESSION['friends'][$tagged_friends[$count]]['id']);
   $count++;
 }
+$friendIDs = implode(",", $friendIDs);
+print_r($friendIDs);
+
 
   $link = "http://".$_SERVER['SERVER_NAME']."/content.php?contentId=".$_SESSION['saveContentID'];
   $description = $_GET['description'];

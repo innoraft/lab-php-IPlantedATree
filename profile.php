@@ -86,7 +86,8 @@ $userId = $userNode->getId();
   </div>
 </div>
 
-<div  class="row" id="profile_row">
+
+<!-- <div  class="row" id="profile_row">
   <div class="col-md-12 border-negative profile-col-2 rem-padding-right">
     <div id="main-container" class="expandUp">
       <span>Choose your image for uploading</span>
@@ -108,7 +109,7 @@ $userId = $userNode->getId();
       </form>
     </div>
   </div>
-</div>
+</div> -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>
