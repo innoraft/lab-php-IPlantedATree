@@ -10,10 +10,12 @@ session_start();
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 <body>
 
-<div class="navbar navbar-inverse navbar-fixed-top">
+<div class="navbar navbar-inverse navbar-fixed-top" style="font-family: Verdana,sans-serif;
+    font-size: 15px;">
   <div class="container">
     <div class="navbar-header">
       <a href="#" class="navbar-brand">Treeplant</a>
@@ -26,14 +28,17 @@ session_start();
     <div class="collapse navbar-collapse myNavbar">
       <ul class="nav navbar-nav navbar-right">
         <li><a href="index.php">Home</a></li>
-        <?php if(isset($_SESSION['facebook_access_token'])) 
+        <?php if(isset($_SESSION['facebook_access_token'])){
           echo '<li><a href="profile.php">Profile</a></li>';
           echo '<li><a href="post.php">Post</a></li>';
+          } 
         ?>
         <li><a href="gallery.php">Gallery</a></li>
         <li class="active"><a href="aboutus.php">About Us</a></li>
-        <?php if(isset($_SESSION['facebook_access_token'])) 
-          echo '<li><a href="logout.php">Logout</a></li>';
+        <?php 
+          if(isset($_SESSION['facebook_access_token'])){ 
+            echo '<li><a href="logout.php">Logout</a></li>';
+          }
         ?>
       </ul>
     </div>

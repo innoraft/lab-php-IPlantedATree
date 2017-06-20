@@ -59,6 +59,7 @@ else{
   $sql = "SELECT * FROM user where fb_id=".$userNode->getId();
   $rs = $conn->query($sql);
   var_dump($rs);
+  // die();
   if($rs->num_rows > 0)
     header('location:http://'.$_SERVER['SERVER_NAME'].'/profile.php');
   else{

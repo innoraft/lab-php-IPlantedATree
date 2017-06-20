@@ -17,8 +17,8 @@ if(isset($_SESSION['facebook_access_token'])){
   include('assets/config/fbCredentials.php');
   $accessToken =  $_SESSION["facebook_access_token"];
   try {
-    $friends = $fb->get('/me/taggable_friends?fields=name,id,picture.width(50)',$accessToken); 
-    $friends = $friends->getGraphEdge()->asArray();  
+    $friends = $fb->get('/me/taggable_friends?fields=name,id,picture.width(50)&limit=1000',$accessToken); 
+    $friends = $friends->getGraphEdge()->asArray(); 
   } catch(Facebook\Exceptions\FacebookResponseException $e) {
     // When Graph returns an error
     echo 'Graph returned an error: ' . $e->getMessage();

@@ -11,5 +11,9 @@ Postfix installation:
 https://www.digitalocean.com/community/tutorials/how-to-install-and-setup-postfix-on-ubuntu-14-04
 Gave Postfix mail address as mailtest.com.
 Have not followed the step to create the file : sudo nano /etc/postfix/virtual
+Server key passphrase : vivserver27
+Challenge password for certificate : fgbhi
 
+
+Did not do no.4 step in SMTP authentication
 

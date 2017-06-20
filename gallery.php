@@ -1,4 +1,5 @@
 <?php
+session_start();
 $_PHP_SELF = $_SERVER['PHP_SELF'];
 include('conn.php');
 //get total number of records
@@ -29,9 +30,11 @@ $rs = $conn->query($sql);
   <title></title>
       <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="assets/css/style.css">
   <style type="text/css">
 section {
   padding: 100px 0;
@@ -76,6 +79,7 @@ header.gallery-header p {
 }
 .timeline::before {
   content: '';
+  margin-top: -26px;
   background: #C5CAE9;
   width: 5px;
   height: 95%;
@@ -86,7 +90,7 @@ header.gallery-header p {
 
 .timeline-item {
   width: 100%;
-  margin-bottom: 70px;
+  margin-bottom: -70px;
 }
 .timeline-item:nth-child(even) .timeline-content {
   float: right;
@@ -97,15 +101,15 @@ header.gallery-header p {
   left: 0;
 }
 .timeline-item:nth-child(even) .timeline-content::after {
-  content: '';
-  position: absolute;
-  border-style: solid;
-  width: 0;
-  height: 0;
-  top: 30px;
-  left: -15px;
-  border-width: 10px 15px 10px 0;
-  border-color: transparent #f5f5f5 transparent transparent;
+    content: '';
+    position: absolute;
+    border-style: solid;
+    width: 0;
+    height: 0;
+    top: 0px;
+    left: -15px;
+    border-width: 22px 15px 22px 0;
+    border-color: transparent #f5f5f5 transparent transparent;
 }
 .timeline-item::after {
   content: '';
@@ -119,29 +123,33 @@ header.gallery-header p {
   padding: 10px 30px;
   border-radius: 4px;
   background: #f5f5f5;
-  box-shadow: 0 20px 25px -15px rgba(0, 0, 0, 0.3);
+  /*box-shadow: 0 20px 25px -15px rgba(0, 0, 0, 0.3);*/
+  -webkit-box-shadow: 7px 9px 29px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 7px 9px 29px 0px rgba(0,0,0,0.75);
+box-shadow: 7px 9px 29px 0px rgba(0,0,0,0.75);
 }
 .timeline-content::after {
-  content: '';
-  position: absolute;
-  border-style: solid;
-  width: 0;
-  height: 0;
-  top: 30px;
-  right: -15px;
-  border-width: 10px 0 10px 15px;
-  border-color: transparent transparent transparent #f5f5f5;
+    content: '';
+    position: absolute;
+    border-style: solid;
+    width: 0;
+    height: 0;
+    /* background: #FF4081; */
+    top: 0;
+    right: -15px;
+    border-width: 22px 0 22px 15px;
+    border-color: transparent transparent transparent #f5f5f5;
 }
 
 .timeline-img {
-  width: 30px;
-  height: 30px;
-  background: #3F51B5;
-  border-radius: 50%;
-  position: absolute;
-  left: 50%;
-  margin-top: 25px;
-  margin-left: -15px;
+    width: 30px;
+    height: 30px;
+    background: #3F51B5;
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    margin-top: 9px;
+    margin-left: -15px;
 }
 
 a.gallery-a {
@@ -150,12 +158,15 @@ a.gallery-a {
   padding: 8px 20px;
   text-transform: uppercase;
   font-size: 14px;
-  margin-bottom: 20px;
-  margin-top: 10px;
+  margin: 10px 5px 10px;
+  /*margin: 0px 5px;*/
   display: inline-block;
   border-radius: 2px;
   box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.6);
 }
+.next{ margin-left: 10px; }
+.prev{  }
+
 a.gallery-a:hover, a.gallery-a:active, a.gallery-a:focus {
   background: #32408f;
   color: #FFFFFF;
@@ -231,12 +242,14 @@ blockquote {
     border-style: solid;
     width: 0;
     height: 0;
-    top: 30px;
+    top: 0px;
     left: -15px;
-    border-width: 10px 15px 10px 0;
+    border-width: 22px 15px 22px 0px;
     border-color: transparent #f5f5f5 transparent transparent;
   }
-
+.timeline-item{
+  margin-bottom: 20px;
+}
 }
     
   </style>
@@ -313,6 +326,7 @@ function getPostTime(unix_timestamp){
 </script>
 </head>
 <body>
+
 <div class="navbar navbar-inverse navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
@@ -326,11 +340,21 @@ function getPostTime(unix_timestamp){
     <div class="collapse navbar-collapse myNavbar">
       <ul class="nav navbar-nav navbar-right">
         <li><a href="index.php">Home</a></li>
-        <li><a href="profile.php">Profile</a></li>
-        <li><a href="post.php">Post</a></li>
+        <?php
+          if(isset($_SESSION['facebook_access_token'])){
+            echo  '<li><a href="profile.php">Profile</a></li>';
+            echo  '<li><a href="post.php">Post</a></li>';
+          }
+        ?>
+        
         <li class="active"><a href="#">Gallery</a></li>
         <li><a href="aboutus.php">About Us</a></li>
-        <li><a href="logout.php">Logout</a></li>
+        <?php if(isset($_SESSION['facebook_access_token'])){ 
+          ?>
+          <li><a href="logout.php">Logout</a></li>
+        <?php
+        }
+        ?>
       </ul>
     </div>
   </div>
@@ -384,14 +408,27 @@ function getPostTime(unix_timestamp){
     // echo "<a class='gallery-a' href = \"$_PHP_SELF?page=$last\">Last 5 Posts</a>";
   }else if( $page > 0 ) {
     $last = $page - 2;
-    echo "<a class='gallery-a' href = \"$_PHP_SELF?page=$last\">Last 5 Posts</a> |";
-    echo "<a class='gallery-a' href = \"$_PHP_SELF?page=$page\">Next 5 Posts</a>";
+    echo "<a class='gallery-a prev' href = \"$_PHP_SELF?page=$last\">Last 5 Posts</a>";
+    echo "<a class='gallery-a next' href = \"$_PHP_SELF?page=$page\">Next 5 Posts</a>";
   }
          
   mysqli_close($conn);
 ?>
+<br>
+<?php
+  if(isset($_SESSION['facebook_access_token'])){ 
+    ?>
+    <a class="gallery-a" href="post.php" style="background: none;padding: 0;display: inline-block;margin: 10px 0;text-align: center;"><button class="btn btn-lg btn-primary">Start planting trees</button></a>
+  <?php
+  }
+  else{
+    ?>
+      <a class="gallery-a" href="index.php" style="background: none;padding: 0;transform: translate(43vw,0%);"><button class="btn btn-lg btn-primary">Start planting trees</button></a>
+    <?php
+  }
+?>
 </div>
-<a class="gallery-a" href="index.php" style="background: none;padding: 0;transform: translate(43vw,0%);"><button class="btn btn-lg btn-primary">Start planting trees</button></a>
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>
