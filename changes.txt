@@ -17,3 +17,4 @@ Challenge password for certificate : fgbhi
 
 Did not do no.4 step in SMTP authentication
 
+SELECT fb_id,count(timestamp) AS no_of_posts from userContent where timestamp >= 1495324801 Group By fb_id Order by count(timestamp) DESC;

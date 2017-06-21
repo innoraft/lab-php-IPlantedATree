@@ -58,10 +58,13 @@ else{
   echo $userNode->getId();
   $sql = "SELECT * FROM user where fb_id=".$userNode->getId();
   $rs = $conn->query($sql);
-  var_dump($rs);
+  // var_dump($rs);
   // die();
-  if($rs->num_rows > 0)
+  if($rs->num_rows > 0){
+    $row = mysqli_fetch_assoc($rs);
+    $_SESSION['role'] = $row['role'];
     header('location:http://'.$_SERVER['SERVER_NAME'].'/profile.php');
+  }
   else{
     $name = $userNode->getName();
     $id = $userNode->getId();

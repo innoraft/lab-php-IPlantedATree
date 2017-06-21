@@ -50,6 +50,11 @@ $loginUrl = $helper->getLoginUrl('http://'.$_SERVER['SERVER_NAME'].'/callback5.p
       font-size: 30px;
       color:#00aa00;
     }
+    .btn-mod{
+      padding: 10px;
+      margin: 10px;
+      font-size: 16px;
+    }
   </style>
 </head>
 <body>
@@ -99,11 +104,11 @@ $loginUrl = $helper->getLoginUrl('http://'.$_SERVER['SERVER_NAME'].'/callback5.p
       </div>
       <footer class="w3-container w3-teal">
         <div class="align-center">
-        	<button class="hvr-fade btn-primary">
+        	<div class="hvr-fade btn btn-primary btn-mod">
         		<i class="fa fa-facebook" aria-hidden="true">	
         		</i>
-        		<?php echo '<a style="text-decoration:none;color:fff;" href="' . htmlspecialchars($loginUrl) . '">'.'Login With Facebook'.'</a>';?>
-        	</button>
+        		<a style="text-decoration:none;color:#fff;" href=<?php echo htmlspecialchars($loginUrl)?> >Login With Facebook</a>
+        	</div>
         </div>
       </footer>
     </div>

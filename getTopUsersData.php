@@ -1,10 +1,29 @@
 <?php
 
 include("conn.php");
+date_default_timezone_set("Asia/Kolkata");
+$date  = new DateTime();
+$monthDiff = 2592000; //number of seconds in one month
+$hours = $date->format('h');
+$minutes = $date->format('i');
+$seconds = $date->format('s');
+$subVal = $hours*60*60 + $minutes*60 + $seconds-1;
+$date->setTimestamp($date->getTimestamp()-$monthDiff-$subVal);
+$startDate = $date->getTimestamp();
+$number = 1000;
+$startDate = $_POST['startDate'];
+$endDate = $_POST['endDate'];
 $number = $_POST['topPostsNumber'];
+
+if($number <= 0)
+	$number = 1;
+
+if(!$number)
+	$number = 1;
+
 $sql = "SELECT user.fb_id, user.fb_name,count(id)
 		FROM userContent,user
-		WHERE user.fb_id=userContent.fb_id 
+		WHERE user.fb_id=userContent.fb_id AND timestamp >= $startDate AND timestamp <= $endDate 
 		GROUP BY fb_id
 		ORDER BY count(id) DESC
 ";
@@ -24,19 +43,6 @@ while($row = mysqli_fetch_assoc($rs)){
 	$i++;
 }
 
-$sql = "SELECT fb_id,fb_name from user WHERE fb_id IN(";
-for($i=0;$i<count($fbId);$i++){
-	$sql .= $fbId[$i]['id'].",";
-}
-$sql = substr($sql,0,-1);
-$sql .= ")";
-
-$rs = $conn->query($sql);
-$conn->error;
-$i = 0;
-
-
-echo json_encode($fbId);
+ echo json_encode($fbId);
 
 ?>
-

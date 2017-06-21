@@ -339,6 +339,11 @@ function getPostTime(unix_timestamp){
     </div>
     <div class="collapse navbar-collapse myNavbar">
       <ul class="nav navbar-nav navbar-right">
+        <?php
+          if(($_SESSION['role'] == 0) || ($_SESSION['role'] == 1)){
+            echo '<li><a href="">View Admin Dashboard</a></li>';
+          }
+        ?>
         <li><a href="index.php">Home</a></li>
         <?php
           if(isset($_SESSION['facebook_access_token'])){

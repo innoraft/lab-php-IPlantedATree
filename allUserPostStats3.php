@@ -1,49 +1,67 @@
+<?php
+// include('conn.php');
 
+// date_default_timezone_set("Asia/Kolkata");
+// $date  = new DateTime();
+// $monthDiff = 2592000; //number of seconds in one month
+// $hours = $date->format('h');
+// $minutes = $date->format('i');
+// $seconds = $date->format('s');
+// $subVal = $hours*60*60 + $minutes*60 + $seconds-1;
+// $date->setTimestamp($date->getTimestamp()-$monthDiff-$subVal);
+// $startDate = $date->getTimestamp();
+
+// $sql = "SELECT fb_id,count(timestamp) AS no_of_posts from userContent WHERE timestamp >= $startDate Group By fb_id Order by count(timestamp) DESC";
+// $rs = $conn->query($sql);
+// $row = mysqli_fetch_assoc($rs);
+// $maxPosts = $row['no_of_posts'];
+?>
 <?php
 
-$date = new DateTime();
-$currTime = $date->getTimestamp();
-$currHours =  $date->format('H');
-$currMins = $date->format('i');
-$currSeconds = $date->format('s');
-$prevWeekTimestamp = $currTime - ($currHours*60*60 + $currMins*60 + $currSeconds + 518400); //518400=no of seconds in 6 days
-//$prevWeekTimestamp gets timestamp one week ago from 00:00 hours.
-$date->setTimestamp($prevWeekTimestamp);
+// $date = new DateTime();
+// $currTime = $date->getTimestamp();
+// $currHours =  $date->format('H');
+// $currMins = $date->format('i');
+// $currSeconds = $date->format('s');
+// $prevWeekTimestamp = $currTime - ($currHours*60*60 + $currMins*60 + $currSeconds + 518400); //518400=no of seconds in 6 days
+// //$prevWeekTimestamp gets timestamp one week ago from 00:00 hours.
+// $date->setTimestamp($prevWeekTimestamp);
 
 
 ?>
 <?php
-include('conn.php');
-$sql = "SELECT timestamp from userContent WHERE timestamp >= $prevWeekTimestamp
- ORDER BY timestamp ASC";
-$rs = $conn->query($sql);
-$day = 2;
-$firstTimestamp = $prevWeekTimestamp;
-$secondTimestamp = $firstTimestamp + 86400;
-$count=0;
-$noOfDays = 6;
-$timeStampArray = array();
 
-// if(mysqli_num_rows($rs) = 0)
 
-while($row = mysqli_fetch_array($rs)){
-	array_push($timeStampArray,$row['timestamp']);
-}
+// $sql = "SELECT timestamp from userContent WHERE timestamp >= $prevWeekTimestamp
+//  ORDER BY timestamp ASC";
+// $rs = $conn->query($sql);
+// $day = 2;
+// $firstTimestamp = $prevWeekTimestamp;
+// $secondTimestamp = $firstTimestamp + 86400;
+// $count=0;
+// $noOfDays = 6;
+// $timeStampArray = array();
 
-$arrayPos = 0;
-$posted = false;
-$postCount = array();
-for($j=$noOfDays; $j>=0; $j--){
-	$count = 0;
-	while(($timeStampArray[$arrayPos]>=$firstTimestamp) && ($timeStampArray[$arrayPos]<$secondTimestamp) && ($arrayPos<sizeof($timeStampArray)-1)){
-		$posted = true;
-		$count++;
-		$arrayPos++;
-	}
-	$postCount[$j] = array("day"=>$firstTimestamp,"posts"=>$count);
-	$firstTimestamp = $secondTimestamp;
-	$secondTimestamp = $secondTimestamp + 86400;
-}
+// // if(mysqli_num_rows($rs) = 0)
+
+// while($row = mysqli_fetch_array($rs)){
+// 	array_push($timeStampArray,$row['timestamp']);
+// }
+
+// $arrayPos = 0;
+// $posted = false;
+// $postCount = array();
+// for($j=$noOfDays; $j>=0; $j--){
+// 	$count = 0;
+// 	while(($timeStampArray[$arrayPos]>=$firstTimestamp) && ($timeStampArray[$arrayPos]<$secondTimestamp) && ($arrayPos<sizeof($timeStampArray)-1)){
+// 		$posted = true;
+// 		$count++;
+// 		$arrayPos++;
+// 	}
+// 	$postCount[$j] = array("day"=>$firstTimestamp,"posts"=>$count);
+// 	$firstTimestamp = $secondTimestamp;
+// 	$secondTimestamp = $secondTimestamp + 86400;
+// }
 
 ?>
 <!DOCTYPE html>
@@ -75,6 +93,7 @@ for($j=$noOfDays; $j>=0; $j--){
 if (datefield.type!="date"){ //if browser doesn't support input type="date", initialize date picker widget:
     jQuery(function($){ //on document.ready
         $('#startDate').datepicker();
+        $('#endDate').datepicker();
     })
 }
 </script>
@@ -85,7 +104,10 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
   google.charts.setOnLoadCallback(drawChart);
 var data;
 var options;
-var chart;
+var allUsersPostsChart;
+var individualUsersChart = new Array();
+var individualUsersChartCount = 0;
+var individualUsersChartData = new Array();
 var options2 = {
         title: 'User Posts v/s Time',
         annotations: {
@@ -96,9 +118,12 @@ var options2 = {
             auraColor: 'none',
           },
         },
-        // hAxis: {
-        //   title: 'NUMBER OF POSTS'
-        // },
+        hAxis : {
+		    viewWindow: {
+		        min: 0,
+		        max: <?php echo $maxPosts;?>
+		    }
+        },
         vAxis: {
           title: 'NUMBER OF POSTS'
         },
@@ -140,12 +165,15 @@ function drawChart() {
       };
       
       // Instantiate and draw the chart.
-      chart = new google.visualization.ColumnChart(document.getElementById('allUsersPostsChart'));
-      chart.draw(data, options);
+      allUsersPostsChart = new google.visualization.ColumnChart(document.getElementById('allUsersPostsChart'));
+      allUsersPostsChart.draw(data, options);
 }
 
 $(window).resize(function(){
-	chart.draw(data,options);
+	allUsersPostsChart.draw(data,options);
+	for(var i=0;i<individualUsersChartCount;i++){
+		individualUsersChart[i].draw(individualUsersChartData[i],options2);
+	}
 });
 </script>
 <style type="text/css">
@@ -169,6 +197,26 @@ $(window).resize(function(){
 	}
 	#allUsersPostsStats{
 		
+	}
+	.graph-cell{
+		width:800px;
+		height:300px;
+		border:1px solid #000;
+	}
+	@media only screen and (max-width:992px){
+		.graph-cell{
+			width: 600px;
+		}
+	}
+	@media only screen and (max-width:768px){
+		.graph-cell{
+			width: 400px;
+		}
+	}
+	@media only screen and (max-width:640px){
+		.graph-cell{
+			width: 350px;
+		}
 	}
 </style>
 </head>
@@ -216,6 +264,21 @@ $("#submitTopPosts").on("click",function(event){
 
 <script type="text/javascript">
 
+function getMaxPosts(){
+	var request = $.ajax({
+						url : 'getMaxPosts.php',
+						method : 'POST'
+					});
+
+	request.done(function(response){
+		options2.hAxis.viewWindow.max = parseInt(response);
+	});
+
+    request.fail(function( jqXHR, textStatus ) {
+        console.log("Could not successfully complete AJAX request!");
+    });	
+}
+
 function createTable(tableData){
 	var isExistsTable = document.getElementById("topUsersTable");
 	if(isExistsTable)
@@ -262,7 +325,8 @@ function createTable(tableData){
 				// td.height = "80px";
 				var userGraphDiv = document.createElement("div");
 				userGraphDiv.setAttribute("id" , tableData[i]['id']);
-				userGraphDiv.setAttribute("style" , "width:800px;height:300px;border:1px solid #000;");
+				userGraphDiv.setAttribute("class" , "graph-cell");
+				// userGraphDiv.setAttribute("style" , "");
 				// userGraphDiv.setAttribute("style" , "width:100%;height:100%;");
 				getSingleUserPostData(tableData[i]['id']);
 				td.appendChild(userGraphDiv);
@@ -283,11 +347,12 @@ function getSingleUserPostData(id){
 
 	request.done(function(response){
 		// response = JSON.parse(response);
-		console.log(response);
-		data = new google.visualization.DataTable(response);
+		// console.log(response);
+		individualUsersChartData[individualUsersChartCount] = new google.visualization.DataTable(response);
 		// console.log(data);
-      	var chart = new google.visualization.BarChart(document.getElementById(id));
-      	chart.draw(data, options2);		
+      	individualUsersChart[individualUsersChartCount] = new google.visualization.BarChart(document.getElementById(id));
+      	individualUsersChart[individualUsersChartCount].draw(individualUsersChartData[individualUsersChartCount], options2);	
+      	individualUsersChartCount++;
 	});
 
     request.fail(function( jqXHR, textStatus ) {
@@ -308,6 +373,7 @@ function getNewTopStats(){
 		// console.log(response);
 		response = JSON.parse(response);
 		// console.log(response);
+		getMaxPosts();
 		createTable(response);
 	});
     
@@ -319,20 +385,12 @@ function getNewTopStats(){
 </script>
 
 
-
-
-
-
-
-
-
-
 <script type="text/javascript">
 
 $("#dateSubmit").on("click", function(event){
         event.preventDefault();
         changeDateValues();
-    });
+});
 
 </script>
 <script type="text/javascript">

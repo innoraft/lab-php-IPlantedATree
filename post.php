@@ -75,6 +75,11 @@ $userId = $userNode->getId();
     </div>
     <div class="collapse navbar-collapse myNavbar">
       <ul class="nav navbar-nav navbar-right">
+      <?php
+        if(($_SESSION['role'] == 0) || ($_SESSION['role'] == 1)){
+          echo '<li><a href="">View Admin Dashboard</a></li>';
+        }
+      ?>
         <li><a href="index.php">Home</a></li>
         <li><a href="profile.php">Profile</a></li>
         <li class="active"><a href="#">Post</a></li>
