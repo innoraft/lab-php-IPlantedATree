@@ -1,5 +1,6 @@
 <?php
-session_start();?>
+session_start();
+?>
 <html>
 <head>
   <title>Treeplant</title>
@@ -55,7 +56,7 @@ else{
     exit;
   } 
   include('conn.php');
-  echo $userNode->getId();
+  // echo $userNode->getId();
   $sql = "SELECT * FROM user where fb_id=".$userNode->getId();
   $rs = $conn->query($sql);
   // var_dump($rs);
@@ -63,14 +64,14 @@ else{
   if($rs->num_rows > 0){
     $row = mysqli_fetch_assoc($rs);
     $_SESSION['role'] = $row['role'];
-    header('location:http://'.$_SERVER['SERVER_NAME'].'/profile.php');
+    header('location:http://'.$_SERVER['SERVER_NAME'].'/post.php');
   }
   else{
     $name = $userNode->getName();
     $id = $userNode->getId();
     $sql = "INSERT INTO user values('$name','$id','')";
     $conn->query($sql);
-    header('location:http://'.$_SERVER['SERVER_NAME'].'/profile.php');
+    header('location:http://'.$_SERVER['SERVER_NAME'].'/post.php');
   }
   // Now you can redirect to another page and use the
   // access token from $_SESSION['facebook_access_token']

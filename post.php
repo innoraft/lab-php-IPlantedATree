@@ -49,6 +49,7 @@ $userId = $userNode->getId();
     <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="assets/css/w3.css">
+   <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script type="text/javascript" src="scripts/js/homepage.js"></script>
@@ -63,33 +64,7 @@ $userId = $userNode->getId();
 <body>
 
 
-<div class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header">
-      <a href="#" class="navbar-brand">Treeplant</a>
-      <button class="navbar-toggle" data-toggle="collapse" data-target=".myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-    </div>
-    <div class="collapse navbar-collapse myNavbar">
-      <ul class="nav navbar-nav navbar-right">
-      <?php
-        if(($_SESSION['role'] == 0) || ($_SESSION['role'] == 1)){
-          echo '<li><a href="">View Admin Dashboard</a></li>';
-        }
-      ?>
-        <li><a href="index.php">Home</a></li>
-        <li><a href="profile.php">Profile</a></li>
-        <li class="active"><a href="#">Post</a></li>
-        <li><a href="gallery.php">Gallery</a></li>
-        <li><a href="aboutus.php">About Us</a></li>
-        <li><a href="logout.php">Logout</a></li>
-      </ul>
-    </div>
-  </div>
-</div>
+<?php include('navbar.php'); ?>
 
 <div  class="row" id="profile_row">
   <div class="col-md-12 border-negative profile-col-2 rem-padding-right">

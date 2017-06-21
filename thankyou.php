@@ -117,28 +117,7 @@ body{
 </head>
 <body>
 
-<div class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header">
-      <a href="#" class="navbar-brand">Treeplant</a>
-      <button class="navbar-toggle" data-toggle="collapse" data-target=".myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-    </div>
-    <div class="collapse navbar-collapse myNavbar">
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="index.php">Home</a></li>
-        <li><a href="profile.php">Profile</a></li>
-        <li><a href="post.php">Post</a></li>
-        <li><a href="gallery.php">Gallery</a></li>
-        <li><a href="aboutus.php">About Us</a></li>
-        <li><a href="logout.php">Logout</a></li>
-      </ul>
-    </div>
-  </div>
-</div>
+<?php include('navbar.php'); ?>
 <div id="ty_container">
 	<div class="arch">Thank you for your participation <?php echo $userNode['first_name'];?>.</div>
 	<div id="ty-plant"></div>

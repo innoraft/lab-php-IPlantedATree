@@ -156,9 +156,9 @@ $(window).resize(function(){
 </style>
 </head>
 <body>
-<div class="jumbotron jumbo-mod">
+<!-- <div class="jumbotron jumbo-mod">
 	<h1>Admin Panel</h1>
-</div>
+</div> -->
 <div id="allUsersPostsStats">
 	<div class="container date-container">
 		<form method="get" action="adminHome.php">

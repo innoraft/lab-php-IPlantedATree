@@ -327,43 +327,8 @@ function getPostTime(unix_timestamp){
 </head>
 <body>
 
-<div class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header">
-      <a href="#" class="navbar-brand">Treeplant</a>
-      <button class="navbar-toggle" data-toggle="collapse" data-target=".myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-    </div>
-    <div class="collapse navbar-collapse myNavbar">
-      <ul class="nav navbar-nav navbar-right">
-        <?php
-          if(($_SESSION['role'] == 0) || ($_SESSION['role'] == 1)){
-            echo '<li><a href="">View Admin Dashboard</a></li>';
-          }
-        ?>
-        <li><a href="index.php">Home</a></li>
-        <?php
-          if(isset($_SESSION['facebook_access_token'])){
-            echo  '<li><a href="profile.php">Profile</a></li>';
-            echo  '<li><a href="post.php">Post</a></li>';
-          }
-        ?>
-        
-        <li class="active"><a href="#">Gallery</a></li>
-        <li><a href="aboutus.php">About Us</a></li>
-        <?php if(isset($_SESSION['facebook_access_token'])){ 
-          ?>
-          <li><a href="logout.php">Logout</a></li>
-        <?php
-        }
-        ?>
-      </ul>
-    </div>
-  </div>
-</div>
+<?php include('navbar.php'); ?>
+
 <header class="gallery-header">
   <div class="container text-center">
     <h1 class="gallery-h1">Welcome to Gallery</h1>

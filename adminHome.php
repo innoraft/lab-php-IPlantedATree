@@ -1,6 +1,5 @@
 <?php
 session_start();
-$_SESSION['role'] = 0;
 ?>
 <!DOCTYPE html>
 <html>
@@ -91,7 +90,7 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
 		}
 	}
 </style>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 function getSingleUserPostData(id){
 	// console.log(id);
 	var request = $.ajax({
@@ -121,10 +120,9 @@ $("#dateSubmit").on("click", function(event){
 });
 
 
-</script>
+</script> -->
 </head>
 <body>
-
 <div class="jumbotron jumbo-mod">
 	<h1>Admin Panel</h1>
 </div>
@@ -155,8 +153,8 @@ $(document).ready(function(){
 	$('#viewTopPosts').click(function(){
 		window.location.href = "viewTopUserPostsChart.php";
 	});
-	$('#viewOverallPosts').click(function(){
-		window.location.href = "viewOverallPosts.php";
+	$('#viewAllUsersPostChart').click(function(){
+		window.location.href = "viewAllUsersPostChart.php";
 	});
 });
 </script>

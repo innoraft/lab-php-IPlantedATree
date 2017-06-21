@@ -1,11 +1,9 @@
 CREATE TABLE userContent(
 	id BIGINT(32) AUTO_INCREMENT,
 	fb_id BIGINT(64) UNSIGNED NOT NULL,
-	description VARCHAR(200),
+	description varchar(500),
 	picture_url VARCHAR(100) NOT NULL,
 	post_id VARCHAR(100),
+	timestamp INT(12) NOT NULL,
 	PRIMARY KEY(id)
 );
-
- ALTER TABLE userContent MODIFY description varchar(500);
- ALTER TABLE userContent ADD COLUMN timestamp INT(12) NOT NULL;
